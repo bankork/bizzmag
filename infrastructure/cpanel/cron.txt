@@ -1,0 +1,13 @@
+# ----------------------------------------------------------------------------
+# cPanel > Cron Jobs. Add ONE job, set to run every minute ("Once Per Minute").
+#
+# Replace "youruser" with your cPanel username, and the PHP path with the
+# PHP 8.3 binary on your server. Common cPanel path:
+#   /opt/cpanel/ea-php83/root/usr/bin/php
+# (cPanel > MultiPHP Manager shows the version; ask your host if unsure.)
+#
+# The scheduler runs the heartbeat, a short queue worker (emails, PDFs) and
+# daily clean-up. app:preflight confirms it is running.
+# ----------------------------------------------------------------------------
+
+* * * * * /opt/cpanel/ea-php83/root/usr/bin/php /home/youruser/apps/bizzmag-api/current/artisan schedule:run >> /dev/null 2>&1

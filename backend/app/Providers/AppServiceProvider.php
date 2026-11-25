@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\Domain\Audit\DatabaseAuditRecorder;
+use App\Domain\Shared\Audit\AuditRecorder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -11,7 +14,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->bind(AuditRecorder::class, DatabaseAuditRecorder::class);
     }
 
     /**
@@ -19,6 +22,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        Model::shouldBeStrict(! $this->app->isProduction());
     }
 }

@@ -1,5 +1,9 @@
 <?php
 
+use App\Domain\Shared\Exceptions\DomainError;
+use App\Http\Middleware\AssignRequestId;
+use App\Http\Middleware\RequireIdempotencyKey;
+use App\Http\Responses\ApiExceptionRenderer;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -13,10 +17,26 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        //
+        $middleware->prepend(AssignRequestId::class);
+
+        $middleware->alias([
+            'idempotent' => RequireIdempotencyKey::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->shouldRenderJsonWhen(
             fn (Request $request) => $request->is('api/*') || $request->expectsJson(),
         );
+
+        $exceptions->dontReportWhen(
+            fn (Throwable $exception) => $exception instanceof DomainError && $exception->httpStatus() < 500,
+        );
+
+        $exceptions->render(function (Throwable $exception, Request $request) {
+            if (! ($request->is('api/*') || $request->expectsJson())) {
+                return null;
+            }
+
+            return ApiExceptionRenderer::render($exception);
+        });
     })->create();

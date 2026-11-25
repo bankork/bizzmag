@@ -1,0 +1,29 @@
+# ----------------------------------------------------------------------------
+# Optional local development services (Docker is never required).
+#
+#   docker compose -f infrastructure/docker/compose.yml up -d
+#
+# MySQL 8.4 on localhost:3306 (root / root, databases bizzmag_dev and
+# bizzmag_testing) and Mailpit for catching emails at http://localhost:8025.
+# Without Docker, use a native MySQL 8.0.16+ or MariaDB 10.6+ instead.
+# ----------------------------------------------------------------------------
+name: bizzmag-dev
+
+services:
+  mysql:
+    image: mysql:8.4
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: bizzmag_dev
+    command: ["--default-time-zone=+00:00"]
+    ports: ["3306:3306"]
+    volumes:
+      - mysql:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+
+  mailpit:
+    image: axllent/mailpit:latest
+    ports: ["1025:1025", "8025:8025"]
+
+volumes:
+  mysql:

@@ -1,0 +1,55 @@
+name: Release
+
+# Push a tag such as v1.0.0 to publish release packages on GitHub.
+#
+# The API package is always built. The web app package needs the API
+# address at build time: set the repository variable NEXT_PUBLIC_API_URL
+# (Settings > Secrets and variables > Actions > Variables), for example
+# https://api.your-domain. If it is not set, only the API package is
+# published and you build the web app with infrastructure/build-release.sh
+# (or let Vercel build it).
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.3"
+          extensions: pdo_mysql, mbstring, gd, zip, intl
+          coverage: none
+
+      - uses: pnpm/action-setup@v4
+        with:
+          package_json_file: frontend/package.json
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+          cache-dependency-path: frontend/pnpm-lock.yaml
+
+      - name: Build API package
+        run: infrastructure/build-release.sh "${GITHUB_REF_NAME#v}" --api-only
+
+      - name: Build web app package
+        if: vars.NEXT_PUBLIC_API_URL != ''
+        run: infrastructure/build-release.sh "${GITHUB_REF_NAME#v}" --app-only
+        env:
+          NEXT_PUBLIC_API_URL: ${{ vars.NEXT_PUBLIC_API_URL }}
+
+      - name: Publish GitHub release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/*.tar.gz
+          prerelease: ${{ startsWith(github.ref_name, 'v0.') }}
+          generate_release_notes: true

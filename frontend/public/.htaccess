@@ -1,0 +1,57 @@
+# ----------------------------------------------------------------------------
+# Salon Operations web app on Apache (cPanel).
+# Copied unchanged into out/ by `pnpm build`. Requires mod_rewrite and
+# AllowOverride All (the cPanel default).
+# ----------------------------------------------------------------------------
+
+Options -Indexes
+DirectoryIndex index.html
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # HTTPS: turn on "Force HTTPS Redirect" for this domain in cPanel > Domains.
+
+    # Serve existing files and folders directly.
+    RewriteCond %{REQUEST_FILENAME} -f [OR]
+    RewriteCond %{REQUEST_FILENAME} -d
+    RewriteRule ^ - [L]
+
+    # /desk/order -> /desk/order/ (pages are exported as folder/index.html).
+    RewriteCond %{REQUEST_FILENAME}/index.html -f
+    RewriteRule ^(.*[^/])$ /$1/ [L,R=301]
+
+    # Anything else is a page that does not exist.
+    RewriteRule ^ /404.html [L]
+</IfModule>
+
+ErrorDocument 404 /404.html
+
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+    Header always set X-Frame-Options "DENY"
+    Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=()"
+    Header always set Strict-Transport-Security "max-age=31536000" "expr=%{HTTPS} == 'on'"
+    # The Content Security Policy is set in each page's <meta> tag at build
+    # time (it includes the API origin), so it is identical on every host.
+
+    # Hashed build assets never change: cache for a year.
+    <If "%{REQUEST_URI} =~ m#^/_next/static/#">
+        Header set Cache-Control "public, max-age=31536000, immutable"
+    </If>
+
+    # HTML, the service worker and the manifest must always be revalidated
+    # so a new release reaches every phone.
+    <FilesMatch "\.(html|webmanifest)$|^sw\.js$">
+        Header set Cache-Control "no-cache"
+    </FilesMatch>
+</IfModule>
+
+<IfModule mod_mime.c>
+    AddType application/manifest+json .webmanifest
+</IfModule>
+
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/css application/javascript application/json application/manifest+json image/svg+xml
+</IfModule>

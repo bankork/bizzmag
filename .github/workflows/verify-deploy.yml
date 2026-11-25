@@ -1,0 +1,56 @@
+name: Verify deployment
+
+# Deploys the release packages with the real deploy scripts into a
+# cPanel-like stack (Apache + PHP 8.3 + MariaDB 10.6) and a VPS-like stack
+# (Nginx + PHP-FPM 8.3 + MySQL 8.4), then smoke-tests both.
+
+on:
+  pull_request:
+    paths: ["backend/**", "frontend/**", "infrastructure/**", ".github/workflows/verify-deploy.yml"]
+  push:
+    branches: [main, staging]
+    tags: ["v*"]
+  workflow_dispatch:
+
+jobs:
+  verify:
+    name: Deploy to ${{ matrix.platform }}-like host
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        platform: [cpanel, vps]
+    env:
+      VERSION: verify-${{ github.run_number }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.3"
+          extensions: pdo_mysql, mbstring, gd, zip, intl
+          coverage: none
+
+      - uses: pnpm/action-setup@v4
+        with:
+          package_json_file: frontend/package.json
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+          cache-dependency-path: frontend/pnpm-lock.yaml
+
+      - name: Build release packages
+        run: infrastructure/build-release.sh "$VERSION"
+        env:
+          NEXT_PUBLIC_API_URL: http://api.bizzmag.test:8080
+          NEXT_PUBLIC_APP_ENV: staging
+
+      - name: Deploy and smoke test
+        run: infrastructure/verify/run.sh ${{ matrix.platform }} "$VERSION"
+
+      - name: Server logs on failure
+        if: failure()
+        run: |
+          docker compose -f infrastructure/verify/compose.yml --profile ${{ matrix.platform }} logs --tail=200

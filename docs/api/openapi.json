@@ -1,0 +1,77 @@
+{
+    "openapi": "3.1.2",
+    "info": {
+        "title": "Bizz Mgmt",
+        "version": "dev",
+        "description": "Salon Operations and Accountability Platform API. Money is always integer kobo."
+    },
+    "servers": [
+        {
+            "url": "http://bizzmag-api.test/api/v1"
+        }
+    ],
+    "paths": {
+        "/meta": {
+            "get": {
+                "operationId": "v1.system.meta",
+                "tags": [
+                    "Meta"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean"
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "name": {
+                                                    "type": "string"
+                                                },
+                                                "api_version": {
+                                                    "type": "string",
+                                                    "const": "v1"
+                                                },
+                                                "release": {
+                                                    "type": "string"
+                                                },
+                                                "currency": {
+                                                    "type": "string",
+                                                    "const": "NGN"
+                                                },
+                                                "server_time": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "name",
+                                                "api_version",
+                                                "release",
+                                                "currency",
+                                                "server_time"
+                                            ]
+                                        },
+                                        "meta": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "required": [
+                                        "success",
+                                        "data",
+                                        "meta"
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,25 @@
+# ----------------------------------------------------------------------------
+# Supervised queue worker for a VPS (Stage 3 §11.2).
+#
+#   sudo cp bizzmag-queue.service /etc/systemd/system/
+#   sudo systemctl daemon-reload
+#   sudo systemctl enable --now bizzmag-queue
+#
+# With this running, set QUEUE_WORK_VIA_SCHEDULER=false in shared/.env so the
+# scheduler does not start a second worker. deploy-api.sh signals a restart
+# after every release (queue:restart); systemd starts the worker again.
+# ----------------------------------------------------------------------------
+[Unit]
+Description=Salon Operations queue worker
+After=network.target mysql.service
+
+[Service]
+User=www-data
+Group=www-data
+Restart=always
+RestartSec=3
+WorkingDirectory=/srv/bizzmag/api/current
+ExecStart=/usr/bin/php /srv/bizzmag/api/current/artisan queue:work --sleep=3 --tries=3 --max-time=3600
+
+[Install]
+WantedBy=multi-user.target
