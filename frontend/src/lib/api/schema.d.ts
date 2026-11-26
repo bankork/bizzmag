@@ -4,6 +4,218 @@
  */
 
 export interface paths {
+    "/catalogue/categories": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["v1.catalogue.categories.index"];
+        put?: never;
+        post: operations["v1.catalogue.categories.store"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/catalogue/categories/reorder": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["v1.catalogue.categories.reorder"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/catalogue/categories/{category}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch: operations["v1.catalogue.categories.update"];
+        trace?: never;
+    };
+    "/catalogue/categories/{category}/deactivate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["v1.catalogue.categories.deactivate"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/catalogue/categories/{category}/activate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["v1.catalogue.categories.activate"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/customers": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["v1.customers.index"];
+        put?: never;
+        post: operations["v1.customers.store"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/customers/{customer}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["v1.customers.show"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch: operations["v1.customers.update"];
+        trace?: never;
+    };
+    "/customers/{customer}/anonymise": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["v1.customers.anonymise"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/catalogue/items": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["v1.catalogue.items.index"];
+        put?: never;
+        post: operations["v1.catalogue.items.store"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/catalogue/items/{item}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["v1.catalogue.items.show"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch: operations["v1.catalogue.items.update"];
+        trace?: never;
+    };
+    "/catalogue/items/{item}/deactivate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["v1.catalogue.items.deactivate"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/catalogue/items/{item}/activate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["v1.catalogue.items.activate"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/catalogue/items/{item}/history": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Every recorded change to the item and its variants, newest first.
+         *     Price changes are the entries where price_kobo differs
+         */
+        get: operations["v1.catalogue.items.history"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/businesses/{business}/logo": {
         parameters: {
             query?: never;
@@ -312,6 +524,14 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        /**
+         * AnonymiseCustomerRequest
+         * @description Removing personal data cannot be undone, so the owner types REMOVE.
+         */
+        AnonymiseCustomerRequest: {
+            /** @enum {string} */
+            confirm: "REMOVE";
+        };
         /** AssignRolesRequest */
         AssignRolesRequest: {
             role_ids: number[];
@@ -327,12 +547,23 @@ export interface components {
             reason?: string | null;
         };
         /**
+         * ItemType
+         * @description What a catalogue entry is (FR-SVC-002).
+         * @enum {string}
+         */
+        ItemType: "service" | "product";
+        /**
          * LoginRequest
          * @description Sign in with an email address or a phone number (P1 Q1).
          */
         LoginRequest: {
             identifier: string;
             password: string;
+        };
+        /** ReorderCategoriesRequest */
+        ReorderCategoriesRequest: {
+            type: components["schemas"]["ItemType"];
+            ids: number[];
         };
         /** ResetPasswordRequest */
         ResetPasswordRequest: {
@@ -349,6 +580,43 @@ export interface components {
             discount_cap_bp?: number | null;
             discount_cap_kobo?: number | null;
             permissions?: ("user.manage" | "role.manage" | "settings.manage" | "customer.view" | "customer.view_contact" | "customer.manage" | "customer.associate" | "catalogue.manage" | "order.create" | "order.view_open" | "order.view_all" | "order.item.add" | "order.item.cancel_unexecuted" | "order.item.price_override" | "order.assign" | "order.cancel" | "execution.submit" | "execution.join" | "execution.dispute" | "execution.correct" | "execution.submit_late" | "allocation.override" | "additional.request" | "additional.decide" | "reconciliation.view" | "invoice.view" | "invoice.finalise" | "invoice.finalise_with_exception" | "invoice.amend" | "invoice.void" | "discount.apply" | "discount.approve" | "payment.record" | "payment.reverse" | "refund.issue" | "transfer.verify" | "document.share" | "closing.submit" | "closing.approve" | "closing.reopen" | "report.own" | "report.team" | "report.financial" | "dashboard.view" | "bonus.configure" | "bonus.calculate" | "bonus.approve" | "bonus.pay" | "audit.view" | "import.run")[];
+        };
+        /**
+         * SplitMethod
+         * @description The default way a service's credit is shared between the staff who do it (FR-ATTR-004, FR-ATTR-007). Custom percentages are chosen per visit with allocation.override, not in the catalogue (P2 Q2). The values match the allocation calculator's methods.
+         * @enum {string}
+         */
+        SplitMethod: "equal" | "primary_assistant";
+        /** StoreCategoryRequest */
+        StoreCategoryRequest: {
+            type: components["schemas"]["ItemType"];
+            name: string;
+        };
+        /** StoreCustomerRequest */
+        StoreCustomerRequest: {
+            name: string;
+            phone?: string | null;
+            /** Format: email */
+            email?: string | null;
+            notes?: string | null;
+            confirm_duplicate?: boolean;
+        };
+        /**
+         * StoreItemRequest
+         * @description A new service or product, or with parent_id a new variant of a service.
+         */
+        StoreItemRequest: {
+            name: string;
+            description?: string | null;
+            category_id?: number | null;
+            has_variants?: boolean;
+            price_kobo?: number | null;
+            taxable?: boolean;
+            quantity_allowed?: boolean;
+            allocation_method?: components["schemas"]["SplitMethod"] | null;
+            primary_share_bp?: number | null;
+            sort_order?: number;
+            parent_id?: number | null;
         };
         /** StoreUserRequest */
         StoreUserRequest: {
@@ -372,6 +640,35 @@ export interface components {
          * @enum {string}
          */
         TaxMode: "exclusive" | "inclusive";
+        /** UpdateCategoryRequest */
+        UpdateCategoryRequest: {
+            version: number;
+            name: string;
+        };
+        /** UpdateCustomerRequest */
+        UpdateCustomerRequest: {
+            version: number;
+            name?: string;
+            phone?: string | null;
+            /** Format: email */
+            email?: string | null;
+            notes?: string | null;
+            confirm_duplicate?: boolean;
+        };
+        /** UpdateItemRequest */
+        UpdateItemRequest: {
+            version: number;
+            name?: string;
+            description?: string | null;
+            category_id?: number;
+            has_variants?: boolean;
+            price_kobo?: number | null;
+            taxable?: boolean;
+            quantity_allowed?: boolean;
+            allocation_method?: components["schemas"]["SplitMethod"] | null;
+            primary_share_bp?: number | null;
+            sort_order?: number;
+        };
         /**
          * UpdateSettingsRequest
          * @description Partial save of the business profile and settings. Send only what
@@ -490,6 +787,586 @@ export interface components {
 }
 export type $defs = Record<string, never>;
 export interface operations {
+    "v1.catalogue.categories.index": {
+        parameters: {
+            query?: {
+                "filter[type]"?: "service" | "product" | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        success: boolean;
+                        data: {
+                            id: number;
+                            /** @enum {string} */
+                            type: "service" | "product";
+                            name: string;
+                            sort_order: number;
+                            is_active: boolean;
+                            version: number;
+                            items_count: number | null;
+                        }[];
+                        meta: string;
+                    };
+                };
+            };
+            422: components["responses"]["ValidationException"];
+        };
+    };
+    "v1.catalogue.categories.store": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["StoreCategoryRequest"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        success: boolean;
+                        data: {
+                            id: number;
+                            /** @enum {string} */
+                            type: "service" | "product";
+                            name: string;
+                            sort_order: number;
+                            is_active: boolean;
+                            version: number;
+                            items_count: number | null;
+                        };
+                        meta: string;
+                    };
+                };
+            };
+            422: components["responses"]["ValidationException"];
+        };
+    };
+    "v1.catalogue.categories.reorder": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ReorderCategoriesRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        success: boolean;
+                        data: unknown[];
+                        meta: string;
+                    };
+                };
+            };
+            422: components["responses"]["ValidationException"];
+        };
+    };
+    "v1.catalogue.categories.update": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                category: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateCategoryRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        success: boolean;
+                        data: {
+                            id: number;
+                            /** @enum {string} */
+                            type: "service" | "product";
+                            name: string;
+                            sort_order: number;
+                            is_active: boolean;
+                            version: number;
+                            items_count: number | null;
+                        };
+                        meta: string;
+                    };
+                };
+            };
+            422: components["responses"]["ValidationException"];
+        };
+    };
+    "v1.catalogue.categories.deactivate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                category: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        success: boolean;
+                        data: {
+                            id: number;
+                            /** @enum {string} */
+                            type: "service" | "product";
+                            name: string;
+                            sort_order: number;
+                            is_active: boolean;
+                            version: number;
+                            items_count: number | null;
+                        };
+                        meta: string;
+                    };
+                };
+            };
+        };
+    };
+    "v1.catalogue.categories.activate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                category: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        success: boolean;
+                        data: {
+                            id: number;
+                            /** @enum {string} */
+                            type: "service" | "product";
+                            name: string;
+                            sort_order: number;
+                            is_active: boolean;
+                            version: number;
+                            items_count: number | null;
+                        };
+                        meta: string;
+                    };
+                };
+            };
+        };
+    };
+    "v1.customers.index": {
+        parameters: {
+            query?: {
+                "filter[q]"?: string | null;
+                page?: number | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        success: boolean;
+                        data: {
+                            [key: string]: unknown;
+                        }[];
+                        meta: {
+                            pagination: {
+                                page: number;
+                                per_page: number;
+                                total: number;
+                                last_page: number;
+                            };
+                        };
+                    };
+                };
+            };
+            422: components["responses"]["ValidationException"];
+        };
+    };
+    "v1.customers.store": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["StoreCustomerRequest"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        success: boolean;
+                        data: {
+                            [key: string]: unknown;
+                        };
+                        meta: string;
+                    };
+                };
+            };
+            422: components["responses"]["ValidationException"];
+        };
+    };
+    "v1.customers.show": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                customer: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        success: boolean;
+                        data: {
+                            [key: string]: unknown;
+                        };
+                        meta: string;
+                    };
+                };
+            };
+        };
+    };
+    "v1.customers.update": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                customer: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateCustomerRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        success: boolean;
+                        data: {
+                            [key: string]: unknown;
+                        };
+                        meta: string;
+                    };
+                };
+            };
+            422: components["responses"]["ValidationException"];
+        };
+    };
+    "v1.customers.anonymise": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                customer: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AnonymiseCustomerRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        success: boolean;
+                        data: {
+                            [key: string]: unknown;
+                        };
+                        meta: string;
+                    };
+                };
+            };
+            422: components["responses"]["ValidationException"];
+        };
+    };
+    "v1.catalogue.items.index": {
+        parameters: {
+            query?: {
+                "filter[type]"?: "service" | "product" | null;
+                "filter[category_id]"?: number | null;
+                "filter[active]"?: boolean | null;
+                "filter[q]"?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        success: boolean;
+                        data: unknown[][] | string;
+                        meta: string;
+                    };
+                };
+            };
+            422: components["responses"]["ValidationException"];
+        };
+    };
+    "v1.catalogue.items.store": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["StoreItemRequest"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        success: boolean;
+                        data: unknown[];
+                        meta: string;
+                    };
+                };
+            };
+            422: components["responses"]["ValidationException"];
+        };
+    };
+    "v1.catalogue.items.show": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                item: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        success: boolean;
+                        data: unknown[];
+                        meta: string;
+                    };
+                };
+            };
+        };
+    };
+    "v1.catalogue.items.update": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                item: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateItemRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        success: boolean;
+                        data: unknown[];
+                        meta: string;
+                    };
+                };
+            };
+            422: components["responses"]["ValidationException"];
+        };
+    };
+    "v1.catalogue.items.deactivate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                item: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        success: boolean;
+                        data: unknown[];
+                        meta: string;
+                    };
+                };
+            };
+        };
+    };
+    "v1.catalogue.items.activate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                item: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        success: boolean;
+                        data: unknown[];
+                        meta: string;
+                    };
+                };
+            };
+        };
+    };
+    "v1.catalogue.items.history": {
+        parameters: {
+            query?: {
+                page?: number | null;
+            };
+            header?: never;
+            path: {
+                item: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        success: boolean;
+                        data: {
+                            id: number;
+                            action: string;
+                            item: {
+                                id: number | null;
+                                name: string | null;
+                                is_variant: boolean;
+                            };
+                            actor: {
+                                id: number;
+                                name: string;
+                            } | null;
+                            before: {
+                                [key: string]: unknown;
+                            } | null;
+                            after: {
+                                [key: string]: unknown;
+                            } | null;
+                            at: string | null;
+                        }[];
+                        meta: {
+                            pagination: {
+                                page: number;
+                                per_page: number;
+                                total: number;
+                                last_page: number;
+                            };
+                        };
+                    };
+                };
+            };
+            422: components["responses"]["ValidationException"];
+        };
+    };
     "v1.business.logo": {
         parameters: {
             query?: never;

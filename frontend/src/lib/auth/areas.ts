@@ -31,7 +31,10 @@ export const AREAS: Record<AreaKey, AreaDefinition> = {
     title: "Front desk",
     description: "Open visits, take payments and issue receipts.",
     permissions: ["order.create", "payment.record"],
-    nav: [{ href: "/desk/", label: "Visits", permissions: ["order.create"] }],
+    nav: [
+      { href: "/desk/", label: "Visits", permissions: ["order.create"] },
+      { href: "/desk/customers/", label: "Customers", permissions: ["customer.view"] },
+    ],
   },
   admin: {
     key: "admin",
@@ -41,6 +44,8 @@ export const AREAS: Record<AreaKey, AreaDefinition> = {
     permissions: ["user.manage", "role.manage", "settings.manage", "dashboard.view", "catalogue.manage"],
     nav: [
       { href: "/admin/", label: "Overview", permissions: ["user.manage", "role.manage", "settings.manage", "dashboard.view", "catalogue.manage"] },
+      { href: "/admin/catalogue/", label: "Catalogue", permissions: ["catalogue.manage"] },
+      { href: "/admin/customers/", label: "Customers", permissions: ["customer.view"] },
       { href: "/admin/users/", label: "Staff", permissions: ["user.manage"] },
       { href: "/admin/roles/", label: "Roles", permissions: ["role.manage"] },
       { href: "/admin/settings/", label: "Settings", permissions: ["settings.manage"] },

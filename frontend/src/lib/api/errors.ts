@@ -29,6 +29,9 @@ export type ApiErrorCode =
   | "INVALID_TRANSITION"
   | "GATE_BLOCKED"
   | "SOD_VIOLATION"
+  | "DUPLICATE_PHONE"
+  | "CUSTOMER_REMOVED"
+  | "CATEGORY_IN_USE"
   | "SERVER_ERROR"
   | "NETWORK_ERROR"
   | (string & {});

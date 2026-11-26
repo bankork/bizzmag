@@ -107,3 +107,64 @@ export type HistoryEntry = {
 };
 
 export type Pagination = { page: number; per_page: number; total: number; last_page: number };
+
+export type ItemType = "service" | "product";
+
+export type SplitMethod = "equal" | "primary_assistant";
+
+export type CatalogueCategory = {
+  id: number;
+  type: ItemType;
+  name: string;
+  sort_order: number;
+  is_active: boolean;
+  version: number;
+  items_count: number | null;
+};
+
+/**
+ * A service, product or variant. `price_kobo` is absent, not null, for
+ * people who may not see prices (BR-041). A service with variants has no
+ * price of its own.
+ */
+export type CatalogueItem = {
+  id: number;
+  category_id: number;
+  parent_id: number | null;
+  type: ItemType;
+  name: string;
+  description: string | null;
+  has_variants: boolean;
+  price_kobo?: number | null;
+  taxable: boolean;
+  quantity_allowed: boolean;
+  allocation_method: SplitMethod | null;
+  primary_share_bp: number | null;
+  sort_order: number;
+  is_active: boolean;
+  orderable: boolean;
+  version: number;
+  variants?: CatalogueItem[];
+};
+
+export type CatalogueHistoryEntry = HistoryEntry & {
+  item: { id: number; name: string | null; is_variant: boolean };
+};
+
+/** Phone and email are absent for people without customer.view_contact. */
+export type Customer = {
+  id: number;
+  name: string;
+  has_phone: boolean;
+  has_email: boolean;
+  phone?: string | null;
+  phone_display?: string | null;
+  email?: string | null;
+  notes: string | null;
+  is_removed: boolean;
+  removed_at: string | null;
+  version: number;
+  created_at: string | null;
+};
+
+export type DuplicateMatch = { id: number; name: string };

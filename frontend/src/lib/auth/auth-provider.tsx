@@ -19,6 +19,8 @@ export type AuthState = {
   permissions: readonly string[];
   can: (permission: string) => boolean;
   canAny: (permissions: readonly string[]) => boolean;
+  /** Holds the Owner role. Only for the few owner-only actions, such as removing a customer's personal data. */
+  isOwner: boolean;
   signIn: (identifier: string, password: string) => Promise<Me>;
   signOut: () => Promise<void>;
   /** Replace the cached session, for example after a password change. */
@@ -93,6 +95,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       permissions,
       can: (permission) => permissions.includes(permission),
       canAny: (required) => required.some((permission) => permissions.includes(permission)),
+      isOwner: me?.roles.some((role) => role.system_key === "owner") ?? false,
       signIn,
       signOut,
       setMe,

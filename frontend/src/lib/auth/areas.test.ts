@@ -18,4 +18,10 @@ describe("areas and navigation by permission", () => {
     expect(navFor("admin", ["user.manage", "role.manage", "settings.manage"]).map((item) => item.label)).toEqual(["Overview", "Staff", "Roles", "Settings"]);
     expect(navFor("admin", EMPLOYEE)).toEqual([]);
   });
+
+  it("shows the catalogue to the owner and customers to the desk", () => {
+    expect(navFor("admin", ["catalogue.manage", "customer.view"]).map((item) => item.label)).toEqual(["Overview", "Catalogue", "Customers"]);
+    expect(navFor("desk", [...CASHIER, "customer.view"]).map((item) => item.label)).toEqual(["Visits", "Customers"]);
+    expect(navFor("desk", CASHIER).map((item) => item.label)).toEqual(["Visits"]);
+  });
 });
