@@ -78,3 +78,16 @@ This page is generated from `backend/app/Domain/Identity/Permissions/PermissionC
 | Records | Import data | `import.run` | ✓ |  |  |  |
 
 Totals: Owner 48, Supervisor 36, Cashier 18, Employee 6 of 50 permissions. The Owner role does not include the two employee-only actions (joining someone else's work, and asking for an extra service).
+
+## Owner-only actions
+
+A few actions need the **Owner role** on top of a permission, so they cannot be handed to another role:
+
+| Action | Permission | Plus |
+|---|---|---|
+| Remove a customer's personal data (SEC-021) | `customer.manage` | Owner role |
+
+## Prices and contact details
+
+- Prices in the catalogue are sent only to people with `order.view_all` or `catalogue.manage`. Everyone else, including employees, gets the services without any price field (BR-041).
+- Customer phone numbers and emails are sent only to people with `customer.view_contact`, and only they can search by phone number (SEC-021).

@@ -2,7 +2,7 @@
 
 **Version:** 1.0
 **Date:** 2026-11-25
-**Status:** Approved by the product owner on 2026-11-25. In progress.
+**Status:** Approved by the product owner on 2026-11-25. Complete; phase approved on 2026-11-26.
 
 **Approval notes:** Q1 confirmed: staff can sign in with email or phone. Q2 and Q3 use the defaults.
 

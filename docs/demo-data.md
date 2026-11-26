@@ -42,20 +42,30 @@ The phone numbers are the same on every machine. The two cashiers have no employ
 4. Type a wrong password for **Kemi** five times: sign-in is locked for 15 minutes on that device.
 5. Leave **Kemi** signed in and idle for 30 minutes: the next click asks her to sign in again. Employees stay signed in for 7 days.
 
+### Things to try in Phase 2
+
+1. Sign in as **Adunni** and open **Catalogue**. Services are grouped by category; Knotless braids shows "3 variants from ₦30,000".
+2. Open **Knotless braids**, change the Medium price, save, and see the change in the history at the bottom. Change the credit split to 70% and read the worked example for 1, 2 and 3 staff.
+3. Add a new service with variants, then add the variants and their prices.
+4. Sign in as **Kemi**, open **Customers**, and add a customer using the phone number of someone already in the list (any way of writing it). You are warned and shown the existing customer; **Add anyway** saves.
+5. Search customers by name, by a full number, or by its last 4 digits.
+6. Sign in as **Adunni**, open **Customers**, open anyone, and use **Remove personal data** (type REMOVE). The name becomes "Removed customer". Kemi and Ngozi do not see this button, and the API refuses them.
+7. Sign in as **Chiamaka**: the Catalogue and Customers pages are refused, and the services list the API gives her has no prices.
+
 ## What is in it, phase by phase
 
 | Phase | Adds |
 |---|---|
 | P0 | Staff login accounts. The full price list and calculation scenarios (`app:demo:calc`). |
-| P1 (now) | Roles for every account, phone sign-in, the salon's profile and default settings, tax switched off (turn on VAT 7.5% to try it) |
-| P2 | Catalogue in the database (6 categories, variants, products) and about 150 customers |
+| P1 | Roles for every account, phone sign-in, the salon's profile and default settings, tax switched off (turn on VAT 7.5% to try it) |
+| P2 (now) | The price list in the database (5 service and 2 product categories, variants, products, credit splits) and 150 customers. A few share a phone number, as family members booked on one phone do, and some have no phone |
 | P3 to P5 | About 90 days of visits: Saturday rushes, shared braids, extra services, part payments, cash, POS and transfers |
 | P6 | Cashier closings, including a cash shortage, plus unverified and rejected transfers |
 | P7 | A month of staff performance and bonus calculations |
 
 ## The price list
 
-Prices are plausible Lagos mid-range prices for late 2026. Edit them in the catalogue screens from Phase 2.
+Prices are plausible Lagos mid-range prices for late 2026. Edit them in **Admin > Catalogue**. Running `app:demo` again puts the demo prices back; `--fresh` resets everything.
 
 | Category | Examples |
 |---|---|

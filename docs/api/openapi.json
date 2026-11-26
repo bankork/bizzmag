@@ -11,6 +11,1333 @@
         }
     ],
     "paths": {
+        "/catalogue/categories": {
+            "get": {
+                "operationId": "v1.catalogue.categories.index",
+                "tags": [
+                    "Category"
+                ],
+                "parameters": [
+                    {
+                        "name": "filter[type]",
+                        "in": "query",
+                        "schema": {
+                            "type": [
+                                "string",
+                                "null"
+                            ],
+                            "enum": [
+                                "service",
+                                "product",
+                                null
+                            ]
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer"
+                                                    },
+                                                    "type": {
+                                                        "type": "string",
+                                                        "enum": [
+                                                            "service",
+                                                            "product"
+                                                        ]
+                                                    },
+                                                    "name": {
+                                                        "type": "string"
+                                                    },
+                                                    "sort_order": {
+                                                        "type": "integer"
+                                                    },
+                                                    "is_active": {
+                                                        "type": "boolean"
+                                                    },
+                                                    "version": {
+                                                        "type": "integer"
+                                                    },
+                                                    "items_count": {
+                                                        "type": [
+                                                            "integer",
+                                                            "null"
+                                                        ]
+                                                    }
+                                                },
+                                                "required": [
+                                                    "id",
+                                                    "type",
+                                                    "name",
+                                                    "sort_order",
+                                                    "is_active",
+                                                    "version",
+                                                    "items_count"
+                                                ]
+                                            }
+                                        },
+                                        "meta": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "required": [
+                                        "success",
+                                        "data",
+                                        "meta"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/ValidationException"
+                    }
+                }
+            },
+            "post": {
+                "operationId": "v1.catalogue.categories.store",
+                "tags": [
+                    "Category"
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/StoreCategoryRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean"
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer"
+                                                },
+                                                "type": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "service",
+                                                        "product"
+                                                    ]
+                                                },
+                                                "name": {
+                                                    "type": "string"
+                                                },
+                                                "sort_order": {
+                                                    "type": "integer"
+                                                },
+                                                "is_active": {
+                                                    "type": "boolean"
+                                                },
+                                                "version": {
+                                                    "type": "integer"
+                                                },
+                                                "items_count": {
+                                                    "type": [
+                                                        "integer",
+                                                        "null"
+                                                    ]
+                                                }
+                                            },
+                                            "required": [
+                                                "id",
+                                                "type",
+                                                "name",
+                                                "sort_order",
+                                                "is_active",
+                                                "version",
+                                                "items_count"
+                                            ]
+                                        },
+                                        "meta": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "required": [
+                                        "success",
+                                        "data",
+                                        "meta"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/ValidationException"
+                    }
+                }
+            }
+        },
+        "/catalogue/categories/reorder": {
+            "post": {
+                "operationId": "v1.catalogue.categories.reorder",
+                "tags": [
+                    "Category"
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ReorderCategoriesRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {}
+                                        },
+                                        "meta": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "required": [
+                                        "success",
+                                        "data",
+                                        "meta"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/ValidationException"
+                    }
+                }
+            }
+        },
+        "/catalogue/categories/{category}": {
+            "patch": {
+                "operationId": "v1.catalogue.categories.update",
+                "tags": [
+                    "Category"
+                ],
+                "parameters": [
+                    {
+                        "name": "category",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateCategoryRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean"
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer"
+                                                },
+                                                "type": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "service",
+                                                        "product"
+                                                    ]
+                                                },
+                                                "name": {
+                                                    "type": "string"
+                                                },
+                                                "sort_order": {
+                                                    "type": "integer"
+                                                },
+                                                "is_active": {
+                                                    "type": "boolean"
+                                                },
+                                                "version": {
+                                                    "type": "integer"
+                                                },
+                                                "items_count": {
+                                                    "type": [
+                                                        "integer",
+                                                        "null"
+                                                    ]
+                                                }
+                                            },
+                                            "required": [
+                                                "id",
+                                                "type",
+                                                "name",
+                                                "sort_order",
+                                                "is_active",
+                                                "version",
+                                                "items_count"
+                                            ]
+                                        },
+                                        "meta": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "required": [
+                                        "success",
+                                        "data",
+                                        "meta"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/ValidationException"
+                    }
+                }
+            }
+        },
+        "/catalogue/categories/{category}/deactivate": {
+            "post": {
+                "operationId": "v1.catalogue.categories.deactivate",
+                "tags": [
+                    "Category"
+                ],
+                "parameters": [
+                    {
+                        "name": "category",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean"
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer"
+                                                },
+                                                "type": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "service",
+                                                        "product"
+                                                    ]
+                                                },
+                                                "name": {
+                                                    "type": "string"
+                                                },
+                                                "sort_order": {
+                                                    "type": "integer"
+                                                },
+                                                "is_active": {
+                                                    "type": "boolean"
+                                                },
+                                                "version": {
+                                                    "type": "integer"
+                                                },
+                                                "items_count": {
+                                                    "type": [
+                                                        "integer",
+                                                        "null"
+                                                    ]
+                                                }
+                                            },
+                                            "required": [
+                                                "id",
+                                                "type",
+                                                "name",
+                                                "sort_order",
+                                                "is_active",
+                                                "version",
+                                                "items_count"
+                                            ]
+                                        },
+                                        "meta": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "required": [
+                                        "success",
+                                        "data",
+                                        "meta"
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/catalogue/categories/{category}/activate": {
+            "post": {
+                "operationId": "v1.catalogue.categories.activate",
+                "tags": [
+                    "Category"
+                ],
+                "parameters": [
+                    {
+                        "name": "category",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean"
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer"
+                                                },
+                                                "type": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "service",
+                                                        "product"
+                                                    ]
+                                                },
+                                                "name": {
+                                                    "type": "string"
+                                                },
+                                                "sort_order": {
+                                                    "type": "integer"
+                                                },
+                                                "is_active": {
+                                                    "type": "boolean"
+                                                },
+                                                "version": {
+                                                    "type": "integer"
+                                                },
+                                                "items_count": {
+                                                    "type": [
+                                                        "integer",
+                                                        "null"
+                                                    ]
+                                                }
+                                            },
+                                            "required": [
+                                                "id",
+                                                "type",
+                                                "name",
+                                                "sort_order",
+                                                "is_active",
+                                                "version",
+                                                "items_count"
+                                            ]
+                                        },
+                                        "meta": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "required": [
+                                        "success",
+                                        "data",
+                                        "meta"
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/customers": {
+            "get": {
+                "operationId": "v1.customers.index",
+                "tags": [
+                    "Customer"
+                ],
+                "parameters": [
+                    {
+                        "name": "filter[q]",
+                        "in": "query",
+                        "schema": {
+                            "type": [
+                                "string",
+                                "null"
+                            ],
+                            "maxLength": 100
+                        }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "schema": {
+                            "type": [
+                                "integer",
+                                "null"
+                            ],
+                            "minimum": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "additionalProperties": {}
+                                            }
+                                        },
+                                        "meta": {
+                                            "type": "object",
+                                            "properties": {
+                                                "pagination": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "page": {
+                                                            "type": "integer"
+                                                        },
+                                                        "per_page": {
+                                                            "type": "integer"
+                                                        },
+                                                        "total": {
+                                                            "type": "integer"
+                                                        },
+                                                        "last_page": {
+                                                            "type": "integer"
+                                                        }
+                                                    },
+                                                    "required": [
+                                                        "page",
+                                                        "per_page",
+                                                        "total",
+                                                        "last_page"
+                                                    ]
+                                                }
+                                            },
+                                            "required": [
+                                                "pagination"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "success",
+                                        "data",
+                                        "meta"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/ValidationException"
+                    }
+                }
+            },
+            "post": {
+                "operationId": "v1.customers.store",
+                "tags": [
+                    "Customer"
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/StoreCustomerRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean"
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "additionalProperties": {}
+                                        },
+                                        "meta": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "required": [
+                                        "success",
+                                        "data",
+                                        "meta"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/ValidationException"
+                    }
+                }
+            }
+        },
+        "/customers/{customer}": {
+            "get": {
+                "operationId": "v1.customers.show",
+                "tags": [
+                    "Customer"
+                ],
+                "parameters": [
+                    {
+                        "name": "customer",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean"
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "additionalProperties": {}
+                                        },
+                                        "meta": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "required": [
+                                        "success",
+                                        "data",
+                                        "meta"
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "operationId": "v1.customers.update",
+                "tags": [
+                    "Customer"
+                ],
+                "parameters": [
+                    {
+                        "name": "customer",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateCustomerRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean"
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "additionalProperties": {}
+                                        },
+                                        "meta": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "required": [
+                                        "success",
+                                        "data",
+                                        "meta"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/ValidationException"
+                    }
+                }
+            }
+        },
+        "/customers/{customer}/anonymise": {
+            "post": {
+                "operationId": "v1.customers.anonymise",
+                "tags": [
+                    "Customer"
+                ],
+                "parameters": [
+                    {
+                        "name": "customer",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AnonymiseCustomerRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean"
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "additionalProperties": {}
+                                        },
+                                        "meta": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "required": [
+                                        "success",
+                                        "data",
+                                        "meta"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/ValidationException"
+                    }
+                }
+            }
+        },
+        "/catalogue/items": {
+            "get": {
+                "operationId": "v1.catalogue.items.index",
+                "tags": [
+                    "Item"
+                ],
+                "parameters": [
+                    {
+                        "name": "filter[type]",
+                        "in": "query",
+                        "schema": {
+                            "type": [
+                                "string",
+                                "null"
+                            ],
+                            "enum": [
+                                "service",
+                                "product",
+                                null
+                            ]
+                        }
+                    },
+                    {
+                        "name": "filter[category_id]",
+                        "in": "query",
+                        "schema": {
+                            "type": [
+                                "integer",
+                                "null"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "filter[active]",
+                        "in": "query",
+                        "schema": {
+                            "type": [
+                                "boolean",
+                                "null"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "filter[q]",
+                        "in": "query",
+                        "schema": {
+                            "type": [
+                                "string",
+                                "null"
+                            ],
+                            "maxLength": 100
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean"
+                                        },
+                                        "data": {
+                                            "anyOf": [
+                                                {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "array",
+                                                        "items": {}
+                                                    }
+                                                },
+                                                {
+                                                    "type": "string"
+                                                }
+                                            ]
+                                        },
+                                        "meta": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "required": [
+                                        "success",
+                                        "data",
+                                        "meta"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/ValidationException"
+                    }
+                }
+            },
+            "post": {
+                "operationId": "v1.catalogue.items.store",
+                "tags": [
+                    "Item"
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/StoreItemRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {}
+                                        },
+                                        "meta": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "required": [
+                                        "success",
+                                        "data",
+                                        "meta"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/ValidationException"
+                    }
+                }
+            }
+        },
+        "/catalogue/items/{item}": {
+            "get": {
+                "operationId": "v1.catalogue.items.show",
+                "tags": [
+                    "Item"
+                ],
+                "parameters": [
+                    {
+                        "name": "item",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {}
+                                        },
+                                        "meta": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "required": [
+                                        "success",
+                                        "data",
+                                        "meta"
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "operationId": "v1.catalogue.items.update",
+                "tags": [
+                    "Item"
+                ],
+                "parameters": [
+                    {
+                        "name": "item",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateItemRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {}
+                                        },
+                                        "meta": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "required": [
+                                        "success",
+                                        "data",
+                                        "meta"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/ValidationException"
+                    }
+                }
+            }
+        },
+        "/catalogue/items/{item}/deactivate": {
+            "post": {
+                "operationId": "v1.catalogue.items.deactivate",
+                "tags": [
+                    "Item"
+                ],
+                "parameters": [
+                    {
+                        "name": "item",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {}
+                                        },
+                                        "meta": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "required": [
+                                        "success",
+                                        "data",
+                                        "meta"
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/catalogue/items/{item}/activate": {
+            "post": {
+                "operationId": "v1.catalogue.items.activate",
+                "tags": [
+                    "Item"
+                ],
+                "parameters": [
+                    {
+                        "name": "item",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {}
+                                        },
+                                        "meta": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "required": [
+                                        "success",
+                                        "data",
+                                        "meta"
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/catalogue/items/{item}/history": {
+            "get": {
+                "operationId": "v1.catalogue.items.history",
+                "summary": "Every recorded change to the item and its variants, newest first.\nPrice changes are the entries where price_kobo differs",
+                "tags": [
+                    "Item"
+                ],
+                "parameters": [
+                    {
+                        "name": "item",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "schema": {
+                            "type": [
+                                "integer",
+                                "null"
+                            ],
+                            "minimum": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer"
+                                                    },
+                                                    "action": {
+                                                        "type": "string"
+                                                    },
+                                                    "item": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": [
+                                                                    "integer",
+                                                                    "null"
+                                                                ]
+                                                            },
+                                                            "name": {
+                                                                "type": [
+                                                                    "string",
+                                                                    "null"
+                                                                ]
+                                                            },
+                                                            "is_variant": {
+                                                                "type": "boolean"
+                                                            }
+                                                        },
+                                                        "required": [
+                                                            "id",
+                                                            "name",
+                                                            "is_variant"
+                                                        ]
+                                                    },
+                                                    "actor": {
+                                                        "type": [
+                                                            "object",
+                                                            "null"
+                                                        ],
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer"
+                                                            },
+                                                            "name": {
+                                                                "type": "string"
+                                                            }
+                                                        },
+                                                        "required": [
+                                                            "id",
+                                                            "name"
+                                                        ]
+                                                    },
+                                                    "before": {
+                                                        "type": [
+                                                            "object",
+                                                            "null"
+                                                        ],
+                                                        "additionalProperties": {}
+                                                    },
+                                                    "after": {
+                                                        "type": [
+                                                            "object",
+                                                            "null"
+                                                        ],
+                                                        "additionalProperties": {}
+                                                    },
+                                                    "at": {
+                                                        "type": [
+                                                            "string",
+                                                            "null"
+                                                        ]
+                                                    }
+                                                },
+                                                "required": [
+                                                    "id",
+                                                    "action",
+                                                    "item",
+                                                    "actor",
+                                                    "before",
+                                                    "after",
+                                                    "at"
+                                                ]
+                                            }
+                                        },
+                                        "meta": {
+                                            "type": "object",
+                                            "properties": {
+                                                "pagination": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "page": {
+                                                            "type": "integer"
+                                                        },
+                                                        "per_page": {
+                                                            "type": "integer"
+                                                        },
+                                                        "total": {
+                                                            "type": "integer"
+                                                        },
+                                                        "last_page": {
+                                                            "type": "integer"
+                                                        }
+                                                    },
+                                                    "required": [
+                                                        "page",
+                                                        "per_page",
+                                                        "total",
+                                                        "last_page"
+                                                    ]
+                                                }
+                                            },
+                                            "required": [
+                                                "pagination"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "success",
+                                        "data",
+                                        "meta"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/ValidationException"
+                    }
+                }
+            }
+        },
         "/businesses/{business}/logo": {
             "get": {
                 "operationId": "v1.business.logo",
@@ -2975,6 +4302,22 @@
     },
     "components": {
         "schemas": {
+            "AnonymiseCustomerRequest": {
+                "type": "object",
+                "description": "Removing personal data cannot be undone, so the owner types REMOVE.",
+                "properties": {
+                    "confirm": {
+                        "type": "string",
+                        "enum": [
+                            "REMOVE"
+                        ]
+                    }
+                },
+                "required": [
+                    "confirm"
+                ],
+                "title": "AnonymiseCustomerRequest"
+            },
             "AssignRolesRequest": {
                 "type": "object",
                 "properties": {
@@ -3027,6 +4370,15 @@
                 },
                 "title": "DisableUserRequest"
             },
+            "ItemType": {
+                "type": "string",
+                "description": "What a catalogue entry is (FR-SVC-002).\n",
+                "enum": [
+                    "service",
+                    "product"
+                ],
+                "title": "ItemType"
+            },
             "LoginRequest": {
                 "type": "object",
                 "description": "Sign in with an email address or a phone number (P1 Q1).",
@@ -3045,6 +4397,28 @@
                     "password"
                 ],
                 "title": "LoginRequest"
+            },
+            "ReorderCategoriesRequest": {
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "$ref": "#/components/schemas/ItemType"
+                    },
+                    "ids": {
+                        "type": "array",
+                        "items": {
+                            "type": "integer"
+                        },
+                        "minItems": 1,
+                        "maxItems": 200,
+                        "uniqueItems": true
+                    }
+                },
+                "required": [
+                    "type",
+                    "ids"
+                ],
+                "title": "ReorderCategoriesRequest"
             },
             "ResetPasswordRequest": {
                 "type": "object",
@@ -3152,6 +4526,143 @@
                 },
                 "title": "SaveRoleRequest"
             },
+            "SplitMethod": {
+                "type": "string",
+                "description": "The default way a service's credit is shared between the staff who do it (FR-ATTR-004, FR-ATTR-007). Custom percentages are chosen per visit with allocation.override, not in the catalogue (P2 Q2). The values match the allocation calculator's methods.\n",
+                "enum": [
+                    "equal",
+                    "primary_assistant"
+                ],
+                "title": "SplitMethod"
+            },
+            "StoreCategoryRequest": {
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "$ref": "#/components/schemas/ItemType"
+                    },
+                    "name": {
+                        "type": "string",
+                        "maxLength": 80
+                    }
+                },
+                "required": [
+                    "type",
+                    "name"
+                ],
+                "title": "StoreCategoryRequest"
+            },
+            "StoreCustomerRequest": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "maxLength": 100
+                    },
+                    "phone": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "maxLength": 30
+                    },
+                    "email": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "format": "email",
+                        "maxLength": 150
+                    },
+                    "notes": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "maxLength": 1000
+                    },
+                    "confirm_duplicate": {
+                        "type": "boolean"
+                    }
+                },
+                "required": [
+                    "name"
+                ],
+                "title": "StoreCustomerRequest"
+            },
+            "StoreItemRequest": {
+                "type": "object",
+                "description": "A new service or product, or with parent_id a new variant of a service.",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "maxLength": 100
+                    },
+                    "description": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "maxLength": 500
+                    },
+                    "category_id": {
+                        "type": [
+                            "integer",
+                            "null"
+                        ]
+                    },
+                    "has_variants": {
+                        "type": "boolean"
+                    },
+                    "price_kobo": {
+                        "type": [
+                            "integer",
+                            "null"
+                        ],
+                        "minimum": 0,
+                        "maximum": 10000000000
+                    },
+                    "taxable": {
+                        "type": "boolean"
+                    },
+                    "quantity_allowed": {
+                        "type": "boolean"
+                    },
+                    "allocation_method": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/SplitMethod"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
+                    },
+                    "primary_share_bp": {
+                        "type": [
+                            "integer",
+                            "null"
+                        ],
+                        "minimum": 100,
+                        "maximum": 10000
+                    },
+                    "sort_order": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 10000
+                    },
+                    "parent_id": {
+                        "type": [
+                            "integer",
+                            "null"
+                        ]
+                    }
+                },
+                "required": [
+                    "name"
+                ],
+                "title": "StoreItemRequest"
+            },
             "StoreUserRequest": {
                 "type": "object",
                 "properties": {
@@ -3221,6 +4732,133 @@
                     "inclusive"
                 ],
                 "title": "TaxMode"
+            },
+            "UpdateCategoryRequest": {
+                "type": "object",
+                "properties": {
+                    "version": {
+                        "type": "integer",
+                        "minimum": 1
+                    },
+                    "name": {
+                        "type": "string",
+                        "maxLength": 80
+                    }
+                },
+                "required": [
+                    "version",
+                    "name"
+                ],
+                "title": "UpdateCategoryRequest"
+            },
+            "UpdateCustomerRequest": {
+                "type": "object",
+                "properties": {
+                    "version": {
+                        "type": "integer",
+                        "minimum": 1
+                    },
+                    "name": {
+                        "type": "string",
+                        "maxLength": 100
+                    },
+                    "phone": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "maxLength": 30
+                    },
+                    "email": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "format": "email",
+                        "maxLength": 150
+                    },
+                    "notes": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "maxLength": 1000
+                    },
+                    "confirm_duplicate": {
+                        "type": "boolean"
+                    }
+                },
+                "required": [
+                    "version"
+                ],
+                "title": "UpdateCustomerRequest"
+            },
+            "UpdateItemRequest": {
+                "type": "object",
+                "properties": {
+                    "version": {
+                        "type": "integer",
+                        "minimum": 1
+                    },
+                    "name": {
+                        "type": "string",
+                        "maxLength": 100
+                    },
+                    "description": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "maxLength": 500
+                    },
+                    "category_id": {
+                        "type": "integer"
+                    },
+                    "has_variants": {
+                        "type": "boolean"
+                    },
+                    "price_kobo": {
+                        "type": [
+                            "integer",
+                            "null"
+                        ],
+                        "minimum": 0,
+                        "maximum": 10000000000
+                    },
+                    "taxable": {
+                        "type": "boolean"
+                    },
+                    "quantity_allowed": {
+                        "type": "boolean"
+                    },
+                    "allocation_method": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/SplitMethod"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
+                    },
+                    "primary_share_bp": {
+                        "type": [
+                            "integer",
+                            "null"
+                        ],
+                        "minimum": 100,
+                        "maximum": 10000
+                    },
+                    "sort_order": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 10000
+                    }
+                },
+                "required": [
+                    "version"
+                ],
+                "title": "UpdateItemRequest"
             },
             "UpdateSettingsRequest": {
                 "type": "object",
