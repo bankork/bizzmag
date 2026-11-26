@@ -3,8 +3,14 @@
 namespace Tests\Feature\Api\V1;
 
 use App\Domain\Audit\AuditEvent;
+use App\Domain\Business\Models\Business;
+use App\Domain\Catalogue\Models\CatalogueCategory;
+use App\Domain\Catalogue\Models\CatalogueItem;
+use App\Domain\Customers\Models\Customer;
 use App\Domain\Identity\Permissions\PermissionCatalogue;
 use App\Domain\Identity\Permissions\SystemRole;
+use App\Domain\Shared\Tenancy\CurrentBusiness;
+use App\Http\Middleware\RequireOwner;
 use App\Models\User;
 use Illuminate\Testing\TestResponse;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -45,15 +51,23 @@ class PermissionMatrixTest extends ApiTestCase
             $people[$role->value] = $role === SystemRole::Owner ? $salon['owner'] : $this->staffMember($salon['business'], $role);
         }
 
+        $records = $this->catalogueAndCustomer($salon['business']);
+
         $uri = 'api/v1/'.strtr($path, [
             '{user}' => (string) $target->id,
             '{role}' => (string) $this->systemRole($salon['business'], SystemRole::Employee)->id,
+            '{category}' => (string) $records['category']->id,
+            '{item}' => (string) $records['item']->id,
+            '{customer}' => (string) $records['customer']->id,
         ]);
+        $ownerOnly = in_array($name, EndpointCatalogue::OWNER_ONLY, true);
 
         $this->json($method, $uri)->assertStatus(401);
 
         foreach ($people as $roleKey => $person) {
-            $allowed = in_array($permission, PermissionCatalogue::defaultsFor(SystemRole::from($roleKey)), true);
+            $holds = in_array($permission, PermissionCatalogue::defaultsFor(SystemRole::from($roleKey)), true);
+            $allowed = $holds && (! $ownerOnly || $roleKey === SystemRole::Owner->value);
+            $refusedFor = $holds ? RequireOwner::MARKER : $permission;
             $response = $this->requestAs($person, $method, $uri);
 
             if ($allowed) {
@@ -65,7 +79,7 @@ class PermissionMatrixTest extends ApiTestCase
             $response->assertStatus(403)->assertJsonPath('code', 'FORBIDDEN')->assertJsonMissingPath('data');
             $this->assertTrue(
                 AuditEvent::query()->where('action', 'access.denied')->where('actor_id', $person->id)->get()
-                    ->contains(fn (AuditEvent $event) => ($event->after['permission'] ?? null) === $permission),
+                    ->contains(fn (AuditEvent $event) => ($event->after['permission'] ?? null) === $refusedFor),
                 "The refusal of {$name} for {$roleKey} was not recorded.",
             );
         }
@@ -103,5 +117,22 @@ class PermissionMatrixTest extends ApiTestCase
         $this->app['auth']->forgetGuards();
 
         return $this->signIn($person)->json($method, $uri);
+    }
+
+    /**
+     * @return array{category: CatalogueCategory, item: CatalogueItem, customer: Customer}
+     */
+    private function catalogueAndCustomer(Business $business): array
+    {
+        return app(CurrentBusiness::class)->within($business->id, function (): array {
+            $category = CatalogueCategory::query()->create(['type' => 'service', 'name' => 'Braids', 'sort_order' => 1]);
+            $item = CatalogueItem::query()->create([
+                'category_id' => $category->id, 'type' => 'service', 'name' => 'Cornrows', 'price_kobo' => 800_000,
+                'allocation_method' => 'equal',
+            ]);
+            $customer = Customer::query()->create(['name' => 'Funke Adeyemi', 'phone_e164' => '+2348030001234']);
+
+            return ['category' => $category, 'item' => $item, 'customer' => $customer];
+        });
     }
 }

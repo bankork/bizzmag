@@ -6,6 +6,7 @@ use App\Http\Middleware\EnforceIdleTimeout;
 use App\Http\Middleware\EnsureActiveUser;
 use App\Http\Middleware\EnsureBusinessScope;
 use App\Http\Middleware\RequireIdempotencyKey;
+use App\Http\Middleware\RequireOwner;
 use App\Http\Middleware\RequirePasswordChange;
 use App\Http\Middleware\RequirePermission;
 use App\Http\Responses\ApiExceptionRenderer;
@@ -31,6 +32,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'idempotent' => RequireIdempotencyKey::class,
             'permission' => RequirePermission::class,
+            'owner' => RequireOwner::class,
         ]);
 
         // Every protected route: signed in, active, scoped to the user's

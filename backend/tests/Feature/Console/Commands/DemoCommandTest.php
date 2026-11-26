@@ -3,8 +3,14 @@
 namespace Tests\Feature\Console\Commands;
 
 use App\Domain\Business\Models\Business;
+use App\Domain\Catalogue\Models\CatalogueItem;
+use App\Domain\Catalogue\Models\ItemType;
+use App\Domain\Catalogue\Models\SplitMethod;
+use App\Domain\Customers\Models\Customer;
 use App\Domain\Shared\Tenancy\CurrentBusiness;
 use App\Models\User;
+use Database\Seeders\Demo\DemoSeeder;
+use Database\Seeders\Demo\Support\DemoData;
 use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Tests\TestCase;
 
@@ -53,6 +59,59 @@ class DemoCommandTest extends TestCase
         $this->assertDatabaseCount('businesses', 1);
         $this->assertDatabaseCount('roles', 4);
         $this->assertSame($phones, User::query()->orderBy('id')->pluck('phone')->all());
+        $this->assertDatabaseCount('catalogue_categories', 7);
+        $this->assertSame($this->expectedCatalogueRows(), CatalogueItem::query()->withoutGlobalScopes()->count());
+        $this->assertDatabaseCount('customers', DemoSeeder::CUSTOMER_COUNT);
+    }
+
+    public function test_loads_the_price_list_with_variants_products_and_credit_splits(): void
+    {
+        $this->artisan('app:demo')->assertSuccessful();
+        $business = Business::query()->sole();
+
+        app(CurrentBusiness::class)->within($business->id, function (): void {
+            $knotless = CatalogueItem::query()->where('name', 'Knotless braids')->with('variants')->sole();
+            $this->assertTrue($knotless->has_variants);
+            $this->assertNull($knotless->price_kobo);
+            $this->assertSame(['Small' => 5_500_000, 'Medium' => 4_000_000, 'Large' => 3_000_000], $knotless->variants->pluck('price_kobo', 'name')->all());
+            $this->assertTrue($knotless->variants->every(fn (CatalogueItem $variant) => $variant->primary_share_bp === 6000 && $variant->allocation_method === SplitMethod::PrimaryAssistant));
+
+            $nailArt = CatalogueItem::query()->where('name', 'Nail art (per set)')->sole();
+            $this->assertTrue($nailArt->quantity_allowed);
+            $this->assertSame(SplitMethod::Equal, $nailArt->allocation_method);
+
+            $hair = CatalogueItem::query()->where('name', 'X-pression braiding hair (pack)')->sole();
+            $this->assertSame(ItemType::Product, $hair->type);
+            $this->assertSame(350_000, $hair->price_kobo);
+            $this->assertNull($hair->allocation_method);
+        });
+    }
+
+    public function test_some_demo_customers_share_a_number_and_none_uses_a_staff_number(): void
+    {
+        $this->artisan('app:demo')->assertSuccessful();
+
+        $shared = Customer::query()->withoutGlobalScopes()->whereNotNull('phone_e164')
+            ->selectRaw('phone_e164, count(*) as total')->groupBy('phone_e164')->havingRaw('count(*) > 1')->get();
+        $this->assertGreaterThanOrEqual(3, $shared->count());
+        $this->assertGreaterThan(0, Customer::query()->withoutGlobalScopes()->whereNull('phone_e164')->count());
+        $this->assertSame(0, Customer::query()->withoutGlobalScopes()->whereIn('phone_e164', User::query()->pluck('phone'))->count());
+        $this->assertSame(0, Customer::query()->withoutGlobalScopes()->where('phone_e164', 'not like', '+234%000____')->count());
+    }
+
+    private function expectedCatalogueRows(): int
+    {
+        $rows = 0;
+
+        foreach (DemoData::catalogue() as $categories) {
+            foreach ($categories as $items) {
+                foreach ($items as $item) {
+                    $rows += 1 + count($item['variants'] ?? []);
+                }
+            }
+        }
+
+        return $rows;
     }
 
     public function test_demo_staff_can_sign_in_with_email_or_phone(): void

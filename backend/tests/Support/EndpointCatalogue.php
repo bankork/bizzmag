@@ -17,8 +17,8 @@ final class EndpointCatalogue
 
     /**
      * Route name (without the api.v1. prefix) => [method, path, access].
-     * Access is PUBLIC, SIGNED_IN or a permission name. {user} and {role}
-     * are filled in by the test.
+     * Access is PUBLIC, SIGNED_IN or a permission name. {user}, {role},
+     * {category}, {item} and {customer} are filled in by the test.
      *
      * @var array<string, array{0: string, 1: string, 2: string}>
      */
@@ -52,7 +52,35 @@ final class EndpointCatalogue
         'settings.tax.show' => ['GET', 'settings/tax', 'settings.manage'],
         'settings.tax.update' => ['PATCH', 'settings/tax', 'settings.manage'],
         'settings.history' => ['GET', 'settings/history', 'settings.manage'],
+
+        'catalogue.categories.index' => ['GET', 'catalogue/categories', self::SIGNED_IN],
+        'catalogue.items.index' => ['GET', 'catalogue/items', self::SIGNED_IN],
+        'catalogue.items.show' => ['GET', 'catalogue/items/{item}', self::SIGNED_IN],
+        'catalogue.categories.store' => ['POST', 'catalogue/categories', 'catalogue.manage'],
+        'catalogue.categories.reorder' => ['POST', 'catalogue/categories/reorder', 'catalogue.manage'],
+        'catalogue.categories.update' => ['PATCH', 'catalogue/categories/{category}', 'catalogue.manage'],
+        'catalogue.categories.deactivate' => ['POST', 'catalogue/categories/{category}/deactivate', 'catalogue.manage'],
+        'catalogue.categories.activate' => ['POST', 'catalogue/categories/{category}/activate', 'catalogue.manage'],
+        'catalogue.items.store' => ['POST', 'catalogue/items', 'catalogue.manage'],
+        'catalogue.items.update' => ['PATCH', 'catalogue/items/{item}', 'catalogue.manage'],
+        'catalogue.items.deactivate' => ['POST', 'catalogue/items/{item}/deactivate', 'catalogue.manage'],
+        'catalogue.items.activate' => ['POST', 'catalogue/items/{item}/activate', 'catalogue.manage'],
+        'catalogue.items.history' => ['GET', 'catalogue/items/{item}/history', 'catalogue.manage'],
+
+        'customers.index' => ['GET', 'customers', 'customer.view'],
+        'customers.show' => ['GET', 'customers/{customer}', 'customer.view'],
+        'customers.store' => ['POST', 'customers', 'customer.manage'],
+        'customers.update' => ['PATCH', 'customers/{customer}', 'customer.manage'],
+        'customers.anonymise' => ['POST', 'customers/{customer}/anonymise', 'customer.manage'],
     ];
+
+    /**
+     * Endpoints that also require the Owner role (`owner` middleware), on
+     * top of their permission.
+     *
+     * @var list<string>
+     */
+    public const OWNER_ONLY = ['customers.anonymise'];
 
     /**
      * @return array<string, array{0: string, 1: string, 2: string}>

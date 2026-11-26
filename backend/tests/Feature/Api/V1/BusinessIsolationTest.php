@@ -4,6 +4,9 @@ namespace Tests\Feature\Api\V1;
 
 use App\Domain\Business\Models\BusinessSetting;
 use App\Domain\Business\Models\TaxSetting;
+use App\Domain\Catalogue\Models\CatalogueCategory;
+use App\Domain\Catalogue\Models\CatalogueItem;
+use App\Domain\Customers\Models\Customer;
 use App\Domain\Identity\Models\EmployeeProfile;
 use App\Domain\Identity\Permissions\SystemRole;
 use App\Domain\Shared\Exceptions\BusinessScopeMissing;
@@ -74,6 +77,49 @@ class BusinessIsolationTest extends ApiTestCase
         $this->getJson('api/v1/settings/tax')->assertJsonPath('data.enabled', false);
         $this->getJson('api/v1/settings')->assertJsonPath('data.profile.name', 'Adunni Hair & Beauty Studio')->assertJsonPath('data.windows.late_submission_hours.value', 48);
         $this->assertSame(['business.installed'], array_column($this->getJson('api/v1/settings/history')->json('data'), 'action'));
+    }
+
+    public function test_catalogue_items_and_categories_belong_to_each_salon(): void
+    {
+        $adunni = $this->installSalon('Adunni Hair & Beauty Studio', 'owner@adunni.test');
+        $ivie = $this->installSalon('Ivie\'s Place, Benin', 'owner@ivie.test');
+        $theirs = app(CurrentBusiness::class)->within($ivie['business']->id, function (): CatalogueItem {
+            $category = CatalogueCategory::factory()->create(['name' => 'Braids']);
+
+            return CatalogueItem::factory()->create(['category_id' => $category->id, 'name' => 'Ivie knotless', 'price_kobo' => 3_000_000]);
+        });
+        $this->signIn($adunni['owner']);
+
+        $this->assertSame([], $this->getJson('api/v1/catalogue/items')->json('data'));
+        $this->assertSame([], $this->getJson('api/v1/catalogue/categories')->json('data'));
+        $this->getJson("api/v1/catalogue/items/{$theirs->id}")->assertNotFound();
+        $this->getJson("api/v1/catalogue/items/{$theirs->id}/history")->assertNotFound();
+        $this->patchJson("api/v1/catalogue/items/{$theirs->id}", ['version' => 1, 'price_kobo' => 1])->assertNotFound();
+        $this->postJson("api/v1/catalogue/items/{$theirs->id}/deactivate")->assertNotFound();
+        $this->patchJson("api/v1/catalogue/categories/{$theirs->category_id}", ['version' => 1, 'name' => 'Taken'])->assertNotFound();
+        $this->postJson('api/v1/catalogue/items', ['category_id' => $theirs->category_id, 'name' => 'Sneaky', 'price_kobo' => 1, 'allocation_method' => 'equal'])->assertStatus(422);
+        $this->postJson('api/v1/catalogue/items', ['parent_id' => $theirs->id, 'name' => 'Sneaky', 'price_kobo' => 1])->assertStatus(422);
+        $this->postJson('api/v1/catalogue/categories/reorder', ['type' => 'service', 'ids' => [$theirs->category_id]])->assertStatus(422);
+
+        $this->assertSame(3_000_000, CatalogueItem::query()->withoutGlobalScopes()->findOrFail($theirs->id)->price_kobo);
+        $this->assertSame(1, CatalogueItem::query()->withoutGlobalScopes()->count());
+    }
+
+    public function test_customers_belong_to_each_salon_and_their_numbers_do_not_trigger_the_warning(): void
+    {
+        $adunni = $this->installSalon('Adunni Hair & Beauty Studio', 'owner@adunni.test');
+        $ivie = $this->installSalon('Ivie\'s Place, Benin', 'owner@ivie.test');
+        $theirs = app(CurrentBusiness::class)->within($ivie['business']->id, fn () => Customer::factory()->create(['name' => 'Osas Ehigie', 'phone_e164' => '+2348030001234']));
+        $this->signIn($adunni['owner']);
+
+        $this->assertSame([], $this->getJson('api/v1/customers?filter[q]=Osas')->json('data'));
+        $this->assertSame([], $this->getJson('api/v1/customers?filter[q]=08030001234')->json('data'));
+        $this->getJson("api/v1/customers/{$theirs->id}")->assertNotFound();
+        $this->patchJson("api/v1/customers/{$theirs->id}", ['version' => 1, 'name' => 'Taken'])->assertNotFound();
+        $this->postJson("api/v1/customers/{$theirs->id}/anonymise", ['confirm' => 'REMOVE'])->assertNotFound();
+        $this->postJson('api/v1/customers', ['name' => 'Funke Adeyemi', 'phone' => '08030001234'])->assertCreated();
+
+        $this->assertSame('Osas Ehigie', Customer::query()->withoutGlobalScopes()->findOrFail($theirs->id)->name);
     }
 
     public function test_business_owned_models_return_nothing_without_a_current_business(): void

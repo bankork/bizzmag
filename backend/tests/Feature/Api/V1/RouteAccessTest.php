@@ -31,6 +31,11 @@ class RouteAccessTest extends TestCase
             $middleware = $route->gatherMiddleware();
             $signedIn = in_array('signed-in', $middleware, true);
             $permissions = array_values(array_filter($middleware, fn ($entry) => is_string($entry) && str_starts_with($entry, 'permission:')));
+            $ownerOnly = in_array('owner', $middleware, true);
+
+            if ($ownerOnly !== in_array($name, EndpointCatalogue::OWNER_ONLY, true)) {
+                $problems[] = "{$name}: owner-only does not match the catalogue";
+            }
 
             if ($method !== null && ! in_array($method, $route->methods(), true)) {
                 $problems[] = "{$name}: method is not {$method}";
