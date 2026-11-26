@@ -7,6 +7,7 @@ use App\Console\Preflight\Checks\ApplicationConfigCheck;
 use App\Console\Preflight\Checks\DatabaseCheck;
 use App\Console\Preflight\Checks\DomainConsistencyCheck;
 use App\Console\Preflight\Checks\FilesystemCheck;
+use App\Console\Preflight\Checks\InstallationCheck;
 use App\Console\Preflight\Checks\PhpRuntimeCheck;
 use App\Console\Preflight\Checks\SchedulerCheck;
 use App\Console\Preflight\Checks\SchemaCheck;
@@ -37,6 +38,7 @@ class PreflightCommand extends Command
         FilesystemCheck::class,
         ApplicationConfigCheck::class,
         DomainConsistencyCheck::class,
+        InstallationCheck::class,
         SchedulerCheck::class,
     ];
 

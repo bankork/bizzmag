@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domain\Billing\Calculators;
+namespace App\Domain\Shared\Tax;
 
 enum TaxMode: string
 {

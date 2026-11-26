@@ -41,7 +41,7 @@ class DemoCommand extends Command
 
         $this->newLine();
         $this->info('Demo salon loaded: '.DemoData::salon()['name']);
-        $this->line('Sign in with any staff email (see docs/demo-data.md). Password: '.DemoData::salon()['demo_password']);
+        $this->line('Sign in with any staff email or phone number (see docs/demo-data.md). Password: '.DemoData::salon()['demo_password']);
 
         return self::SUCCESS;
     }

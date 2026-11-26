@@ -6,6 +6,7 @@ use App\Domain\Billing\Exceptions\InvalidDiscount;
 use App\Domain\Shared\Money\Apportion;
 use App\Domain\Shared\Money\Percentage;
 use App\Domain\Shared\Money\Rounding;
+use App\Domain\Shared\Tax\TaxMode;
 
 /**
  * The single, pure invoice calculation (TDR-03, SRS §7.6.3).

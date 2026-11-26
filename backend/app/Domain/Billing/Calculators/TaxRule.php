@@ -2,6 +2,7 @@
 
 namespace App\Domain\Billing\Calculators;
 
+use App\Domain\Shared\Tax\TaxMode;
 use InvalidArgumentException;
 
 /**
