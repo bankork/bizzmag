@@ -101,13 +101,34 @@ MAIL_FROM_ADDRESS=receipts@your-domain
 Leave `APP_KEY` empty; the script generates it. Then run the same install command again. This time it will:
 
 1. migrate the database;
-2. cache the configuration;
-3. run **`app:preflight`**;
-4. switch the site live only if every required check passes.
+2. add any permissions that are new in this release (`app:permissions:sync`);
+3. cache the configuration;
+4. run **`app:preflight`**;
+5. switch the site live only if every required check passes.
 
 ### B5. Add the cron job
 
 Open cPanel > Cron Jobs and add the line from [`infrastructure/cpanel/cron.txt`](../../infrastructure/cpanel/cron.txt), set to run once per minute. Within a minute, preflight's "Scheduler (cron)" check turns to PASS.
+
+### B6. Create the salon and the owner account (first install only)
+
+In cPanel > Terminal (or over SSH):
+
+```bash
+cd ~/apps/bizzmag-api/current && /opt/cpanel/ea-php83/root/usr/bin/php artisan app:install
+```
+
+It asks for the salon name, the owner's name, the owner's email or phone number, and a password (at least 8 characters, typed twice). It sets up the four default roles and leaves tax switched off. It refuses to run a second time.
+
+For a scripted install, put the password in the environment so it never appears in your shell history:
+
+```bash
+read -rs BIZZMAG_OWNER_PASSWORD && export BIZZMAG_OWNER_PASSWORD
+php artisan app:install --business="Your Salon" --owner-name="Your Name" --owner-phone="0803 000 0000" --no-interaction
+unset BIZZMAG_OWNER_PASSWORD
+```
+
+Then sign in at `https://app.your-domain` and add your staff in **Admin > Staff**.
 
 ## Part C: check the deployment
 
@@ -122,6 +143,7 @@ Then:
 | Open `https://api.your-domain/up` | A green "Application up" page |
 | Open `https://api.your-domain/api/v1/meta` | JSON with your release number |
 | Open `https://app.your-domain` | The start page shows **"Connected to ... API"** at the bottom |
+| Sign in at `https://app.your-domain/login/` as the owner | You land on **Admin > Overview** |
 
 See [preflight.md](preflight.md) for what each preflight check means.
 
@@ -138,6 +160,17 @@ APP_DIR=~/apps/bizzmag-api PHP_BIN=/opt/cpanel/ea-php83/root/usr/bin/php bash ~/
 This points the site back to the previous release. Database changes are not undone; releases are designed so the previous version still works with the newer database.
 
 For the web app, deploy the previous `bizzmag-app` package again.
+
+## If the owner cannot sign in
+
+- **Too many wrong passwords:** sign-in from that device is locked for 15 minutes, then works again.
+- **Forgotten password:** on the server, give the account a temporary password. The owner must choose a new one at the next sign-in.
+
+  ```bash
+  cd ~/apps/bizzmag-api/current && /opt/cpanel/ea-php83/root/usr/bin/php artisan app:user:reset-password owner@your-domain
+  ```
+
+  Use the owner's email or phone number. The command prints the temporary password.
 
 ## Troubleshooting
 

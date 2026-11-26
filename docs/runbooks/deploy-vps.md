@@ -67,7 +67,13 @@ DB_HOST=127.0.0.1
 QUEUE_WORK_VIA_SCHEDULER=false
 ```
 
-Then run the install again.
+Then run the install again, and create the salon and owner account once:
+
+```bash
+cd /srv/bizzmag/api/current && sudo -u www-data php artisan app:install
+```
+
+See [deploy-cpanel.md, step B6](deploy-cpanel.md#b6-create-the-salon-and-the-owner-account-first-install-only) for the scripted form.
 
 ## Scheduler and queue worker
 
@@ -86,6 +92,6 @@ sudo systemctl daemon-reload && sudo systemctl enable --now bizzmag-queue
 
 ## Check, update, roll back
 
-These work the same as on cPanel. See the "Part C", "Updating" and "Rolling back" sections of [deploy-cpanel.md](deploy-cpanel.md).
+These work the same as on cPanel. See the "Part C", "Updating", "Rolling back" and "If the owner cannot sign in" sections of [deploy-cpanel.md](deploy-cpanel.md).
 
 Nginx uses `$realpath_root`, so a new release is served as soon as the `current` link switches. No reload is needed.

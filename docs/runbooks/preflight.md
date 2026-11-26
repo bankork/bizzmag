@@ -36,6 +36,10 @@ Each problem is printed with its fix.
 | Session cookie domain | Both subdomains share the login cookie | `SESSION_DOMAIN=.your-domain` |
 | Vercel domain | The web app is not on a `vercel.app` address | Use a custom subdomain ([deploy-vercel.md](deploy-vercel.md)) |
 | Secure cookies | Secure, SameSite=lax in production | `SESSION_SECURE_COOKIE=true` |
+| Session store | Sessions are kept in the database, so disabling someone signs them out everywhere | `SESSION_DRIVER=database` |
+| Business installed | `app:install` has been run (WARN until then) | `php artisan app:install` |
+| Permissions | Every permission of this release exists | `php artisan app:permissions:sync` (the deploy script runs it) |
+| Session lifetime | `SESSION_LIFETIME` is at least the employee idle limit set in Settings | Raise `SESSION_LIFETIME` (minutes) or lower the limit in Settings |
 | Scheduler (cron) | Cron ran in the last 5 minutes. WARN right after a first deployment. | Add the cron job ([cron.txt](../../infrastructure/cpanel/cron.txt)) |
 
 After editing `.env`, run `php artisan config:cache`, then run preflight again.
