@@ -9,7 +9,9 @@ set -uo pipefail
 
 RELEASE="${1:?expected release}"
 BASE="${2:-http://127.0.0.1:8080}"
-APP_ORIGIN="http://app.bizzmag.test:8080"
+PORT="${BASE##*:}"
+HOST_IP="${BASE#*://}"; HOST_IP="${HOST_IP%%:*}"
+APP_ORIGIN="http://app.bizzmag.test:$PORT"
 FAILURES=0
 
 pass() { printf '  PASS  %s\n' "$1"; }
@@ -64,6 +66,45 @@ fi
 csrf="$(api -D - -o /dev/null -H "Origin: $APP_ORIGIN" "$BASE/sanctum/csrf-cookie" | tr -d '\r')"
 contains "CSRF cookie is issued" "$csrf" "XSRF-TOKEN="
 contains "CSRF cookie is shared across the parent domain" "$(tr '[:upper:]' '[:lower:]' <<<"$csrf")" "domain=.bizzmag.test"
+
+# ---------------------------------------------------------------------------
+# Cookie sign-in exactly as the web app does it (SEC-023): CSRF cookie,
+# login with X-XSRF-TOKEN, then /me, then a refused admin request.
+# Real host names are resolved to the test server so cookies scoped to
+# .bizzmag.test are stored and sent back.
+# ---------------------------------------------------------------------------
+API="http://api.bizzmag.test:$PORT/api/v1"
+JAR="$(mktemp)"
+trap 'rm -f "$JAR"' EXIT
+
+session() {
+    curl -s --resolve "api.bizzmag.test:$PORT:$HOST_IP" -b "$JAR" -c "$JAR" \
+        -H "Accept: application/json" -H "Origin: $APP_ORIGIN" -H "Referer: $APP_ORIGIN/" "$@"
+}
+xsrf() {
+    local raw
+    raw="$(awk '$6 == "XSRF-TOKEN" { print $7 }' "$JAR" | tail -n 1)"
+    printf '%b' "${raw//%/\\x}"
+}
+send() { local method="$1" path="$2" body="$3"; session -X "$method" -H "Content-Type: application/json" -H "X-XSRF-TOKEN: $(xsrf)" -d "$body" "$API/$path"; }
+sign_in() { session -o /dev/null "http://api.bizzmag.test:$PORT/sanctum/csrf-cookie"; send POST auth/login "{\"identifier\":\"$1\",\"password\":\"$2\"}"; }
+
+login="$(sign_in owner@bizzmag.test Verify-owner-2026)"
+contains "Owner signs in with a cookie session" "$login" '"success":true'
+contains "Sign-in returns the owner's permissions" "$login" '"user.manage"'
+contains "Signed-in /me works with the session cookie" "$(session "$API/me")" '"home":"admin"'
+
+employee_role="$(session "$API/roles" | grep -o '"id":[0-9]*,"name":"Employee"' | grep -o '[0-9]*' | awk 'NR == 1')"
+staff_email="smoke-$RANDOM$RANDOM@bizzmag.test"
+created="$(send POST users "{\"name\":\"Smoke Employee\",\"email\":\"$staff_email\",\"password\":\"Smoke-temp-2026\",\"role_ids\":[$employee_role]}")"
+contains "Owner creates an employee" "$created" '"must_change_password":true'
+send POST auth/logout '{}' >/dev/null
+
+sign_in "$staff_email" Smoke-temp-2026 >/dev/null
+send PUT me/password '{"current_password":"Smoke-temp-2026","password":"Smoke-new-2026","password_confirmation":"Smoke-new-2026"}' >/dev/null
+check "An employee is refused an admin endpoint" "$(session -o /dev/null -w '%{http_code}' "$API/settings")" 403
+send POST auth/logout '{}' >/dev/null
+check "After signing out, /me needs a sign-in again" "$(session -o /dev/null -w '%{http_code}' "$API/me")" 401
 
 if [[ "$FAILURES" -gt 0 ]]; then
     echo "$FAILURES smoke test(s) failed."

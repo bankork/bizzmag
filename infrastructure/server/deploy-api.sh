@@ -96,6 +96,9 @@ install_release() {
     log "Running database migrations"
     artisan "$release" migrate --force
 
+    log "Adding any new permissions to the default roles"
+    artisan "$release" app:permissions:sync
+
     log "Caching configuration, routes, events and views"
     artisan "$release" config:cache
     artisan "$release" route:cache

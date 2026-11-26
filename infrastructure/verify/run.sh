@@ -65,6 +65,9 @@ as_user "bash $WORK/deploy-app.sh $WORK/bizzmag-app-$VERSION.tar.gz $DOCROOT"
 echo "==> Running the scheduler once (as cron would)"
 as_user "cd $APP_DIR/current && php artisan schedule:run"
 
+echo "==> First-run setup (app:install), scripted with the password in the environment"
+as_user "cd $APP_DIR/current && BIZZMAG_OWNER_PASSWORD=Verify-owner-2026 php artisan app:install --business='Verify Salon' --owner-name='Verify Owner' --owner-email=owner@bizzmag.test --no-interaction"
+
 echo "==> Preflight on the deployed release"
 as_user "cd $APP_DIR/current && php artisan app:preflight"
 
