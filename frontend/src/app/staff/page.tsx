@@ -6,16 +6,11 @@ export const metadata: Metadata = { title: "Staff" };
 
 export default function StaffHome() {
   return (
-    <AreaShell title="My work today" subtitle="Staff" mobileFirst>
-      <ComingSoon
-        phase="Phase 3"
-        items={[
-          "Today's open visits, with your assignments first",
-          "Record a service in three taps",
-          "Add collaborators or join a shared service",
-          "Request an extra service for a customer",
-        ]}
-      />
+    <AreaShell area="staff" title="Today" mobileFirst>
+      <div className="space-y-4">
+        <ComingSoon phase="Phase 3" items={["See the services assigned to you", "Record work done, alone or with a colleague"]} />
+        <ComingSoon phase="Phase 7" items={["Your performance and bonus progress"]} />
+      </div>
     </AreaShell>
   );
 }

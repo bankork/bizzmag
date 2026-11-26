@@ -1,4 +1,5 @@
 import { config } from "@/lib/config";
+import { emitSessionEnded } from "@/lib/auth/session-events";
 import { ApiError, errorFromResponse, networkError } from "./errors";
 
 /**
@@ -9,6 +10,8 @@ import { ApiError, errorFromResponse, networkError } from "./errors";
  *   echoes it back as X-XSRF-TOKEN.
  * - Retries once after a 419 (expired CSRF token).
  * - Sends an Idempotency-Key when the caller provides one.
+ * - Sends FormData as multipart (file uploads) without forcing JSON.
+ * - Reports a lost session (401) so the app can return to sign-in.
  * - Unwraps the { success, data, meta } envelope or throws an ApiError.
  */
 
@@ -22,6 +25,7 @@ export type ApiSuccess<T> = {
 export type ApiRequestOptions = {
   method?: "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
   body?: unknown;
+  formData?: FormData;
   query?: Record<string, string | number | boolean | null | undefined>;
   idempotencyKey?: string;
   signal?: AbortSignal;
@@ -60,7 +64,7 @@ async function send(path: string, options: ApiRequestOptions): Promise<Response>
     "X-Requested-With": "XMLHttpRequest",
   };
 
-  if (options.body !== undefined) {
+  if (options.body !== undefined && options.formData === undefined) {
     headers["Content-Type"] = "application/json";
   }
 
@@ -78,7 +82,7 @@ async function send(path: string, options: ApiRequestOptions): Promise<Response>
     return await fetch(buildUrl(path, options.query), {
       method: options.method ?? "GET",
       headers,
-      body: options.body === undefined ? undefined : JSON.stringify(options.body),
+      body: options.formData ?? (options.body === undefined ? undefined : JSON.stringify(options.body)),
       credentials: "include",
       signal: options.signal,
     });
@@ -96,7 +100,15 @@ async function unwrap<T>(response: Response): Promise<ApiSuccess<T>> {
   const body: unknown = await response.json().catch(() => null);
 
   if (!response.ok) {
-    throw errorFromResponse(response.status, body, requestId);
+    const error = errorFromResponse(response.status, body, requestId);
+
+    if (error.status === 401) {
+      emitSessionEnded(error.code === "SESSION_IDLE" ? "idle" : "unauthenticated");
+    } else if (error.code === "ACCOUNT_DISABLED") {
+      emitSessionEnded("disabled");
+    }
+
+    throw error;
   }
 
   const envelope = (body ?? {}) as { data?: T; meta?: Record<string, unknown> };

@@ -12,7 +12,9 @@
     "test:watch": "vitest",
     "api:types": "openapi-typescript ../docs/api/openapi.json -o src/lib/api/schema.d.ts",
     "check:export": "node scripts/check-export.mjs",
-    "check:no-em-dash": "node scripts/check-no-em-dash.mjs src public ../backend/resources/views ../backend/database/seeders/Demo ../backend/app"
+    "check:no-em-dash": "node scripts/check-no-em-dash.mjs src public ../backend/resources/views ../backend/database/seeders/Demo ../backend/app",
+    "e2e": "NEXT_PUBLIC_API_URL=http://127.0.0.1:8100 pnpm build && playwright test",
+    "e2e:run": "playwright test"
   },
   "dependencies": {
     "@base-ui/react": "^1.9.0",

@@ -4,6 +4,54 @@
  */
 
 export interface paths {
+    "/businesses/{business}/logo": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["v1.business.logo"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/me": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["v1.me"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/me/password": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put: operations["v1.me.password"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/meta": {
         parameters: {
             query?: never;
@@ -20,11 +68,421 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/permissions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["v1.permissions.index"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/roles": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["v1.roles.index"];
+        put?: never;
+        post: operations["v1.roles.store"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/roles/{role}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete: operations["v1.roles.destroy"];
+        options?: never;
+        head?: never;
+        patch: operations["v1.roles.update"];
+        trace?: never;
+    };
+    "/auth/login": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["v1.auth.login"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/auth/logout": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["v1.auth.logout"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/settings": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["v1.settings.show"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch: operations["v1.settings.update"];
+        trace?: never;
+    };
+    "/settings/logo": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["v1.settings.logo"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/settings/tax": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["v1.settings.tax.show"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch: operations["v1.settings.tax.update"];
+        trace?: never;
+    };
+    "/settings/history": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["v1.settings.history"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/users": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["v1.users.index"];
+        put?: never;
+        post: operations["v1.users.store"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/users/{user}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["v1.users.show"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch: operations["v1.users.update"];
+        trace?: never;
+    };
+    "/users/{user}/disable": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["v1.users.disable"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/users/{user}/enable": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["v1.users.enable"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/users/{user}/reset-password": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["v1.users.reset-password"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/users/{user}/roles": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put: operations["v1.users.roles"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
-    schemas: never;
-    responses: never;
+    schemas: {
+        /** AssignRolesRequest */
+        AssignRolesRequest: {
+            role_ids: number[];
+        };
+        /** ChangePasswordRequest */
+        ChangePasswordRequest: {
+            current_password: string;
+            password: string;
+            password_confirmation: string;
+        };
+        /** DisableUserRequest */
+        DisableUserRequest: {
+            reason?: string | null;
+        };
+        /**
+         * LoginRequest
+         * @description Sign in with an email address or a phone number (P1 Q1).
+         */
+        LoginRequest: {
+            identifier: string;
+            password: string;
+        };
+        /** ResetPasswordRequest */
+        ResetPasswordRequest: {
+            password: string;
+        };
+        /**
+         * SaveRoleRequest
+         * @description Create or edit a role. Caps are in basis points (1,000 = 10%) and kobo;
+         *     null means unlimited.
+         */
+        SaveRoleRequest: {
+            name?: string;
+            description?: string | null;
+            discount_cap_bp?: number | null;
+            discount_cap_kobo?: number | null;
+            permissions?: ("user.manage" | "role.manage" | "settings.manage" | "customer.view" | "customer.view_contact" | "customer.manage" | "customer.associate" | "catalogue.manage" | "order.create" | "order.view_open" | "order.view_all" | "order.item.add" | "order.item.cancel_unexecuted" | "order.item.price_override" | "order.assign" | "order.cancel" | "execution.submit" | "execution.join" | "execution.dispute" | "execution.correct" | "execution.submit_late" | "allocation.override" | "additional.request" | "additional.decide" | "reconciliation.view" | "invoice.view" | "invoice.finalise" | "invoice.finalise_with_exception" | "invoice.amend" | "invoice.void" | "discount.apply" | "discount.approve" | "payment.record" | "payment.reverse" | "refund.issue" | "transfer.verify" | "document.share" | "closing.submit" | "closing.approve" | "closing.reopen" | "report.own" | "report.team" | "report.financial" | "dashboard.view" | "bonus.configure" | "bonus.calculate" | "bonus.approve" | "bonus.pay" | "audit.view" | "import.run")[];
+        };
+        /** StoreUserRequest */
+        StoreUserRequest: {
+            name: string;
+            /** Format: email */
+            email?: string | null;
+            phone?: string | null;
+            password: string;
+            role_ids: number[];
+            employee_profile?: {
+                display_name?: string;
+                job_title?: string | null;
+            } | null;
+        };
+        /**
+         * TaxMode
+         * @description | |
+         *     |---|
+         *     | `exclusive` <br/> Tax is added on top of the price. |
+         *     | `inclusive` <br/> The price already contains the tax. |
+         * @enum {string}
+         */
+        TaxMode: "exclusive" | "inclusive";
+        /**
+         * UpdateSettingsRequest
+         * @description Partial save of the business profile and settings. Send only what
+         *     changed, with the version the screen was loaded with.
+         */
+        UpdateSettingsRequest: {
+            version: number;
+            profile?: {
+                name?: string;
+                phone?: string | null;
+                /** Format: email */
+                email?: string | null;
+                address?: string | null;
+                receipt_footer?: string | null;
+                invoice_footer?: string | null;
+                timezone?: string;
+            };
+            numbering?: {
+                order?: string;
+                invoice?: string;
+                receipt?: string;
+            };
+            windows?: {
+                late_submission_hours?: number;
+                transfer_alert_days?: number;
+                share_link_days?: number;
+            };
+            sessions?: {
+                idle_minutes_privileged?: number;
+                idle_days_low_risk?: number;
+            };
+        };
+        /**
+         * UpdateTaxRequest
+         * @description The single tax (FR-TAX-001, FR-TAX-008). The rate is in basis points:
+         *     750 is 7.5%.
+         */
+        UpdateTaxRequest: {
+            version: number;
+            enabled: boolean;
+            name: string;
+            rate_bp: number;
+            mode: components["schemas"]["TaxMode"];
+        };
+        /** UpdateUserRequest */
+        UpdateUserRequest: {
+            name?: string;
+            /** Format: email */
+            email?: string | null;
+            phone?: string | null;
+            employee_profile?: {
+                display_name?: string;
+                job_title?: string | null;
+                is_active?: boolean;
+            } | null;
+        };
+        /**
+         * UploadLogoRequest
+         * @description PNG or JPEG, at most 1 MB. The real file content is checked, not just
+         *     the file name.
+         */
+        UploadLogoRequest: {
+            /**
+             * Format: binary
+             * @description Maximum file size: 1024 kilobytes.
+             */
+            logo: string;
+        };
+    };
+    responses: {
+        /** @description Not found */
+        ModelNotFoundException: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": {
+                    /** @description Error overview. */
+                    message: string;
+                };
+            };
+        };
+        /** @description Validation error */
+        ValidationException: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": {
+                    /** @description Errors overview. */
+                    message: string;
+                    /** @description A detailed description of each field that failed validation. */
+                    errors: {
+                        [key: string]: string[];
+                    };
+                };
+            };
+        };
+        /** @description Not found */
+        NotFoundHttpException: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": {
+                    /** @description Error overview. */
+                    message: string;
+                };
+            };
+        };
+    };
     parameters: never;
     requestBodies: never;
     headers: never;
@@ -32,6 +490,168 @@ export interface components {
 }
 export type $defs = Record<string, never>;
 export interface operations {
+    "v1.business.logo": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                business: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    "Transfer-Encoding": "chunked";
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/octet-stream": string;
+                };
+            };
+            404: components["responses"]["NotFoundHttpException"];
+        };
+    };
+    "v1.me": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        success: boolean;
+                        data: {
+                            user: {
+                                id: number;
+                                name: string;
+                                email: string | null;
+                                phone: string | null;
+                                must_change_password: boolean;
+                                employee_profile: {
+                                    id: number;
+                                    display_name: string;
+                                    job_title: string | null;
+                                    is_active: boolean;
+                                } | null;
+                            };
+                            business: {
+                                id: number;
+                                name: string;
+                                currency: string;
+                                timezone: string;
+                                logo_url: string | null;
+                            };
+                            roles: {
+                                id: string;
+                                name: string;
+                                system_key: string;
+                            }[];
+                            permissions: unknown[];
+                            discount_cap: {
+                                percent_bp: number | null;
+                                per_invoice_kobo: number | null;
+                            } | {
+                                /** @constant */
+                                percent_bp: 0;
+                                /** @constant */
+                                per_invoice_kobo: 0;
+                            };
+                            session: {
+                                /** @enum {string} */
+                                kind: "personal" | "privileged";
+                                idle_timeout_seconds: number;
+                            };
+                            /** @enum {string} */
+                            home: "admin" | "desk" | "staff";
+                        };
+                        meta: string;
+                    };
+                };
+            };
+            404: components["responses"]["ModelNotFoundException"];
+        };
+    };
+    "v1.me.password": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ChangePasswordRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        success: boolean;
+                        data: {
+                            user: {
+                                id: number;
+                                name: string;
+                                email: string | null;
+                                phone: string | null;
+                                must_change_password: boolean;
+                                employee_profile: {
+                                    id: number;
+                                    display_name: string;
+                                    job_title: string | null;
+                                    is_active: boolean;
+                                } | null;
+                            };
+                            business: {
+                                id: number;
+                                name: string;
+                                currency: string;
+                                timezone: string;
+                                logo_url: string | null;
+                            };
+                            roles: {
+                                id: string;
+                                name: string;
+                                system_key: string;
+                            }[];
+                            permissions: unknown[];
+                            discount_cap: {
+                                percent_bp: number | null;
+                                per_invoice_kobo: number | null;
+                            } | {
+                                /** @constant */
+                                percent_bp: 0;
+                                /** @constant */
+                                per_invoice_kobo: 0;
+                            };
+                            session: {
+                                /** @enum {string} */
+                                kind: "personal" | "privileged";
+                                idle_timeout_seconds: number;
+                            };
+                            /** @enum {string} */
+                            home: "admin" | "desk" | "staff";
+                        };
+                        meta: string;
+                    };
+                };
+            };
+            404: components["responses"]["ModelNotFoundException"];
+            422: components["responses"]["ValidationException"];
+        };
+    };
     "v1.system.meta": {
         parameters: {
             query?: never;
@@ -61,6 +681,848 @@ export interface operations {
                     };
                 };
             };
+        };
+    };
+    "v1.permissions.index": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        success: boolean;
+                        data: {
+                            name: string;
+                            group: string;
+                            label: string;
+                        }[];
+                        meta: string;
+                    };
+                };
+            };
+        };
+    };
+    "v1.roles.index": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        success: boolean;
+                        data: unknown[];
+                        meta: string;
+                    };
+                };
+            };
+        };
+    };
+    "v1.roles.store": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["SaveRoleRequest"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        success: boolean;
+                        data: unknown[];
+                        meta: string;
+                    };
+                };
+            };
+            422: components["responses"]["ValidationException"];
+        };
+    };
+    "v1.roles.destroy": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                role: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        success: boolean;
+                        data: null;
+                        meta: string;
+                    };
+                };
+            };
+        };
+    };
+    "v1.roles.update": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                role: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["SaveRoleRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        success: boolean;
+                        data: unknown[];
+                        meta: string;
+                    };
+                };
+            };
+            422: components["responses"]["ValidationException"];
+        };
+    };
+    "v1.auth.login": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["LoginRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        success: boolean;
+                        data: {
+                            user: {
+                                id: number;
+                                name: string;
+                                email: string | null;
+                                phone: string | null;
+                                must_change_password: boolean;
+                                employee_profile: {
+                                    id: number;
+                                    display_name: string;
+                                    job_title: string | null;
+                                    is_active: boolean;
+                                } | null;
+                            };
+                            business: {
+                                id: number;
+                                name: string;
+                                currency: string;
+                                timezone: string;
+                                logo_url: string | null;
+                            };
+                            roles: {
+                                id: string;
+                                name: string;
+                                system_key: string;
+                            }[];
+                            permissions: unknown[];
+                            discount_cap: {
+                                percent_bp: number | null;
+                                per_invoice_kobo: number | null;
+                            } | {
+                                /** @constant */
+                                percent_bp: 0;
+                                /** @constant */
+                                per_invoice_kobo: 0;
+                            };
+                            session: {
+                                /** @enum {string} */
+                                kind: "personal" | "privileged";
+                                idle_timeout_seconds: number;
+                            };
+                            /** @enum {string} */
+                            home: "admin" | "desk" | "staff";
+                        };
+                        meta: string;
+                    };
+                };
+            };
+            404: components["responses"]["ModelNotFoundException"];
+            422: components["responses"]["ValidationException"];
+            /** @description Too many requests */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Error overview. */
+                        message: string;
+                    };
+                };
+            };
+        };
+    };
+    "v1.auth.logout": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        success: boolean;
+                        data: null;
+                        meta: string;
+                    };
+                };
+            };
+        };
+    };
+    "v1.settings.show": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        success: boolean;
+                        data: {
+                            version: number;
+                            profile: {
+                                name: string;
+                                phone: string | null;
+                                email: string | null;
+                                address: string | null;
+                                receipt_footer: string | null;
+                                invoice_footer: string | null;
+                                timezone: string;
+                                currency: string;
+                                logo_url: string | null;
+                            };
+                            numbering: string;
+                            windows: {
+                                late_submission_hours: {
+                                    value: number | string;
+                                    default: number | string;
+                                    range: {
+                                        min: number;
+                                        max: number;
+                                    } | null;
+                                };
+                                transfer_alert_days: {
+                                    value: number | string;
+                                    default: number | string;
+                                    range: {
+                                        min: number;
+                                        max: number;
+                                    } | null;
+                                };
+                                share_link_days: {
+                                    value: number | string;
+                                    default: number | string;
+                                    range: {
+                                        min: number;
+                                        max: number;
+                                    } | null;
+                                };
+                            };
+                            sessions: {
+                                idle_minutes_privileged: {
+                                    value: number | string;
+                                    default: number | string;
+                                    range: {
+                                        min: number;
+                                        max: number;
+                                    } | null;
+                                };
+                                idle_days_low_risk: {
+                                    value: number | string;
+                                    default: number | string;
+                                    range: {
+                                        min: number;
+                                        max: number;
+                                    } | null;
+                                };
+                            };
+                        };
+                        meta: string;
+                    };
+                };
+            };
+        };
+    };
+    "v1.settings.update": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateSettingsRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        success: boolean;
+                        data: {
+                            version: number;
+                            profile: {
+                                name: string;
+                                phone: string | null;
+                                email: string | null;
+                                address: string | null;
+                                receipt_footer: string | null;
+                                invoice_footer: string | null;
+                                timezone: string;
+                                currency: string;
+                                logo_url: string | null;
+                            };
+                            numbering: string;
+                            windows: {
+                                late_submission_hours: {
+                                    value: number | string;
+                                    default: number | string;
+                                    range: {
+                                        min: number;
+                                        max: number;
+                                    } | null;
+                                };
+                                transfer_alert_days: {
+                                    value: number | string;
+                                    default: number | string;
+                                    range: {
+                                        min: number;
+                                        max: number;
+                                    } | null;
+                                };
+                                share_link_days: {
+                                    value: number | string;
+                                    default: number | string;
+                                    range: {
+                                        min: number;
+                                        max: number;
+                                    } | null;
+                                };
+                            };
+                            sessions: {
+                                idle_minutes_privileged: {
+                                    value: number | string;
+                                    default: number | string;
+                                    range: {
+                                        min: number;
+                                        max: number;
+                                    } | null;
+                                };
+                                idle_days_low_risk: {
+                                    value: number | string;
+                                    default: number | string;
+                                    range: {
+                                        min: number;
+                                        max: number;
+                                    } | null;
+                                };
+                            };
+                        };
+                        meta: string;
+                    };
+                };
+            };
+            422: components["responses"]["ValidationException"];
+        };
+    };
+    "v1.settings.logo": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "multipart/form-data": components["schemas"]["UploadLogoRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        success: boolean;
+                        data: {
+                            version: number;
+                            profile: {
+                                name: string;
+                                phone: string | null;
+                                email: string | null;
+                                address: string | null;
+                                receipt_footer: string | null;
+                                invoice_footer: string | null;
+                                timezone: string;
+                                currency: string;
+                                logo_url: string | null;
+                            };
+                            numbering: string;
+                            windows: {
+                                late_submission_hours: {
+                                    value: number | string;
+                                    default: number | string;
+                                    range: {
+                                        min: number;
+                                        max: number;
+                                    } | null;
+                                };
+                                transfer_alert_days: {
+                                    value: number | string;
+                                    default: number | string;
+                                    range: {
+                                        min: number;
+                                        max: number;
+                                    } | null;
+                                };
+                                share_link_days: {
+                                    value: number | string;
+                                    default: number | string;
+                                    range: {
+                                        min: number;
+                                        max: number;
+                                    } | null;
+                                };
+                            };
+                            sessions: {
+                                idle_minutes_privileged: {
+                                    value: number | string;
+                                    default: number | string;
+                                    range: {
+                                        min: number;
+                                        max: number;
+                                    } | null;
+                                };
+                                idle_days_low_risk: {
+                                    value: number | string;
+                                    default: number | string;
+                                    range: {
+                                        min: number;
+                                        max: number;
+                                    } | null;
+                                };
+                            };
+                        };
+                        meta: string;
+                    };
+                };
+            };
+            422: components["responses"]["ValidationException"];
+        };
+    };
+    "v1.settings.tax.show": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        success: boolean;
+                        data: {
+                            version: number;
+                            enabled: boolean;
+                            name: string;
+                            rate_bp: number;
+                            /** @enum {string} */
+                            mode: "exclusive" | "inclusive";
+                            updated_at: string | null;
+                        };
+                        meta: string;
+                    };
+                };
+            };
+        };
+    };
+    "v1.settings.tax.update": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateTaxRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        success: boolean;
+                        data: {
+                            version: number;
+                            enabled: boolean;
+                            name: string;
+                            rate_bp: number;
+                            /** @enum {string} */
+                            mode: "exclusive" | "inclusive";
+                            updated_at: string | null;
+                        };
+                        meta: string;
+                    };
+                };
+            };
+            422: components["responses"]["ValidationException"];
+        };
+    };
+    "v1.settings.history": {
+        parameters: {
+            query?: {
+                page?: number | null;
+                "filter[area]"?: "tax" | "settings" | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        success: boolean;
+                        data: {
+                            id: number;
+                            action: string;
+                            actor: {
+                                id: number;
+                                name: string;
+                            } | null;
+                            before: {
+                                [key: string]: unknown;
+                            } | null;
+                            after: {
+                                [key: string]: unknown;
+                            } | null;
+                            at: string | null;
+                        }[];
+                        meta: {
+                            pagination: {
+                                page: number;
+                                per_page: number;
+                                total: number;
+                                last_page: number;
+                            };
+                        };
+                    };
+                };
+            };
+            422: components["responses"]["ValidationException"];
+        };
+    };
+    "v1.users.index": {
+        parameters: {
+            query?: {
+                "filter[q]"?: string | null;
+                "filter[status]"?: "active" | "disabled" | null;
+                "filter[role_id]"?: number | null;
+                page?: number | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        success: boolean;
+                        data: unknown[];
+                        meta: {
+                            pagination: {
+                                page: number;
+                                per_page: number;
+                                total: number;
+                                last_page: number;
+                            };
+                        };
+                    };
+                };
+            };
+            422: components["responses"]["ValidationException"];
+        };
+    };
+    "v1.users.store": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["StoreUserRequest"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        success: boolean;
+                        data: unknown[];
+                        meta: string;
+                    };
+                };
+            };
+            422: components["responses"]["ValidationException"];
+        };
+    };
+    "v1.users.show": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                user: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        success: boolean;
+                        data: unknown[];
+                        meta: string;
+                    };
+                };
+            };
+        };
+    };
+    "v1.users.update": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                user: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["UpdateUserRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        success: boolean;
+                        data: unknown[];
+                        meta: string;
+                    };
+                };
+            };
+            422: components["responses"]["ValidationException"];
+        };
+    };
+    "v1.users.disable": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                user: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["DisableUserRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        success: boolean;
+                        data: unknown[];
+                        meta: string;
+                    };
+                };
+            };
+            422: components["responses"]["ValidationException"];
+        };
+    };
+    "v1.users.enable": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                user: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        success: boolean;
+                        data: unknown[];
+                        meta: string;
+                    };
+                };
+            };
+        };
+    };
+    "v1.users.reset-password": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                user: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ResetPasswordRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        success: boolean;
+                        data: unknown[];
+                        meta: string;
+                    };
+                };
+            };
+            422: components["responses"]["ValidationException"];
+        };
+    };
+    "v1.users.roles": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                user: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AssignRolesRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        success: boolean;
+                        data: unknown[];
+                        meta: string;
+                    };
+                };
+            };
+            422: components["responses"]["ValidationException"];
         };
     };
 }
