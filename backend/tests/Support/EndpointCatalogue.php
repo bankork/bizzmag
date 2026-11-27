@@ -17,8 +17,9 @@ final class EndpointCatalogue
 
     /**
      * Route name (without the api.v1. prefix) => [method, path, access].
-     * Access is PUBLIC, SIGNED_IN or a permission name. {user}, {role},
-     * {category}, {item} and {customer} are filled in by the test.
+     * Access is PUBLIC, SIGNED_IN or a permission name; "a|b" means either
+     * one is enough. {user}, {role}, {category}, {item}, {customer},
+     * {order}, {orderItem} and {execution} are filled in by the test.
      *
      * @var array<string, array{0: string, 1: string, 2: string}>
      */
@@ -72,7 +73,47 @@ final class EndpointCatalogue
         'customers.store' => ['POST', 'customers', 'customer.manage'],
         'customers.update' => ['PATCH', 'customers/{customer}', 'customer.manage'],
         'customers.anonymise' => ['POST', 'customers/{customer}/anonymise', 'customer.manage'],
+
+        'orders.index' => ['GET', 'orders', 'order.view_open|order.view_all'],
+        'orders.show' => ['GET', 'orders/{order}', 'order.view_open|order.view_all'],
+        'staff-directory' => ['GET', 'staff-directory', 'order.view_open|order.view_all'],
+        'orders.store' => ['POST', 'orders', 'order.create'],
+        'orders.items.store' => ['POST', 'orders/{order}/items', 'order.item.add'],
+        'orders.additional-requests.store' => ['POST', 'orders/{order}/additional-requests', 'additional.request'],
+        'orders.customer' => ['POST', 'orders/{order}/customer', 'customer.associate'],
+        'orders.cancel' => ['POST', 'orders/{order}/cancel', 'order.cancel'],
+        'order-items.assignments' => ['PUT', 'order-items/{orderItem}/assignments', 'order.assign'],
+        'order-items.cancel' => ['POST', 'order-items/{orderItem}/cancel', 'order.item.cancel_unexecuted|execution.correct'],
+        'order-items.price-override' => ['POST', 'order-items/{orderItem}/price-override', 'order.item.price_override'],
+        'order-items.approve' => ['POST', 'order-items/{orderItem}/approve', 'additional.decide'],
+        'order-items.reject' => ['POST', 'order-items/{orderItem}/reject', 'additional.decide'],
+        'order-items.withdraw' => ['POST', 'order-items/{orderItem}/withdraw', 'additional.request|order.item.cancel_unexecuted'],
+        'approvals.index' => ['GET', 'approvals', 'additional.decide'],
+        'customers.orders' => ['GET', 'customers/{customer}/orders', 'order.view_all'],
+
+        'executions.store' => ['POST', 'order-items/{orderItem}/executions', 'execution.submit'],
+        'executions.mine' => ['GET', 'executions/mine', 'execution.submit|execution.join'],
+        'executions.join' => ['POST', 'executions/{execution}/join', 'execution.join'],
+        'executions.contributors' => ['PUT', 'executions/{execution}/contributors', 'execution.submit'],
+        'executions.allocation' => ['POST', 'executions/{execution}/allocation', 'allocation.override'],
+        'executions.dispute' => ['POST', 'executions/{execution}/dispute', 'execution.dispute|execution.correct'],
+        'executions.dismiss-dispute' => ['POST', 'executions/{execution}/dismiss-dispute', 'execution.correct'],
+        'executions.correct' => ['POST', 'executions/{execution}/correct', 'execution.correct'],
+        'executions.cancel' => ['POST', 'executions/{execution}/cancel', 'execution.correct'],
+
+        'notifications.index' => ['GET', 'notifications', self::SIGNED_IN],
+        'notifications.read' => ['POST', 'notifications/read', self::SIGNED_IN],
     ];
+
+    /**
+     * Endpoints whose action makes a further check on top of the route
+     * permission, such as "only the person who asked". A caller who passes
+     * the route may still be refused by the action; that refusal names a
+     * different permission or marker, which the matrix test accepts.
+     *
+     * @var list<string>
+     */
+    public const FURTHER_CHECKS = ['order-items.withdraw', 'order-items.cancel', 'executions.contributors', 'executions.dispute'];
 
     /**
      * Endpoints that also require the Owner role (`owner` middleware), on

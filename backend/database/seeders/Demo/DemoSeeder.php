@@ -9,10 +9,17 @@ use App\Domain\Catalogue\Models\CatalogueItem;
 use App\Domain\Catalogue\Models\ItemType;
 use App\Domain\Catalogue\Models\SplitMethod;
 use App\Domain\Customers\Models\Customer;
+use App\Domain\Execution\Actions\DisputeExecution;
+use App\Domain\Execution\Actions\SubmitExecution;
 use App\Domain\Identity\Actions\ProvisionDefaultRoles;
 use App\Domain\Identity\Models\EmployeeProfile;
+use App\Domain\Orders\Actions\CreateOrder;
+use App\Domain\Orders\Actions\RequestAdditional;
+use App\Domain\Orders\Models\OrderItem;
+use App\Domain\Orders\Models\ServiceOrder;
 use App\Domain\Shared\Money\Money;
 use App\Domain\Shared\Tenancy\CurrentBusiness;
+use App\Domain\Shared\Time\BusinessDay;
 use App\Models\User;
 use Database\Seeders\Demo\Support\DemoData;
 use Database\Seeders\Demo\Support\NigerianNames;
@@ -34,6 +41,10 @@ use Random\Randomizer;
  * Phase 2: the price list from Data/catalogue.php, and about 150 fictional
  * customers. A few share a phone number (family members booked on one
  * phone), so the duplicate warning can be tried, and some have no phone.
+ *
+ * Phase 3: today's visits in every state (waiting, recorded by one,
+ * recorded by three, disputed, extra service waiting for approval), made
+ * through the real actions. Added once per business day.
  */
 class DemoSeeder extends Seeder
 {
@@ -69,6 +80,10 @@ class DemoSeeder extends Seeder
         private readonly InstallBusiness $install,
         private readonly ProvisionDefaultRoles $provisionRoles,
         private readonly CurrentBusiness $business,
+        private readonly CreateOrder $createOrder,
+        private readonly SubmitExecution $submit,
+        private readonly RequestAdditional $requestAdditional,
+        private readonly DisputeExecution $dispute,
     ) {}
 
     public function run(): void
@@ -97,6 +112,7 @@ class DemoSeeder extends Seeder
             $this->seedStaff($business, $staff, $salon['demo_password']);
             $this->seedCatalogue();
             $this->seedCustomers();
+            $this->seedTodaysVisits($business);
         });
     }
 
@@ -168,6 +184,59 @@ class DemoSeeder extends Seeder
      * Fictional customers, generated from a fixed seed so every machine gets
      * the same list. Added once; running again leaves them as they are.
      */
+    /**
+     * A morning at the salon, so every visit and staff screen has something
+     * to show. Skipped when today already has visits.
+     */
+    private function seedTodaysVisits(Business $business): void
+    {
+        $today = (string) BusinessDay::today($business->timezone);
+
+        if (ServiceOrder::query()->where('opened_business_day', $today)->exists()) {
+            return;
+        }
+
+        $people = User::query()->whereIn('email', array_column(DemoData::staff(), 'email'))->get()->keyBy(fn (User $user) => strtok((string) $user->email, '@'));
+        $profile = fn (string $key): int => EmployeeProfile::query()->where('user_id', $people[$key]->id)->value('id');
+        $customer = fn (int $number): int => (int) Customer::query()->orderBy('id')->skip($number)->value('id');
+        $item = function (string $name, ?string $variant = null): int {
+            $parent = CatalogueItem::query()->whereNull('parent_id')->where('name', $name)->firstOrFail();
+
+            return $variant === null ? $parent->id : CatalogueItem::query()->where('parent_id', $parent->id)->where('name', $variant)->value('id');
+        };
+        $open = fn (string $desk, array $who, array $items) => ($this->createOrder)($people[$desk], $who, $items);
+        $record = fn (string $who, OrderItem $orderItem, array $with = []) => ($this->submit)($people[$who], $orderItem, array_map($profile, $with));
+
+        // Funke's knotless braids: three braiders on one record, plus hair packs.
+        $braids = $open('kemi', ['customer_id' => $customer(0)], [
+            ['catalogue_item_id' => $item('Knotless braids', 'Medium'), 'employee_ids' => [$profile('chiamaka'), $profile('funmilayo'), $profile('blessing')]],
+            ['catalogue_item_id' => $item('X-pression braiding hair (pack)'), 'quantity' => 3],
+        ]);
+        $record('chiamaka', $braids->items()->firstOrFail(), ['funmilayo', 'blessing']);
+
+        // Nails: one done, one still waiting for Zainab.
+        $nails = $open('kemi', ['customer_id' => $customer(1)], [
+            ['catalogue_item_id' => $item('Gel polish (hands)'), 'employee_ids' => [$profile('efe')]],
+            ['catalogue_item_id' => $item('Classic pedicure'), 'employee_ids' => [$profile('zainab')]],
+        ]);
+        $record('efe', $nails->items()->firstOrFail());
+
+        // A walk-in for a frontal install; the stylist asks for an extra wash.
+        $wig = $open('emeka', ['guest_name' => 'Tope'], [
+            ['catalogue_item_id' => $item('Frontal wig installation'), 'employee_ids' => [$profile('ngozi')]],
+        ]);
+        $record('ngozi', $wig->items()->firstOrFail(), ['hauwa']);
+        ($this->requestAdditional)($people['hauwa'], $wig, $item('Wash and blow-dry'), 1, 'Customer wants her own hair washed under the wig');
+
+        // Lashes: recorded with the apprentice, who disputes being on it.
+        $lashes = $open('kemi', ['customer_id' => $customer(2)], [['catalogue_item_id' => $item('Lash extensions (volume)')]]);
+        $disputed = $record('tolani', $lashes->items()->firstOrFail(), ['precious']);
+        ($this->dispute)($people['precious'], $disputed, 'I only prepared the lashes, Tolani did the full set');
+
+        // Just arrived, nobody assigned yet.
+        $open('emeka', ['guest_name' => null], [['catalogue_item_id' => $item('Cornrows (all back)')]]);
+    }
+
     private function seedCustomers(): void
     {
         if (Customer::query()->exists()) {

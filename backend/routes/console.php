@@ -1,5 +1,6 @@
 <?php
 
+use App\Domain\Notifications\Models\InAppNotification;
 use App\Domain\Shared\Idempotency\IdempotencyKey;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
@@ -31,6 +32,10 @@ if (config('bizzmag.scheduler.queue_work_via_scheduler')) {
 Schedule::command('model:prune', ['--model' => [IdempotencyKey::class]])
     ->daily()
     ->name('prune-idempotency-keys');
+
+Schedule::command('model:prune', ['--model' => [InAppNotification::class]])
+    ->daily()
+    ->name('prune-notifications');
 
 if (filled(config('bizzmag.scheduler.heartbeat_url'))) {
     Schedule::call(function (): void {

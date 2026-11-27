@@ -55,6 +55,11 @@ class CatalogueItem extends Model
     /**
      * Settings a variant takes from its parent.
      */
+    /**
+     * The highest price accepted anywhere: ₦100,000,000 (FR-SVC-008).
+     */
+    public const MAX_PRICE_KOBO = 10_000_000_000;
+
     public const INHERITED = ['type', 'category_id', 'taxable', 'quantity_allowed', 'allocation_method', 'primary_share_bp'];
 
     protected $fillable = [

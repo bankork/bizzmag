@@ -7,8 +7,13 @@ use App\Domain\Business\Models\Business;
 use App\Domain\Catalogue\Models\CatalogueCategory;
 use App\Domain\Catalogue\Models\CatalogueItem;
 use App\Domain\Customers\Models\Customer;
+use App\Domain\Execution\Actions\SubmitExecution;
+use App\Domain\Execution\Models\Execution;
 use App\Domain\Identity\Permissions\PermissionCatalogue;
 use App\Domain\Identity\Permissions\SystemRole;
+use App\Domain\Orders\Actions\CreateOrder;
+use App\Domain\Orders\Models\OrderItem;
+use App\Domain\Orders\Models\ServiceOrder;
 use App\Domain\Shared\Tenancy\CurrentBusiness;
 use App\Http\Middleware\RequireOwner;
 use App\Models\User;
@@ -51,7 +56,7 @@ class PermissionMatrixTest extends ApiTestCase
             $people[$role->value] = $role === SystemRole::Owner ? $salon['owner'] : $this->staffMember($salon['business'], $role);
         }
 
-        $records = $this->catalogueAndCustomer($salon['business']);
+        $records = $this->catalogueAndCustomer($salon['business'], $salon['owner'], $target);
 
         $uri = 'api/v1/'.strtr($path, [
             '{user}' => (string) $target->id,
@@ -59,16 +64,30 @@ class PermissionMatrixTest extends ApiTestCase
             '{category}' => (string) $records['category']->id,
             '{item}' => (string) $records['item']->id,
             '{customer}' => (string) $records['customer']->id,
+            '{order}' => (string) $records['order']->id,
+            '{orderItem}' => (string) $records['orderItem']->id,
+            '{execution}' => (string) $records['execution']->id,
         ]);
+        $furtherChecks = in_array($name, EndpointCatalogue::FURTHER_CHECKS, true);
         $ownerOnly = in_array($name, EndpointCatalogue::OWNER_ONLY, true);
 
         $this->json($method, $uri)->assertStatus(401);
 
         foreach ($people as $roleKey => $person) {
-            $holds = in_array($permission, PermissionCatalogue::defaultsFor(SystemRole::from($roleKey)), true);
+            $holds = array_intersect(explode('|', $permission), PermissionCatalogue::defaultsFor(SystemRole::from($roleKey))) !== [];
             $allowed = $holds && (! $ownerOnly || $roleKey === SystemRole::Owner->value);
             $refusedFor = $holds ? RequireOwner::MARKER : $permission;
             $response = $this->requestAs($person, $method, $uri);
+
+            if ($allowed && $furtherChecks && $response->status() === 403) {
+                $this->assertFalse(
+                    AuditEvent::query()->where('action', 'access.denied')->where('actor_id', $person->id)->get()
+                        ->contains(fn (AuditEvent $event) => ($event->after['permission'] ?? null) === $permission),
+                    "{$roleKey} passed the route check of {$name}; only the action's own check may refuse them.",
+                );
+
+                continue;
+            }
 
             if ($allowed) {
                 $this->assertNotContains($response->status(), [401, 403], "{$roleKey} should be allowed to call {$name}, got {$response->status()}.");
@@ -120,11 +139,11 @@ class PermissionMatrixTest extends ApiTestCase
     }
 
     /**
-     * @return array{category: CatalogueCategory, item: CatalogueItem, customer: Customer}
+     * @return array{category: CatalogueCategory, item: CatalogueItem, customer: Customer, order: ServiceOrder, orderItem: OrderItem, execution: Execution}
      */
-    private function catalogueAndCustomer(Business $business): array
+    private function catalogueAndCustomer(Business $business, User $owner, User $employee): array
     {
-        return app(CurrentBusiness::class)->within($business->id, function (): array {
+        return app(CurrentBusiness::class)->within($business->id, function () use ($owner, $employee): array {
             $category = CatalogueCategory::query()->create(['type' => 'service', 'name' => 'Braids', 'sort_order' => 1]);
             $item = CatalogueItem::query()->create([
                 'category_id' => $category->id, 'type' => 'service', 'name' => 'Cornrows', 'price_kobo' => 800_000,
@@ -132,7 +151,11 @@ class PermissionMatrixTest extends ApiTestCase
             ]);
             $customer = Customer::query()->create(['name' => 'Funke Adeyemi', 'phone_e164' => '+2348030001234']);
 
-            return ['category' => $category, 'item' => $item, 'customer' => $customer];
+            $order = app(CreateOrder::class)($owner, ['customer_id' => $customer->id], [['catalogue_item_id' => $item->id]]);
+            $orderItem = $order->items()->firstOrFail();
+            $execution = app(SubmitExecution::class)($employee, $orderItem);
+
+            return ['category' => $category, 'item' => $item, 'customer' => $customer, 'order' => $order, 'orderItem' => $orderItem, 'execution' => $execution];
         });
     }
 }

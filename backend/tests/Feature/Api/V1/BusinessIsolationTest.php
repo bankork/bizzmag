@@ -7,10 +7,14 @@ use App\Domain\Business\Models\TaxSetting;
 use App\Domain\Catalogue\Models\CatalogueCategory;
 use App\Domain\Catalogue\Models\CatalogueItem;
 use App\Domain\Customers\Models\Customer;
+use App\Domain\Execution\Models\Execution;
 use App\Domain\Identity\Models\EmployeeProfile;
 use App\Domain\Identity\Permissions\SystemRole;
+use App\Domain\Notifications\Models\InAppNotification;
+use App\Domain\Orders\Models\ServiceOrder;
 use App\Domain\Shared\Exceptions\BusinessScopeMissing;
 use App\Domain\Shared\Tenancy\CurrentBusiness;
+use Tests\Support\BuildsVisits;
 
 /**
  * FR-IAM-007 and SEC-003: with two salons in one database, nobody in one
@@ -18,6 +22,8 @@ use App\Domain\Shared\Tenancy\CurrentBusiness;
  */
 class BusinessIsolationTest extends ApiTestCase
 {
+    use BuildsVisits;
+
     public function test_the_staff_list_shows_only_this_salon(): void
     {
         $adunni = $this->installSalon('Adunni Hair & Beauty Studio', 'owner@adunni.test');
@@ -120,6 +126,52 @@ class BusinessIsolationTest extends ApiTestCase
         $this->postJson('api/v1/customers', ['name' => 'Funke Adeyemi', 'phone' => '08030001234'])->assertCreated();
 
         $this->assertSame('Osas Ehigie', Customer::query()->withoutGlobalScopes()->findOrFail($theirs->id)->name);
+    }
+
+    public function test_visits_items_and_records_of_another_salon_cannot_be_seen_or_changed(): void
+    {
+        $adunni = $this->installSalon('Adunni Hair & Beauty Studio', 'owner@adunni.test');
+        $ivie = $this->installSalon('Ivie\'s Place, Benin', 'owner@ivie.test');
+        $iviesStylist = $this->staffMember($ivie['business'], SystemRole::Employee);
+        $theirService = $this->service($ivie['business'], 'Ivie knotless', 3_000_000);
+        $theirOrder = $this->openVisit($ivie['business'], $ivie['owner'], [['catalogue_item_id' => $theirService->id]]);
+        $theirItem = $this->firstItem($theirOrder);
+        $theirWork = $this->record($iviesStylist, $theirItem);
+        $ours = $this->service($adunni['business'], 'Cornrows', 800_000);
+        $this->signIn($adunni['owner']);
+
+        $this->assertSame([], $this->getJson('api/v1/orders?filter[status]=all')->json('data'));
+        $this->assertSame([], $this->getJson('api/v1/approvals')->json('data'));
+        $this->getJson("api/v1/orders/{$theirOrder->id}")->assertNotFound();
+        $this->postJson("api/v1/orders/{$theirOrder->id}/items", ['catalogue_item_id' => $ours->id])->assertNotFound();
+        $this->postJson("api/v1/orders/{$theirOrder->id}/cancel", ['reason' => 'Taken over'])->assertNotFound();
+        $this->postJson("api/v1/order-items/{$theirItem->id}/cancel", ['reason' => 'Taken over'])->assertNotFound();
+        $this->postJson("api/v1/order-items/{$theirItem->id}/price-override", ['price_kobo' => 1, 'reason' => 'Taken over'])->assertNotFound();
+        $this->withHeader('Idempotency-Key', 'isolation-0001')->postJson("api/v1/order-items/{$theirItem->id}/executions", ['primary_employee_id' => $this->profileOf($iviesStylist)->id])->assertNotFound();
+        $this->postJson("api/v1/executions/{$theirWork->id}/cancel", ['reason' => 'Taken over'])->assertNotFound();
+        $this->postJson("api/v1/executions/{$theirWork->id}/dispute", ['reason' => 'Taken over'])->assertNotFound();
+
+        $this->postJson('api/v1/orders', ['items' => [['catalogue_item_id' => $theirService->id]]])->assertStatus(422)->assertJsonPath('code', 'ITEM_NOT_ACTIVE');
+        $this->postJson('api/v1/orders', ['items' => [['catalogue_item_id' => $ours->id, 'employee_ids' => [$this->profileOf($iviesStylist)->id]]]])
+            ->assertStatus(422)->assertJsonPath('code', 'STAFF_NOT_ELIGIBLE');
+        $this->assertSame([], array_column($this->getJson('api/v1/staff-directory')->json('data'), 'name'));
+
+        $this->assertSame('open', ServiceOrder::query()->withoutGlobalScopes()->findOrFail($theirOrder->id)->status->value);
+        $this->assertSame('confirmed', Execution::query()->withoutGlobalScopes()->findOrFail($theirWork->id)->status->value);
+    }
+
+    public function test_notifications_belong_to_their_person_and_salon(): void
+    {
+        $adunni = $this->installSalon('Adunni Hair & Beauty Studio', 'owner@adunni.test');
+        $ivie = $this->installSalon('Ivie\'s Place, Benin', 'owner@ivie.test');
+        $stylist = $this->staffMember($ivie['business'], SystemRole::Employee);
+        $order = $this->openVisit($ivie['business'], $ivie['owner'], [['catalogue_item_id' => $this->service($ivie['business'], 'Ivie knotless', 3_000_000)->id, 'employee_ids' => [$this->profileOf($stylist)->id]]]);
+
+        $this->assertSame(1, InAppNotification::query()->withoutGlobalScopes()->where('business_id', $ivie['business']->id)->count());
+        $this->signIn($adunni['owner']);
+        $this->assertSame([], $this->getJson('api/v1/notifications')->json('data'));
+        $this->postJson('api/v1/notifications/read', ['all' => true])->assertJsonPath('data.marked', 0);
+        $this->assertNotNull($order->id);
     }
 
     public function test_business_owned_models_return_nothing_without_a_current_business(): void

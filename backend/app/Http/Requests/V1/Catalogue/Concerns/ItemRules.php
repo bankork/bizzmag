@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\V1\Catalogue\Concerns;
 
+use App\Domain\Catalogue\Models\CatalogueItem;
 use App\Domain\Catalogue\Models\SplitMethod;
 use Illuminate\Validation\Rule;
 
@@ -12,8 +13,6 @@ use Illuminate\Validation\Rule;
  */
 trait ItemRules
 {
-    public const MAX_PRICE_KOBO = 10_000_000_000;
-
     /**
      * @return array<string, list<mixed>>
      */
@@ -24,7 +23,7 @@ trait ItemRules
             'description' => ['sometimes', 'nullable', 'string', 'max:500'],
             'category_id' => ['sometimes', 'integer'],
             'has_variants' => ['sometimes', 'boolean'],
-            'price_kobo' => ['sometimes', 'nullable', 'integer', 'min:0', 'max:'.self::MAX_PRICE_KOBO],
+            'price_kobo' => ['sometimes', 'nullable', 'integer', 'min:0', 'max:'.CatalogueItem::MAX_PRICE_KOBO],
             'taxable' => ['sometimes', 'boolean'],
             'quantity_allowed' => ['sometimes', 'boolean'],
             'allocation_method' => ['sometimes', 'nullable', Rule::enum(SplitMethod::class)],

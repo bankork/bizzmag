@@ -7,6 +7,9 @@ use App\Domain\Catalogue\Models\CatalogueItem;
 use App\Domain\Catalogue\Models\ItemType;
 use App\Domain\Catalogue\Models\SplitMethod;
 use App\Domain\Customers\Models\Customer;
+use App\Domain\Execution\Models\Execution;
+use App\Domain\Notifications\Models\InAppNotification;
+use App\Domain\Orders\Models\OrderItem;
 use App\Domain\Shared\Tenancy\CurrentBusiness;
 use App\Models\User;
 use Database\Seeders\Demo\DemoSeeder;
@@ -62,6 +65,25 @@ class DemoCommandTest extends TestCase
         $this->assertDatabaseCount('catalogue_categories', 7);
         $this->assertSame($this->expectedCatalogueRows(), CatalogueItem::query()->withoutGlobalScopes()->count());
         $this->assertDatabaseCount('customers', DemoSeeder::CUSTOMER_COUNT);
+        $this->assertDatabaseCount('service_orders', 5);
+        $this->assertDatabaseCount('executions', 4);
+    }
+
+    public function test_today_has_visits_in_every_state(): void
+    {
+        $this->artisan('app:demo')->assertSuccessful();
+
+        $statuses = Execution::query()->withoutGlobalScopes()->pluck('status')->map->value->countBy()->all();
+        $this->assertEquals(['confirmed' => 3, 'disputed' => 1], $statuses);
+        $this->assertSame(1, OrderItem::query()->withoutGlobalScopes()->where('status', 'pending_approval')->count());
+        $waiting = OrderItem::query()->withoutGlobalScopes()->where('type', 'service')->where('status', 'requested')
+            ->whereNotIn('id', Execution::query()->withoutGlobalScopes()->select('order_item_id'))
+            ->pluck('name_snapshot')->all();
+        $this->assertSame(['Classic pedicure', 'Cornrows (all back)'], $waiting);
+
+        $braids = Execution::query()->withoutGlobalScopes()->with('contributors')->orderBy('id')->firstOrFail();
+        $this->assertSame([6000, 2000, 2000], $braids->contributors->pluck('share_bp')->all());
+        $this->assertTrue(InAppNotification::query()->withoutGlobalScopes()->where('type', 'additional.pending')->exists());
     }
 
     public function test_loads_the_price_list_with_variants_products_and_credit_splits(): void
