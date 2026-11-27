@@ -41,9 +41,11 @@ for (const args of [["config:clear"], ["migrate:fresh", "--force"], ["app:demo",
   }
 }
 
+// Several workers, like PHP-FPM in production: screens now poll for live
+// updates, and one worker would make every browser wait in a single queue.
 const server = spawn(php, ["-S", "127.0.0.1:8100", "../vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php"], {
   cwd: `${backend}/public`,
-  env,
+  env: { ...env, PHP_CLI_SERVER_WORKERS: "4" },
   stdio: "inherit",
 });
 

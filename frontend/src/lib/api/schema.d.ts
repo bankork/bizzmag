@@ -4,6 +4,22 @@
  */
 
 export interface paths {
+    "/approvals": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["v1.approvals.index"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/catalogue/categories": {
         parameters: {
             query?: never;
@@ -126,6 +142,167 @@ export interface paths {
         get?: never;
         put?: never;
         post: operations["v1.customers.anonymise"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/customers/{customer}/orders": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["v1.customers.orders"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/order-items/{orderItem}/executions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["v1.executions.store"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/executions/mine": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** The person's own recorded work, newest first (UI-010 "submission history") */
+        get: operations["v1.executions.mine"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/executions/{execution}/join": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["v1.executions.join"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/executions/{execution}/contributors": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put: operations["v1.executions.contributors"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/executions/{execution}/allocation": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["v1.executions.allocation"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/executions/{execution}/dispute": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["v1.executions.dispute"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/executions/{execution}/dismiss-dispute": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["v1.executions.dismiss-dispute"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/executions/{execution}/correct": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["v1.executions.correct"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/executions/{execution}/cancel": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["v1.executions.cancel"];
         delete?: never;
         options?: never;
         head?: never;
@@ -280,6 +457,230 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/notifications": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["v1.notifications.index"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/notifications/read": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["v1.notifications.read"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/orders": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["v1.orders.index"];
+        put?: never;
+        post: operations["v1.orders.store"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/orders/{order}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["v1.orders.show"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/orders/{order}/items": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["v1.orders.items.store"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/orders/{order}/additional-requests": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["v1.orders.additional-requests.store"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/orders/{order}/customer": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["v1.orders.customer"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/orders/{order}/cancel": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["v1.orders.cancel"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/order-items/{orderItem}/assignments": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put: operations["v1.order-items.assignments"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/order-items/{orderItem}/cancel": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["v1.order-items.cancel"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/order-items/{orderItem}/price-override": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["v1.order-items.price-override"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/order-items/{orderItem}/approve": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["v1.order-items.approve"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/order-items/{orderItem}/reject": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["v1.order-items.reject"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/order-items/{orderItem}/withdraw": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["v1.order-items.withdraw"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/permissions": {
         parameters: {
             query?: never;
@@ -424,6 +825,22 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/staff-directory": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["v1.staff-directory"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/users": {
         parameters: {
             query?: never;
@@ -525,6 +942,42 @@ export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
         /**
+         * AddItemRequest
+         * @description One item to add to an open visit (FR-ORD-012), or for an extra-service
+         *     request (FR-ADD-001) with its optional note.
+         */
+        AddItemRequest: {
+            catalogue_item_id: number;
+            quantity?: number;
+            employee_ids?: number[];
+            note?: string | null;
+        };
+        /**
+         * AllocationMethod
+         * @description How credit for one service is split between contributors (PRD-7.5-3).
+         *     | |
+         *     |---|
+         *     | `equal` <br/> Everyone gets the same share. |
+         *     | `primary_assistant` <br/> The primary gets a configured percentage; assistants share the rest equally. |
+         *     | `custom` <br/> Shares entered by a supervisor, totalling exactly 100%. |
+         * @enum {string}
+         */
+        AllocationMethod: "equal" | "primary_assistant" | "custom";
+        /**
+         * AllocationRequest
+         * @description A supervisor's change to one record's split (FR-ATTR-009).
+         */
+        AllocationRequest: {
+            method: components["schemas"]["AllocationMethod"];
+            primary_share_bp?: number | null;
+            shares?: {
+                employee_id: number;
+                share_bp: number;
+            }[];
+            reason: string;
+            primary_employee_id?: number | null;
+        };
+        /**
          * AnonymiseCustomerRequest
          * @description Removing personal data cannot be undone, so the owner types REMOVE.
          */
@@ -536,11 +989,45 @@ export interface components {
         AssignRolesRequest: {
             role_ids: number[];
         };
+        /**
+         * AssignmentsRequest
+         * @description Who is expected to do a service. An empty list leaves it unassigned (FR-ORD-006).
+         */
+        AssignmentsRequest: {
+            employee_ids: number[];
+        };
+        /** AssociateCustomerRequest */
+        AssociateCustomerRequest: {
+            customer_id: number;
+        };
         /** ChangePasswordRequest */
         ChangePasswordRequest: {
             current_password: string;
             password: string;
             password_confirmation: string;
+        };
+        /**
+         * ContributorsRequest
+         * @description Everyone who should be on a record, edited by the person who recorded it.
+         */
+        ContributorsRequest: {
+            employee_ids: number[];
+        };
+        /**
+         * CorrectExecutionRequest
+         * @description A corrected record: who did the work, who was the primary, optionally a
+         *     different split, and why (FR-EXE-010).
+         */
+        CorrectExecutionRequest: {
+            method?: components["schemas"]["AllocationMethod"];
+            primary_share_bp?: number | null;
+            shares?: {
+                employee_id: number;
+                share_bp: number;
+            }[];
+            reason: string;
+            employee_ids: number[];
+            primary_employee_id: number;
         };
         /** DisableUserRequest */
         DisableUserRequest: {
@@ -559,6 +1046,29 @@ export interface components {
         LoginRequest: {
             identifier: string;
             password: string;
+        };
+        /**
+         * OptionalReasonRequest
+         * @description Approving or withdrawing a request, where a reason is welcome but not required.
+         */
+        OptionalReasonRequest: {
+            reason?: string | null;
+        };
+        /**
+         * PriceOverrideRequest
+         * @description A new unit price for one item on a visit, with the mandatory reason (FR-ORD-011).
+         */
+        PriceOverrideRequest: {
+            price_kobo: number;
+            reason: string;
+        };
+        /**
+         * ReasonRequest
+         * @description Actions that need a written reason: cancellations, rejections, disputes
+         *     and their resolution (SRS §6).
+         */
+        ReasonRequest: {
+            reason: string;
         };
         /** ReorderCategoriesRequest */
         ReorderCategoriesRequest: {
@@ -618,6 +1128,21 @@ export interface components {
             sort_order?: number;
             parent_id?: number | null;
         };
+        /**
+         * StoreOrderRequest
+         * @description A new visit: a registered customer or a guest with an optional name and
+         *     phone (FR-CUS-003, FR-CUS-005), and one or more items (FR-ORD-002).
+         */
+        StoreOrderRequest: {
+            customer_id?: number | null;
+            guest_name?: string | null;
+            guest_phone?: string | null;
+            items: {
+                catalogue_item_id: number;
+                quantity?: number;
+                employee_ids?: number[];
+            }[];
+        };
         /** StoreUserRequest */
         StoreUserRequest: {
             name: string;
@@ -630,6 +1155,15 @@ export interface components {
                 display_name?: string;
                 job_title?: string | null;
             } | null;
+        };
+        /**
+         * SubmitExecutionRequest
+         * @description Recording a service: the colleagues who worked on it, and the primary
+         *     when the person recording does no salon work (P3 Q1).
+         */
+        SubmitExecutionRequest: {
+            contributor_employee_ids?: number[];
+            primary_employee_id?: number | null;
         };
         /**
          * TaxMode
@@ -787,6 +1321,32 @@ export interface components {
 }
 export type $defs = Record<string, never>;
 export interface operations {
+    "v1.approvals.index": {
+        parameters: {
+            query?: {
+                "filter[type]"?: "additional_service" | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        success: boolean;
+                        data: unknown[][];
+                        meta: string;
+                    };
+                };
+            };
+            422: components["responses"]["ValidationException"];
+        };
+    };
     "v1.catalogue.categories.index": {
         parameters: {
             query?: {
@@ -1143,6 +1703,1007 @@ export interface operations {
                         success: boolean;
                         data: {
                             [key: string]: unknown;
+                        };
+                        meta: string;
+                    };
+                };
+            };
+            422: components["responses"]["ValidationException"];
+        };
+    };
+    "v1.customers.orders": {
+        parameters: {
+            query?: {
+                page?: number | null;
+            };
+            header?: never;
+            path: {
+                customer: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        success: boolean;
+                        data: {
+                            id: number;
+                            reference: string;
+                            /** @enum {string} */
+                            status: "open" | "finalised" | "cancelled";
+                            opened_at: string;
+                            items: string[];
+                            subtotal_kobo: string;
+                        }[];
+                        meta: {
+                            pagination: {
+                                page: number;
+                                per_page: number;
+                                total: number;
+                                last_page: number;
+                            };
+                        };
+                    };
+                };
+            };
+            422: components["responses"]["ValidationException"];
+        };
+    };
+    "v1.executions.store": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                orderItem: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["SubmitExecutionRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": string;
+                };
+            };
+            422: components["responses"]["ValidationException"];
+        };
+    };
+    "v1.executions.mine": {
+        parameters: {
+            query?: {
+                page?: number | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        success: boolean;
+                        data: unknown[][];
+                        meta: {
+                            pagination: {
+                                page: number;
+                                per_page: number;
+                                total: number;
+                                last_page: number;
+                            };
+                        };
+                    } | {
+                        success: boolean;
+                        data: string[];
+                        meta: {
+                            pagination: {
+                                /** @constant */
+                                page: 1;
+                                /** @constant */
+                                per_page: 30;
+                                /** @constant */
+                                total: 0;
+                                /** @constant */
+                                last_page: 1;
+                            };
+                        };
+                    };
+                };
+            };
+            422: components["responses"]["ValidationException"];
+        };
+    };
+    "v1.executions.join": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                execution: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        success: boolean;
+                        data: {
+                            id: number;
+                            reference: string;
+                            /** @enum {string} */
+                            status: "open" | "finalised" | "cancelled";
+                            customer_name: string;
+                            is_guest: boolean;
+                            opened_at: string;
+                            opened_business_day: string;
+                            opened_by: string;
+                            cancelled_at: string | null;
+                            cancel_reason: string | null;
+                            progress: {
+                                services: number;
+                                recorded: number;
+                                disputed: number;
+                                waiting: number;
+                                pending_approval: number;
+                            };
+                            items: {
+                                id: number;
+                                /** @enum {string} */
+                                type: "service" | "product";
+                                name: string;
+                                quantity: number;
+                                /** @enum {string} */
+                                status: "requested" | "pending_approval" | "approved" | "rejected" | "cancelled";
+                                /** @enum {string} */
+                                origin: "order" | "desk_add" | "additional_request";
+                                request_note: string | null;
+                                decision_reason: string | null;
+                                cancel_reason: string | null;
+                                requested_by: number;
+                                assigned: {
+                                    employee_id: number;
+                                    name: string;
+                                }[];
+                                assigned_to_me: boolean;
+                                work: {
+                                    id: string;
+                                    order_item_id: string;
+                                    /** @enum {string} */
+                                    status: "confirmed" | "disputed" | "superseded" | "cancelled";
+                                    late: string;
+                                    submitted_by: {
+                                        id: string;
+                                        name: string;
+                                    };
+                                    submitted_at: string;
+                                    /** @enum {string} */
+                                    allocation_method: "equal" | "primary_assistant" | "custom";
+                                    primary_share_bp: string;
+                                    supersedes_id: string;
+                                    override_reason: string;
+                                    dispute_reason: string;
+                                    disputed_by: string | null;
+                                    resolution_reason: string;
+                                    includes_me: boolean;
+                                    contributors: {
+                                        employee_id: number;
+                                        name: string;
+                                        is_primary: boolean;
+                                        share_bp: number;
+                                    }[];
+                                } | null;
+                                history: {
+                                    id: number;
+                                    order_item_id: number;
+                                    /** @enum {string} */
+                                    status: "confirmed" | "disputed" | "superseded" | "cancelled";
+                                    late: boolean;
+                                    submitted_by: {
+                                        id: number;
+                                        name: string;
+                                    };
+                                    submitted_at: string;
+                                    /** @enum {string} */
+                                    allocation_method: "equal" | "primary_assistant" | "custom";
+                                    primary_share_bp: number | null;
+                                    supersedes_id: number | null;
+                                    override_reason: string | null;
+                                    dispute_reason: string | null;
+                                    disputed_by: string | null;
+                                    resolution_reason: string | null;
+                                    includes_me: boolean;
+                                    contributors: {
+                                        employee_id: number;
+                                        name: string;
+                                        is_primary: boolean;
+                                        share_bp: number;
+                                    }[];
+                                }[];
+                            }[];
+                            customer_id: number | null;
+                            subtotal_kobo: string;
+                            phone: string | null;
+                            phone_display: string | null;
+                        };
+                        meta: string;
+                    };
+                };
+            };
+        };
+    };
+    "v1.executions.contributors": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                execution: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ContributorsRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        success: boolean;
+                        data: {
+                            id: number;
+                            reference: string;
+                            /** @enum {string} */
+                            status: "open" | "finalised" | "cancelled";
+                            customer_name: string;
+                            is_guest: boolean;
+                            opened_at: string;
+                            opened_business_day: string;
+                            opened_by: string;
+                            cancelled_at: string | null;
+                            cancel_reason: string | null;
+                            progress: {
+                                services: number;
+                                recorded: number;
+                                disputed: number;
+                                waiting: number;
+                                pending_approval: number;
+                            };
+                            items: {
+                                id: number;
+                                /** @enum {string} */
+                                type: "service" | "product";
+                                name: string;
+                                quantity: number;
+                                /** @enum {string} */
+                                status: "requested" | "pending_approval" | "approved" | "rejected" | "cancelled";
+                                /** @enum {string} */
+                                origin: "order" | "desk_add" | "additional_request";
+                                request_note: string | null;
+                                decision_reason: string | null;
+                                cancel_reason: string | null;
+                                requested_by: number;
+                                assigned: {
+                                    employee_id: number;
+                                    name: string;
+                                }[];
+                                assigned_to_me: boolean;
+                                work: {
+                                    id: string;
+                                    order_item_id: string;
+                                    /** @enum {string} */
+                                    status: "confirmed" | "disputed" | "superseded" | "cancelled";
+                                    late: string;
+                                    submitted_by: {
+                                        id: string;
+                                        name: string;
+                                    };
+                                    submitted_at: string;
+                                    /** @enum {string} */
+                                    allocation_method: "equal" | "primary_assistant" | "custom";
+                                    primary_share_bp: string;
+                                    supersedes_id: string;
+                                    override_reason: string;
+                                    dispute_reason: string;
+                                    disputed_by: string | null;
+                                    resolution_reason: string;
+                                    includes_me: boolean;
+                                    contributors: {
+                                        employee_id: number;
+                                        name: string;
+                                        is_primary: boolean;
+                                        share_bp: number;
+                                    }[];
+                                } | null;
+                                history: {
+                                    id: number;
+                                    order_item_id: number;
+                                    /** @enum {string} */
+                                    status: "confirmed" | "disputed" | "superseded" | "cancelled";
+                                    late: boolean;
+                                    submitted_by: {
+                                        id: number;
+                                        name: string;
+                                    };
+                                    submitted_at: string;
+                                    /** @enum {string} */
+                                    allocation_method: "equal" | "primary_assistant" | "custom";
+                                    primary_share_bp: number | null;
+                                    supersedes_id: number | null;
+                                    override_reason: string | null;
+                                    dispute_reason: string | null;
+                                    disputed_by: string | null;
+                                    resolution_reason: string | null;
+                                    includes_me: boolean;
+                                    contributors: {
+                                        employee_id: number;
+                                        name: string;
+                                        is_primary: boolean;
+                                        share_bp: number;
+                                    }[];
+                                }[];
+                            }[];
+                            customer_id: number | null;
+                            subtotal_kobo: string;
+                            phone: string | null;
+                            phone_display: string | null;
+                        };
+                        meta: string;
+                    };
+                };
+            };
+            422: components["responses"]["ValidationException"];
+        };
+    };
+    "v1.executions.allocation": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                execution: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AllocationRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        success: boolean;
+                        data: {
+                            id: number;
+                            reference: string;
+                            /** @enum {string} */
+                            status: "open" | "finalised" | "cancelled";
+                            customer_name: string;
+                            is_guest: boolean;
+                            opened_at: string;
+                            opened_business_day: string;
+                            opened_by: string;
+                            cancelled_at: string | null;
+                            cancel_reason: string | null;
+                            progress: {
+                                services: number;
+                                recorded: number;
+                                disputed: number;
+                                waiting: number;
+                                pending_approval: number;
+                            };
+                            items: {
+                                id: number;
+                                /** @enum {string} */
+                                type: "service" | "product";
+                                name: string;
+                                quantity: number;
+                                /** @enum {string} */
+                                status: "requested" | "pending_approval" | "approved" | "rejected" | "cancelled";
+                                /** @enum {string} */
+                                origin: "order" | "desk_add" | "additional_request";
+                                request_note: string | null;
+                                decision_reason: string | null;
+                                cancel_reason: string | null;
+                                requested_by: number;
+                                assigned: {
+                                    employee_id: number;
+                                    name: string;
+                                }[];
+                                assigned_to_me: boolean;
+                                work: {
+                                    id: string;
+                                    order_item_id: string;
+                                    /** @enum {string} */
+                                    status: "confirmed" | "disputed" | "superseded" | "cancelled";
+                                    late: string;
+                                    submitted_by: {
+                                        id: string;
+                                        name: string;
+                                    };
+                                    submitted_at: string;
+                                    /** @enum {string} */
+                                    allocation_method: "equal" | "primary_assistant" | "custom";
+                                    primary_share_bp: string;
+                                    supersedes_id: string;
+                                    override_reason: string;
+                                    dispute_reason: string;
+                                    disputed_by: string | null;
+                                    resolution_reason: string;
+                                    includes_me: boolean;
+                                    contributors: {
+                                        employee_id: number;
+                                        name: string;
+                                        is_primary: boolean;
+                                        share_bp: number;
+                                    }[];
+                                } | null;
+                                history: {
+                                    id: number;
+                                    order_item_id: number;
+                                    /** @enum {string} */
+                                    status: "confirmed" | "disputed" | "superseded" | "cancelled";
+                                    late: boolean;
+                                    submitted_by: {
+                                        id: number;
+                                        name: string;
+                                    };
+                                    submitted_at: string;
+                                    /** @enum {string} */
+                                    allocation_method: "equal" | "primary_assistant" | "custom";
+                                    primary_share_bp: number | null;
+                                    supersedes_id: number | null;
+                                    override_reason: string | null;
+                                    dispute_reason: string | null;
+                                    disputed_by: string | null;
+                                    resolution_reason: string | null;
+                                    includes_me: boolean;
+                                    contributors: {
+                                        employee_id: number;
+                                        name: string;
+                                        is_primary: boolean;
+                                        share_bp: number;
+                                    }[];
+                                }[];
+                            }[];
+                            customer_id: number | null;
+                            subtotal_kobo: string;
+                            phone: string | null;
+                            phone_display: string | null;
+                        };
+                        meta: string;
+                    };
+                };
+            };
+            422: components["responses"]["ValidationException"];
+        };
+    };
+    "v1.executions.dispute": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                execution: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ReasonRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        success: boolean;
+                        data: {
+                            id: number;
+                            reference: string;
+                            /** @enum {string} */
+                            status: "open" | "finalised" | "cancelled";
+                            customer_name: string;
+                            is_guest: boolean;
+                            opened_at: string;
+                            opened_business_day: string;
+                            opened_by: string;
+                            cancelled_at: string | null;
+                            cancel_reason: string | null;
+                            progress: {
+                                services: number;
+                                recorded: number;
+                                disputed: number;
+                                waiting: number;
+                                pending_approval: number;
+                            };
+                            items: {
+                                id: number;
+                                /** @enum {string} */
+                                type: "service" | "product";
+                                name: string;
+                                quantity: number;
+                                /** @enum {string} */
+                                status: "requested" | "pending_approval" | "approved" | "rejected" | "cancelled";
+                                /** @enum {string} */
+                                origin: "order" | "desk_add" | "additional_request";
+                                request_note: string | null;
+                                decision_reason: string | null;
+                                cancel_reason: string | null;
+                                requested_by: number;
+                                assigned: {
+                                    employee_id: number;
+                                    name: string;
+                                }[];
+                                assigned_to_me: boolean;
+                                work: {
+                                    id: string;
+                                    order_item_id: string;
+                                    /** @enum {string} */
+                                    status: "confirmed" | "disputed" | "superseded" | "cancelled";
+                                    late: string;
+                                    submitted_by: {
+                                        id: string;
+                                        name: string;
+                                    };
+                                    submitted_at: string;
+                                    /** @enum {string} */
+                                    allocation_method: "equal" | "primary_assistant" | "custom";
+                                    primary_share_bp: string;
+                                    supersedes_id: string;
+                                    override_reason: string;
+                                    dispute_reason: string;
+                                    disputed_by: string | null;
+                                    resolution_reason: string;
+                                    includes_me: boolean;
+                                    contributors: {
+                                        employee_id: number;
+                                        name: string;
+                                        is_primary: boolean;
+                                        share_bp: number;
+                                    }[];
+                                } | null;
+                                history: {
+                                    id: number;
+                                    order_item_id: number;
+                                    /** @enum {string} */
+                                    status: "confirmed" | "disputed" | "superseded" | "cancelled";
+                                    late: boolean;
+                                    submitted_by: {
+                                        id: number;
+                                        name: string;
+                                    };
+                                    submitted_at: string;
+                                    /** @enum {string} */
+                                    allocation_method: "equal" | "primary_assistant" | "custom";
+                                    primary_share_bp: number | null;
+                                    supersedes_id: number | null;
+                                    override_reason: string | null;
+                                    dispute_reason: string | null;
+                                    disputed_by: string | null;
+                                    resolution_reason: string | null;
+                                    includes_me: boolean;
+                                    contributors: {
+                                        employee_id: number;
+                                        name: string;
+                                        is_primary: boolean;
+                                        share_bp: number;
+                                    }[];
+                                }[];
+                            }[];
+                            customer_id: number | null;
+                            subtotal_kobo: string;
+                            phone: string | null;
+                            phone_display: string | null;
+                        };
+                        meta: string;
+                    };
+                };
+            };
+            422: components["responses"]["ValidationException"];
+        };
+    };
+    "v1.executions.dismiss-dispute": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                execution: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ReasonRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        success: boolean;
+                        data: {
+                            id: number;
+                            reference: string;
+                            /** @enum {string} */
+                            status: "open" | "finalised" | "cancelled";
+                            customer_name: string;
+                            is_guest: boolean;
+                            opened_at: string;
+                            opened_business_day: string;
+                            opened_by: string;
+                            cancelled_at: string | null;
+                            cancel_reason: string | null;
+                            progress: {
+                                services: number;
+                                recorded: number;
+                                disputed: number;
+                                waiting: number;
+                                pending_approval: number;
+                            };
+                            items: {
+                                id: number;
+                                /** @enum {string} */
+                                type: "service" | "product";
+                                name: string;
+                                quantity: number;
+                                /** @enum {string} */
+                                status: "requested" | "pending_approval" | "approved" | "rejected" | "cancelled";
+                                /** @enum {string} */
+                                origin: "order" | "desk_add" | "additional_request";
+                                request_note: string | null;
+                                decision_reason: string | null;
+                                cancel_reason: string | null;
+                                requested_by: number;
+                                assigned: {
+                                    employee_id: number;
+                                    name: string;
+                                }[];
+                                assigned_to_me: boolean;
+                                work: {
+                                    id: string;
+                                    order_item_id: string;
+                                    /** @enum {string} */
+                                    status: "confirmed" | "disputed" | "superseded" | "cancelled";
+                                    late: string;
+                                    submitted_by: {
+                                        id: string;
+                                        name: string;
+                                    };
+                                    submitted_at: string;
+                                    /** @enum {string} */
+                                    allocation_method: "equal" | "primary_assistant" | "custom";
+                                    primary_share_bp: string;
+                                    supersedes_id: string;
+                                    override_reason: string;
+                                    dispute_reason: string;
+                                    disputed_by: string | null;
+                                    resolution_reason: string;
+                                    includes_me: boolean;
+                                    contributors: {
+                                        employee_id: number;
+                                        name: string;
+                                        is_primary: boolean;
+                                        share_bp: number;
+                                    }[];
+                                } | null;
+                                history: {
+                                    id: number;
+                                    order_item_id: number;
+                                    /** @enum {string} */
+                                    status: "confirmed" | "disputed" | "superseded" | "cancelled";
+                                    late: boolean;
+                                    submitted_by: {
+                                        id: number;
+                                        name: string;
+                                    };
+                                    submitted_at: string;
+                                    /** @enum {string} */
+                                    allocation_method: "equal" | "primary_assistant" | "custom";
+                                    primary_share_bp: number | null;
+                                    supersedes_id: number | null;
+                                    override_reason: string | null;
+                                    dispute_reason: string | null;
+                                    disputed_by: string | null;
+                                    resolution_reason: string | null;
+                                    includes_me: boolean;
+                                    contributors: {
+                                        employee_id: number;
+                                        name: string;
+                                        is_primary: boolean;
+                                        share_bp: number;
+                                    }[];
+                                }[];
+                            }[];
+                            customer_id: number | null;
+                            subtotal_kobo: string;
+                            phone: string | null;
+                            phone_display: string | null;
+                        };
+                        meta: string;
+                    };
+                };
+            };
+            422: components["responses"]["ValidationException"];
+        };
+    };
+    "v1.executions.correct": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                execution: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CorrectExecutionRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        success: boolean;
+                        data: {
+                            id: number;
+                            reference: string;
+                            /** @enum {string} */
+                            status: "open" | "finalised" | "cancelled";
+                            customer_name: string;
+                            is_guest: boolean;
+                            opened_at: string;
+                            opened_business_day: string;
+                            opened_by: string;
+                            cancelled_at: string | null;
+                            cancel_reason: string | null;
+                            progress: {
+                                services: number;
+                                recorded: number;
+                                disputed: number;
+                                waiting: number;
+                                pending_approval: number;
+                            };
+                            items: {
+                                id: number;
+                                /** @enum {string} */
+                                type: "service" | "product";
+                                name: string;
+                                quantity: number;
+                                /** @enum {string} */
+                                status: "requested" | "pending_approval" | "approved" | "rejected" | "cancelled";
+                                /** @enum {string} */
+                                origin: "order" | "desk_add" | "additional_request";
+                                request_note: string | null;
+                                decision_reason: string | null;
+                                cancel_reason: string | null;
+                                requested_by: number;
+                                assigned: {
+                                    employee_id: number;
+                                    name: string;
+                                }[];
+                                assigned_to_me: boolean;
+                                work: {
+                                    id: string;
+                                    order_item_id: string;
+                                    /** @enum {string} */
+                                    status: "confirmed" | "disputed" | "superseded" | "cancelled";
+                                    late: string;
+                                    submitted_by: {
+                                        id: string;
+                                        name: string;
+                                    };
+                                    submitted_at: string;
+                                    /** @enum {string} */
+                                    allocation_method: "equal" | "primary_assistant" | "custom";
+                                    primary_share_bp: string;
+                                    supersedes_id: string;
+                                    override_reason: string;
+                                    dispute_reason: string;
+                                    disputed_by: string | null;
+                                    resolution_reason: string;
+                                    includes_me: boolean;
+                                    contributors: {
+                                        employee_id: number;
+                                        name: string;
+                                        is_primary: boolean;
+                                        share_bp: number;
+                                    }[];
+                                } | null;
+                                history: {
+                                    id: number;
+                                    order_item_id: number;
+                                    /** @enum {string} */
+                                    status: "confirmed" | "disputed" | "superseded" | "cancelled";
+                                    late: boolean;
+                                    submitted_by: {
+                                        id: number;
+                                        name: string;
+                                    };
+                                    submitted_at: string;
+                                    /** @enum {string} */
+                                    allocation_method: "equal" | "primary_assistant" | "custom";
+                                    primary_share_bp: number | null;
+                                    supersedes_id: number | null;
+                                    override_reason: string | null;
+                                    dispute_reason: string | null;
+                                    disputed_by: string | null;
+                                    resolution_reason: string | null;
+                                    includes_me: boolean;
+                                    contributors: {
+                                        employee_id: number;
+                                        name: string;
+                                        is_primary: boolean;
+                                        share_bp: number;
+                                    }[];
+                                }[];
+                            }[];
+                            customer_id: number | null;
+                            subtotal_kobo: string;
+                            phone: string | null;
+                            phone_display: string | null;
+                        };
+                        meta: string;
+                    };
+                };
+            };
+            422: components["responses"]["ValidationException"];
+        };
+    };
+    "v1.executions.cancel": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                execution: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ReasonRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        success: boolean;
+                        data: {
+                            id: number;
+                            reference: string;
+                            /** @enum {string} */
+                            status: "open" | "finalised" | "cancelled";
+                            customer_name: string;
+                            is_guest: boolean;
+                            opened_at: string;
+                            opened_business_day: string;
+                            opened_by: string;
+                            cancelled_at: string | null;
+                            cancel_reason: string | null;
+                            progress: {
+                                services: number;
+                                recorded: number;
+                                disputed: number;
+                                waiting: number;
+                                pending_approval: number;
+                            };
+                            items: {
+                                id: number;
+                                /** @enum {string} */
+                                type: "service" | "product";
+                                name: string;
+                                quantity: number;
+                                /** @enum {string} */
+                                status: "requested" | "pending_approval" | "approved" | "rejected" | "cancelled";
+                                /** @enum {string} */
+                                origin: "order" | "desk_add" | "additional_request";
+                                request_note: string | null;
+                                decision_reason: string | null;
+                                cancel_reason: string | null;
+                                requested_by: number;
+                                assigned: {
+                                    employee_id: number;
+                                    name: string;
+                                }[];
+                                assigned_to_me: boolean;
+                                work: {
+                                    id: string;
+                                    order_item_id: string;
+                                    /** @enum {string} */
+                                    status: "confirmed" | "disputed" | "superseded" | "cancelled";
+                                    late: string;
+                                    submitted_by: {
+                                        id: string;
+                                        name: string;
+                                    };
+                                    submitted_at: string;
+                                    /** @enum {string} */
+                                    allocation_method: "equal" | "primary_assistant" | "custom";
+                                    primary_share_bp: string;
+                                    supersedes_id: string;
+                                    override_reason: string;
+                                    dispute_reason: string;
+                                    disputed_by: string | null;
+                                    resolution_reason: string;
+                                    includes_me: boolean;
+                                    contributors: {
+                                        employee_id: number;
+                                        name: string;
+                                        is_primary: boolean;
+                                        share_bp: number;
+                                    }[];
+                                } | null;
+                                history: {
+                                    id: number;
+                                    order_item_id: number;
+                                    /** @enum {string} */
+                                    status: "confirmed" | "disputed" | "superseded" | "cancelled";
+                                    late: boolean;
+                                    submitted_by: {
+                                        id: number;
+                                        name: string;
+                                    };
+                                    submitted_at: string;
+                                    /** @enum {string} */
+                                    allocation_method: "equal" | "primary_assistant" | "custom";
+                                    primary_share_bp: number | null;
+                                    supersedes_id: number | null;
+                                    override_reason: string | null;
+                                    dispute_reason: string | null;
+                                    disputed_by: string | null;
+                                    resolution_reason: string | null;
+                                    includes_me: boolean;
+                                    contributors: {
+                                        employee_id: number;
+                                        name: string;
+                                        is_primary: boolean;
+                                        share_bp: number;
+                                    }[];
+                                }[];
+                            }[];
+                            customer_id: number | null;
+                            subtotal_kobo: string;
+                            phone: string | null;
+                            phone_display: string | null;
                         };
                         meta: string;
                     };
@@ -1558,6 +3119,1727 @@ export interface operations {
                     };
                 };
             };
+        };
+    };
+    "v1.notifications.index": {
+        parameters: {
+            query?: {
+                unread?: boolean | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        success: boolean;
+                        data: {
+                            id: number;
+                            type: string;
+                            title: string;
+                            body: string | null;
+                            data: {
+                                [key: string]: unknown;
+                            } | string;
+                            read: boolean;
+                            created_at: string;
+                        }[];
+                        meta: {
+                            unread_count: number;
+                        };
+                    };
+                };
+            };
+            422: components["responses"]["ValidationException"];
+        };
+    };
+    "v1.notifications.read": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": {
+                    ids?: number[];
+                    /** @enum {unknown} */
+                    all?: "yes" | "on" | "1" | 1 | "true" | true;
+                };
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        success: boolean;
+                        data: {
+                            marked: number;
+                        };
+                        meta: string;
+                    };
+                };
+            };
+            422: components["responses"]["ValidationException"];
+        };
+    };
+    "v1.orders.index": {
+        parameters: {
+            query?: {
+                "filter[status]"?: "open" | "finalised" | "cancelled" | "all" | null;
+                "filter[q]"?: string | null;
+                page?: number | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        success: boolean;
+                        data: {
+                            id: number;
+                            reference: string;
+                            /** @enum {string} */
+                            status: "open" | "finalised" | "cancelled";
+                            customer_name: string;
+                            is_guest: boolean;
+                            opened_at: string;
+                            opened_business_day: string;
+                            opened_by: string;
+                            cancelled_at: string | null;
+                            cancel_reason: string | null;
+                            progress: {
+                                services: number;
+                                recorded: number;
+                                disputed: number;
+                                waiting: number;
+                                pending_approval: number;
+                            };
+                            items: {
+                                id: number;
+                                /** @enum {string} */
+                                type: "service" | "product";
+                                name: string;
+                                quantity: number;
+                                /** @enum {string} */
+                                status: "requested" | "pending_approval" | "approved" | "rejected" | "cancelled";
+                                /** @enum {string} */
+                                origin: "order" | "desk_add" | "additional_request";
+                                request_note: string | null;
+                                decision_reason: string | null;
+                                cancel_reason: string | null;
+                                requested_by: number;
+                                assigned: {
+                                    employee_id: number;
+                                    name: string;
+                                }[];
+                                assigned_to_me: boolean;
+                                work: {
+                                    id: string;
+                                    order_item_id: string;
+                                    /** @enum {string} */
+                                    status: "confirmed" | "disputed" | "superseded" | "cancelled";
+                                    late: string;
+                                    submitted_by: {
+                                        id: string;
+                                        name: string;
+                                    };
+                                    submitted_at: string;
+                                    /** @enum {string} */
+                                    allocation_method: "equal" | "primary_assistant" | "custom";
+                                    primary_share_bp: string;
+                                    supersedes_id: string;
+                                    override_reason: string;
+                                    dispute_reason: string;
+                                    disputed_by: string | null;
+                                    resolution_reason: string;
+                                    includes_me: boolean;
+                                    contributors: {
+                                        employee_id: number;
+                                        name: string;
+                                        is_primary: boolean;
+                                        share_bp: number;
+                                    }[];
+                                } | null;
+                                history: {
+                                    id: number;
+                                    order_item_id: number;
+                                    /** @enum {string} */
+                                    status: "confirmed" | "disputed" | "superseded" | "cancelled";
+                                    late: boolean;
+                                    submitted_by: {
+                                        id: number;
+                                        name: string;
+                                    };
+                                    submitted_at: string;
+                                    /** @enum {string} */
+                                    allocation_method: "equal" | "primary_assistant" | "custom";
+                                    primary_share_bp: number | null;
+                                    supersedes_id: number | null;
+                                    override_reason: string | null;
+                                    dispute_reason: string | null;
+                                    disputed_by: string | null;
+                                    resolution_reason: string | null;
+                                    includes_me: boolean;
+                                    contributors: {
+                                        employee_id: number;
+                                        name: string;
+                                        is_primary: boolean;
+                                        share_bp: number;
+                                    }[];
+                                }[];
+                            }[];
+                            customer_id: number | null;
+                            subtotal_kobo: string;
+                            phone: string | null;
+                            phone_display: string | null;
+                        }[];
+                        meta: {
+                            pagination: {
+                                page: number;
+                                per_page: number;
+                                total: number;
+                                last_page: number;
+                            };
+                        };
+                    };
+                };
+            };
+            422: components["responses"]["ValidationException"];
+        };
+    };
+    "v1.orders.store": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["StoreOrderRequest"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        success: boolean;
+                        data: {
+                            id: number;
+                            reference: string;
+                            /** @enum {string} */
+                            status: "open" | "finalised" | "cancelled";
+                            customer_name: string;
+                            is_guest: boolean;
+                            opened_at: string;
+                            opened_business_day: string;
+                            opened_by: string;
+                            cancelled_at: string | null;
+                            cancel_reason: string | null;
+                            progress: {
+                                services: number;
+                                recorded: number;
+                                disputed: number;
+                                waiting: number;
+                                pending_approval: number;
+                            };
+                            items: {
+                                id: number;
+                                /** @enum {string} */
+                                type: "service" | "product";
+                                name: string;
+                                quantity: number;
+                                /** @enum {string} */
+                                status: "requested" | "pending_approval" | "approved" | "rejected" | "cancelled";
+                                /** @enum {string} */
+                                origin: "order" | "desk_add" | "additional_request";
+                                request_note: string | null;
+                                decision_reason: string | null;
+                                cancel_reason: string | null;
+                                requested_by: number;
+                                assigned: {
+                                    employee_id: number;
+                                    name: string;
+                                }[];
+                                assigned_to_me: boolean;
+                                work: {
+                                    id: string;
+                                    order_item_id: string;
+                                    /** @enum {string} */
+                                    status: "confirmed" | "disputed" | "superseded" | "cancelled";
+                                    late: string;
+                                    submitted_by: {
+                                        id: string;
+                                        name: string;
+                                    };
+                                    submitted_at: string;
+                                    /** @enum {string} */
+                                    allocation_method: "equal" | "primary_assistant" | "custom";
+                                    primary_share_bp: string;
+                                    supersedes_id: string;
+                                    override_reason: string;
+                                    dispute_reason: string;
+                                    disputed_by: string | null;
+                                    resolution_reason: string;
+                                    includes_me: boolean;
+                                    contributors: {
+                                        employee_id: number;
+                                        name: string;
+                                        is_primary: boolean;
+                                        share_bp: number;
+                                    }[];
+                                } | null;
+                                history: {
+                                    id: number;
+                                    order_item_id: number;
+                                    /** @enum {string} */
+                                    status: "confirmed" | "disputed" | "superseded" | "cancelled";
+                                    late: boolean;
+                                    submitted_by: {
+                                        id: number;
+                                        name: string;
+                                    };
+                                    submitted_at: string;
+                                    /** @enum {string} */
+                                    allocation_method: "equal" | "primary_assistant" | "custom";
+                                    primary_share_bp: number | null;
+                                    supersedes_id: number | null;
+                                    override_reason: string | null;
+                                    dispute_reason: string | null;
+                                    disputed_by: string | null;
+                                    resolution_reason: string | null;
+                                    includes_me: boolean;
+                                    contributors: {
+                                        employee_id: number;
+                                        name: string;
+                                        is_primary: boolean;
+                                        share_bp: number;
+                                    }[];
+                                }[];
+                            }[];
+                            customer_id: number | null;
+                            subtotal_kobo: string;
+                            phone: string | null;
+                            phone_display: string | null;
+                        };
+                        meta: string;
+                    };
+                };
+            };
+            422: components["responses"]["ValidationException"];
+        };
+    };
+    "v1.orders.show": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                order: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        success: boolean;
+                        data: {
+                            id: number;
+                            reference: string;
+                            /** @enum {string} */
+                            status: "open" | "finalised" | "cancelled";
+                            customer_name: string;
+                            is_guest: boolean;
+                            opened_at: string;
+                            opened_business_day: string;
+                            opened_by: string;
+                            cancelled_at: string | null;
+                            cancel_reason: string | null;
+                            progress: {
+                                services: number;
+                                recorded: number;
+                                disputed: number;
+                                waiting: number;
+                                pending_approval: number;
+                            };
+                            items: {
+                                id: number;
+                                /** @enum {string} */
+                                type: "service" | "product";
+                                name: string;
+                                quantity: number;
+                                /** @enum {string} */
+                                status: "requested" | "pending_approval" | "approved" | "rejected" | "cancelled";
+                                /** @enum {string} */
+                                origin: "order" | "desk_add" | "additional_request";
+                                request_note: string | null;
+                                decision_reason: string | null;
+                                cancel_reason: string | null;
+                                requested_by: number;
+                                assigned: {
+                                    employee_id: number;
+                                    name: string;
+                                }[];
+                                assigned_to_me: boolean;
+                                work: {
+                                    id: string;
+                                    order_item_id: string;
+                                    /** @enum {string} */
+                                    status: "confirmed" | "disputed" | "superseded" | "cancelled";
+                                    late: string;
+                                    submitted_by: {
+                                        id: string;
+                                        name: string;
+                                    };
+                                    submitted_at: string;
+                                    /** @enum {string} */
+                                    allocation_method: "equal" | "primary_assistant" | "custom";
+                                    primary_share_bp: string;
+                                    supersedes_id: string;
+                                    override_reason: string;
+                                    dispute_reason: string;
+                                    disputed_by: string | null;
+                                    resolution_reason: string;
+                                    includes_me: boolean;
+                                    contributors: {
+                                        employee_id: number;
+                                        name: string;
+                                        is_primary: boolean;
+                                        share_bp: number;
+                                    }[];
+                                } | null;
+                                history: {
+                                    id: number;
+                                    order_item_id: number;
+                                    /** @enum {string} */
+                                    status: "confirmed" | "disputed" | "superseded" | "cancelled";
+                                    late: boolean;
+                                    submitted_by: {
+                                        id: number;
+                                        name: string;
+                                    };
+                                    submitted_at: string;
+                                    /** @enum {string} */
+                                    allocation_method: "equal" | "primary_assistant" | "custom";
+                                    primary_share_bp: number | null;
+                                    supersedes_id: number | null;
+                                    override_reason: string | null;
+                                    dispute_reason: string | null;
+                                    disputed_by: string | null;
+                                    resolution_reason: string | null;
+                                    includes_me: boolean;
+                                    contributors: {
+                                        employee_id: number;
+                                        name: string;
+                                        is_primary: boolean;
+                                        share_bp: number;
+                                    }[];
+                                }[];
+                            }[];
+                            customer_id: number | null;
+                            subtotal_kobo: string;
+                            phone: string | null;
+                            phone_display: string | null;
+                        };
+                        meta: string;
+                    };
+                };
+            };
+        };
+    };
+    "v1.orders.items.store": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                order: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AddItemRequest"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        success: boolean;
+                        data: {
+                            id: number;
+                            reference: string;
+                            /** @enum {string} */
+                            status: "open" | "finalised" | "cancelled";
+                            customer_name: string;
+                            is_guest: boolean;
+                            opened_at: string;
+                            opened_business_day: string;
+                            opened_by: string;
+                            cancelled_at: string | null;
+                            cancel_reason: string | null;
+                            progress: {
+                                services: number;
+                                recorded: number;
+                                disputed: number;
+                                waiting: number;
+                                pending_approval: number;
+                            };
+                            items: {
+                                id: number;
+                                /** @enum {string} */
+                                type: "service" | "product";
+                                name: string;
+                                quantity: number;
+                                /** @enum {string} */
+                                status: "requested" | "pending_approval" | "approved" | "rejected" | "cancelled";
+                                /** @enum {string} */
+                                origin: "order" | "desk_add" | "additional_request";
+                                request_note: string | null;
+                                decision_reason: string | null;
+                                cancel_reason: string | null;
+                                requested_by: number;
+                                assigned: {
+                                    employee_id: number;
+                                    name: string;
+                                }[];
+                                assigned_to_me: boolean;
+                                work: {
+                                    id: string;
+                                    order_item_id: string;
+                                    /** @enum {string} */
+                                    status: "confirmed" | "disputed" | "superseded" | "cancelled";
+                                    late: string;
+                                    submitted_by: {
+                                        id: string;
+                                        name: string;
+                                    };
+                                    submitted_at: string;
+                                    /** @enum {string} */
+                                    allocation_method: "equal" | "primary_assistant" | "custom";
+                                    primary_share_bp: string;
+                                    supersedes_id: string;
+                                    override_reason: string;
+                                    dispute_reason: string;
+                                    disputed_by: string | null;
+                                    resolution_reason: string;
+                                    includes_me: boolean;
+                                    contributors: {
+                                        employee_id: number;
+                                        name: string;
+                                        is_primary: boolean;
+                                        share_bp: number;
+                                    }[];
+                                } | null;
+                                history: {
+                                    id: number;
+                                    order_item_id: number;
+                                    /** @enum {string} */
+                                    status: "confirmed" | "disputed" | "superseded" | "cancelled";
+                                    late: boolean;
+                                    submitted_by: {
+                                        id: number;
+                                        name: string;
+                                    };
+                                    submitted_at: string;
+                                    /** @enum {string} */
+                                    allocation_method: "equal" | "primary_assistant" | "custom";
+                                    primary_share_bp: number | null;
+                                    supersedes_id: number | null;
+                                    override_reason: string | null;
+                                    dispute_reason: string | null;
+                                    disputed_by: string | null;
+                                    resolution_reason: string | null;
+                                    includes_me: boolean;
+                                    contributors: {
+                                        employee_id: number;
+                                        name: string;
+                                        is_primary: boolean;
+                                        share_bp: number;
+                                    }[];
+                                }[];
+                            }[];
+                            customer_id: number | null;
+                            subtotal_kobo: string;
+                            phone: string | null;
+                            phone_display: string | null;
+                        };
+                        meta: string;
+                    };
+                };
+            };
+            422: components["responses"]["ValidationException"];
+        };
+    };
+    "v1.orders.additional-requests.store": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                order: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AddItemRequest"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        success: boolean;
+                        data: {
+                            id: number;
+                            reference: string;
+                            /** @enum {string} */
+                            status: "open" | "finalised" | "cancelled";
+                            customer_name: string;
+                            is_guest: boolean;
+                            opened_at: string;
+                            opened_business_day: string;
+                            opened_by: string;
+                            cancelled_at: string | null;
+                            cancel_reason: string | null;
+                            progress: {
+                                services: number;
+                                recorded: number;
+                                disputed: number;
+                                waiting: number;
+                                pending_approval: number;
+                            };
+                            items: {
+                                id: number;
+                                /** @enum {string} */
+                                type: "service" | "product";
+                                name: string;
+                                quantity: number;
+                                /** @enum {string} */
+                                status: "requested" | "pending_approval" | "approved" | "rejected" | "cancelled";
+                                /** @enum {string} */
+                                origin: "order" | "desk_add" | "additional_request";
+                                request_note: string | null;
+                                decision_reason: string | null;
+                                cancel_reason: string | null;
+                                requested_by: number;
+                                assigned: {
+                                    employee_id: number;
+                                    name: string;
+                                }[];
+                                assigned_to_me: boolean;
+                                work: {
+                                    id: string;
+                                    order_item_id: string;
+                                    /** @enum {string} */
+                                    status: "confirmed" | "disputed" | "superseded" | "cancelled";
+                                    late: string;
+                                    submitted_by: {
+                                        id: string;
+                                        name: string;
+                                    };
+                                    submitted_at: string;
+                                    /** @enum {string} */
+                                    allocation_method: "equal" | "primary_assistant" | "custom";
+                                    primary_share_bp: string;
+                                    supersedes_id: string;
+                                    override_reason: string;
+                                    dispute_reason: string;
+                                    disputed_by: string | null;
+                                    resolution_reason: string;
+                                    includes_me: boolean;
+                                    contributors: {
+                                        employee_id: number;
+                                        name: string;
+                                        is_primary: boolean;
+                                        share_bp: number;
+                                    }[];
+                                } | null;
+                                history: {
+                                    id: number;
+                                    order_item_id: number;
+                                    /** @enum {string} */
+                                    status: "confirmed" | "disputed" | "superseded" | "cancelled";
+                                    late: boolean;
+                                    submitted_by: {
+                                        id: number;
+                                        name: string;
+                                    };
+                                    submitted_at: string;
+                                    /** @enum {string} */
+                                    allocation_method: "equal" | "primary_assistant" | "custom";
+                                    primary_share_bp: number | null;
+                                    supersedes_id: number | null;
+                                    override_reason: string | null;
+                                    dispute_reason: string | null;
+                                    disputed_by: string | null;
+                                    resolution_reason: string | null;
+                                    includes_me: boolean;
+                                    contributors: {
+                                        employee_id: number;
+                                        name: string;
+                                        is_primary: boolean;
+                                        share_bp: number;
+                                    }[];
+                                }[];
+                            }[];
+                            customer_id: number | null;
+                            subtotal_kobo: string;
+                            phone: string | null;
+                            phone_display: string | null;
+                        };
+                        meta: string;
+                    };
+                };
+            };
+            422: components["responses"]["ValidationException"];
+        };
+    };
+    "v1.orders.customer": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                order: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AssociateCustomerRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        success: boolean;
+                        data: {
+                            id: number;
+                            reference: string;
+                            /** @enum {string} */
+                            status: "open" | "finalised" | "cancelled";
+                            customer_name: string;
+                            is_guest: boolean;
+                            opened_at: string;
+                            opened_business_day: string;
+                            opened_by: string;
+                            cancelled_at: string | null;
+                            cancel_reason: string | null;
+                            progress: {
+                                services: number;
+                                recorded: number;
+                                disputed: number;
+                                waiting: number;
+                                pending_approval: number;
+                            };
+                            items: {
+                                id: number;
+                                /** @enum {string} */
+                                type: "service" | "product";
+                                name: string;
+                                quantity: number;
+                                /** @enum {string} */
+                                status: "requested" | "pending_approval" | "approved" | "rejected" | "cancelled";
+                                /** @enum {string} */
+                                origin: "order" | "desk_add" | "additional_request";
+                                request_note: string | null;
+                                decision_reason: string | null;
+                                cancel_reason: string | null;
+                                requested_by: number;
+                                assigned: {
+                                    employee_id: number;
+                                    name: string;
+                                }[];
+                                assigned_to_me: boolean;
+                                work: {
+                                    id: string;
+                                    order_item_id: string;
+                                    /** @enum {string} */
+                                    status: "confirmed" | "disputed" | "superseded" | "cancelled";
+                                    late: string;
+                                    submitted_by: {
+                                        id: string;
+                                        name: string;
+                                    };
+                                    submitted_at: string;
+                                    /** @enum {string} */
+                                    allocation_method: "equal" | "primary_assistant" | "custom";
+                                    primary_share_bp: string;
+                                    supersedes_id: string;
+                                    override_reason: string;
+                                    dispute_reason: string;
+                                    disputed_by: string | null;
+                                    resolution_reason: string;
+                                    includes_me: boolean;
+                                    contributors: {
+                                        employee_id: number;
+                                        name: string;
+                                        is_primary: boolean;
+                                        share_bp: number;
+                                    }[];
+                                } | null;
+                                history: {
+                                    id: number;
+                                    order_item_id: number;
+                                    /** @enum {string} */
+                                    status: "confirmed" | "disputed" | "superseded" | "cancelled";
+                                    late: boolean;
+                                    submitted_by: {
+                                        id: number;
+                                        name: string;
+                                    };
+                                    submitted_at: string;
+                                    /** @enum {string} */
+                                    allocation_method: "equal" | "primary_assistant" | "custom";
+                                    primary_share_bp: number | null;
+                                    supersedes_id: number | null;
+                                    override_reason: string | null;
+                                    dispute_reason: string | null;
+                                    disputed_by: string | null;
+                                    resolution_reason: string | null;
+                                    includes_me: boolean;
+                                    contributors: {
+                                        employee_id: number;
+                                        name: string;
+                                        is_primary: boolean;
+                                        share_bp: number;
+                                    }[];
+                                }[];
+                            }[];
+                            customer_id: number | null;
+                            subtotal_kobo: string;
+                            phone: string | null;
+                            phone_display: string | null;
+                        };
+                        meta: string;
+                    };
+                };
+            };
+            422: components["responses"]["ValidationException"];
+        };
+    };
+    "v1.orders.cancel": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                order: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ReasonRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        success: boolean;
+                        data: {
+                            id: number;
+                            reference: string;
+                            /** @enum {string} */
+                            status: "open" | "finalised" | "cancelled";
+                            customer_name: string;
+                            is_guest: boolean;
+                            opened_at: string;
+                            opened_business_day: string;
+                            opened_by: string;
+                            cancelled_at: string | null;
+                            cancel_reason: string | null;
+                            progress: {
+                                services: number;
+                                recorded: number;
+                                disputed: number;
+                                waiting: number;
+                                pending_approval: number;
+                            };
+                            items: {
+                                id: number;
+                                /** @enum {string} */
+                                type: "service" | "product";
+                                name: string;
+                                quantity: number;
+                                /** @enum {string} */
+                                status: "requested" | "pending_approval" | "approved" | "rejected" | "cancelled";
+                                /** @enum {string} */
+                                origin: "order" | "desk_add" | "additional_request";
+                                request_note: string | null;
+                                decision_reason: string | null;
+                                cancel_reason: string | null;
+                                requested_by: number;
+                                assigned: {
+                                    employee_id: number;
+                                    name: string;
+                                }[];
+                                assigned_to_me: boolean;
+                                work: {
+                                    id: string;
+                                    order_item_id: string;
+                                    /** @enum {string} */
+                                    status: "confirmed" | "disputed" | "superseded" | "cancelled";
+                                    late: string;
+                                    submitted_by: {
+                                        id: string;
+                                        name: string;
+                                    };
+                                    submitted_at: string;
+                                    /** @enum {string} */
+                                    allocation_method: "equal" | "primary_assistant" | "custom";
+                                    primary_share_bp: string;
+                                    supersedes_id: string;
+                                    override_reason: string;
+                                    dispute_reason: string;
+                                    disputed_by: string | null;
+                                    resolution_reason: string;
+                                    includes_me: boolean;
+                                    contributors: {
+                                        employee_id: number;
+                                        name: string;
+                                        is_primary: boolean;
+                                        share_bp: number;
+                                    }[];
+                                } | null;
+                                history: {
+                                    id: number;
+                                    order_item_id: number;
+                                    /** @enum {string} */
+                                    status: "confirmed" | "disputed" | "superseded" | "cancelled";
+                                    late: boolean;
+                                    submitted_by: {
+                                        id: number;
+                                        name: string;
+                                    };
+                                    submitted_at: string;
+                                    /** @enum {string} */
+                                    allocation_method: "equal" | "primary_assistant" | "custom";
+                                    primary_share_bp: number | null;
+                                    supersedes_id: number | null;
+                                    override_reason: string | null;
+                                    dispute_reason: string | null;
+                                    disputed_by: string | null;
+                                    resolution_reason: string | null;
+                                    includes_me: boolean;
+                                    contributors: {
+                                        employee_id: number;
+                                        name: string;
+                                        is_primary: boolean;
+                                        share_bp: number;
+                                    }[];
+                                }[];
+                            }[];
+                            customer_id: number | null;
+                            subtotal_kobo: string;
+                            phone: string | null;
+                            phone_display: string | null;
+                        };
+                        meta: string;
+                    };
+                };
+            };
+            422: components["responses"]["ValidationException"];
+        };
+    };
+    "v1.order-items.assignments": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                orderItem: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AssignmentsRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        success: boolean;
+                        data: {
+                            id: number;
+                            reference: string;
+                            /** @enum {string} */
+                            status: "open" | "finalised" | "cancelled";
+                            customer_name: string;
+                            is_guest: boolean;
+                            opened_at: string;
+                            opened_business_day: string;
+                            opened_by: string;
+                            cancelled_at: string | null;
+                            cancel_reason: string | null;
+                            progress: {
+                                services: number;
+                                recorded: number;
+                                disputed: number;
+                                waiting: number;
+                                pending_approval: number;
+                            };
+                            items: {
+                                id: number;
+                                /** @enum {string} */
+                                type: "service" | "product";
+                                name: string;
+                                quantity: number;
+                                /** @enum {string} */
+                                status: "requested" | "pending_approval" | "approved" | "rejected" | "cancelled";
+                                /** @enum {string} */
+                                origin: "order" | "desk_add" | "additional_request";
+                                request_note: string | null;
+                                decision_reason: string | null;
+                                cancel_reason: string | null;
+                                requested_by: number;
+                                assigned: {
+                                    employee_id: number;
+                                    name: string;
+                                }[];
+                                assigned_to_me: boolean;
+                                work: {
+                                    id: string;
+                                    order_item_id: string;
+                                    /** @enum {string} */
+                                    status: "confirmed" | "disputed" | "superseded" | "cancelled";
+                                    late: string;
+                                    submitted_by: {
+                                        id: string;
+                                        name: string;
+                                    };
+                                    submitted_at: string;
+                                    /** @enum {string} */
+                                    allocation_method: "equal" | "primary_assistant" | "custom";
+                                    primary_share_bp: string;
+                                    supersedes_id: string;
+                                    override_reason: string;
+                                    dispute_reason: string;
+                                    disputed_by: string | null;
+                                    resolution_reason: string;
+                                    includes_me: boolean;
+                                    contributors: {
+                                        employee_id: number;
+                                        name: string;
+                                        is_primary: boolean;
+                                        share_bp: number;
+                                    }[];
+                                } | null;
+                                history: {
+                                    id: number;
+                                    order_item_id: number;
+                                    /** @enum {string} */
+                                    status: "confirmed" | "disputed" | "superseded" | "cancelled";
+                                    late: boolean;
+                                    submitted_by: {
+                                        id: number;
+                                        name: string;
+                                    };
+                                    submitted_at: string;
+                                    /** @enum {string} */
+                                    allocation_method: "equal" | "primary_assistant" | "custom";
+                                    primary_share_bp: number | null;
+                                    supersedes_id: number | null;
+                                    override_reason: string | null;
+                                    dispute_reason: string | null;
+                                    disputed_by: string | null;
+                                    resolution_reason: string | null;
+                                    includes_me: boolean;
+                                    contributors: {
+                                        employee_id: number;
+                                        name: string;
+                                        is_primary: boolean;
+                                        share_bp: number;
+                                    }[];
+                                }[];
+                            }[];
+                            customer_id: number | null;
+                            subtotal_kobo: string;
+                            phone: string | null;
+                            phone_display: string | null;
+                        };
+                        meta: string;
+                    };
+                };
+            };
+            422: components["responses"]["ValidationException"];
+        };
+    };
+    "v1.order-items.cancel": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                orderItem: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ReasonRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        success: boolean;
+                        data: {
+                            id: number;
+                            reference: string;
+                            /** @enum {string} */
+                            status: "open" | "finalised" | "cancelled";
+                            customer_name: string;
+                            is_guest: boolean;
+                            opened_at: string;
+                            opened_business_day: string;
+                            opened_by: string;
+                            cancelled_at: string | null;
+                            cancel_reason: string | null;
+                            progress: {
+                                services: number;
+                                recorded: number;
+                                disputed: number;
+                                waiting: number;
+                                pending_approval: number;
+                            };
+                            items: {
+                                id: number;
+                                /** @enum {string} */
+                                type: "service" | "product";
+                                name: string;
+                                quantity: number;
+                                /** @enum {string} */
+                                status: "requested" | "pending_approval" | "approved" | "rejected" | "cancelled";
+                                /** @enum {string} */
+                                origin: "order" | "desk_add" | "additional_request";
+                                request_note: string | null;
+                                decision_reason: string | null;
+                                cancel_reason: string | null;
+                                requested_by: number;
+                                assigned: {
+                                    employee_id: number;
+                                    name: string;
+                                }[];
+                                assigned_to_me: boolean;
+                                work: {
+                                    id: string;
+                                    order_item_id: string;
+                                    /** @enum {string} */
+                                    status: "confirmed" | "disputed" | "superseded" | "cancelled";
+                                    late: string;
+                                    submitted_by: {
+                                        id: string;
+                                        name: string;
+                                    };
+                                    submitted_at: string;
+                                    /** @enum {string} */
+                                    allocation_method: "equal" | "primary_assistant" | "custom";
+                                    primary_share_bp: string;
+                                    supersedes_id: string;
+                                    override_reason: string;
+                                    dispute_reason: string;
+                                    disputed_by: string | null;
+                                    resolution_reason: string;
+                                    includes_me: boolean;
+                                    contributors: {
+                                        employee_id: number;
+                                        name: string;
+                                        is_primary: boolean;
+                                        share_bp: number;
+                                    }[];
+                                } | null;
+                                history: {
+                                    id: number;
+                                    order_item_id: number;
+                                    /** @enum {string} */
+                                    status: "confirmed" | "disputed" | "superseded" | "cancelled";
+                                    late: boolean;
+                                    submitted_by: {
+                                        id: number;
+                                        name: string;
+                                    };
+                                    submitted_at: string;
+                                    /** @enum {string} */
+                                    allocation_method: "equal" | "primary_assistant" | "custom";
+                                    primary_share_bp: number | null;
+                                    supersedes_id: number | null;
+                                    override_reason: string | null;
+                                    dispute_reason: string | null;
+                                    disputed_by: string | null;
+                                    resolution_reason: string | null;
+                                    includes_me: boolean;
+                                    contributors: {
+                                        employee_id: number;
+                                        name: string;
+                                        is_primary: boolean;
+                                        share_bp: number;
+                                    }[];
+                                }[];
+                            }[];
+                            customer_id: number | null;
+                            subtotal_kobo: string;
+                            phone: string | null;
+                            phone_display: string | null;
+                        };
+                        meta: string;
+                    };
+                };
+            };
+            422: components["responses"]["ValidationException"];
+        };
+    };
+    "v1.order-items.price-override": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                orderItem: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PriceOverrideRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        success: boolean;
+                        data: {
+                            id: number;
+                            reference: string;
+                            /** @enum {string} */
+                            status: "open" | "finalised" | "cancelled";
+                            customer_name: string;
+                            is_guest: boolean;
+                            opened_at: string;
+                            opened_business_day: string;
+                            opened_by: string;
+                            cancelled_at: string | null;
+                            cancel_reason: string | null;
+                            progress: {
+                                services: number;
+                                recorded: number;
+                                disputed: number;
+                                waiting: number;
+                                pending_approval: number;
+                            };
+                            items: {
+                                id: number;
+                                /** @enum {string} */
+                                type: "service" | "product";
+                                name: string;
+                                quantity: number;
+                                /** @enum {string} */
+                                status: "requested" | "pending_approval" | "approved" | "rejected" | "cancelled";
+                                /** @enum {string} */
+                                origin: "order" | "desk_add" | "additional_request";
+                                request_note: string | null;
+                                decision_reason: string | null;
+                                cancel_reason: string | null;
+                                requested_by: number;
+                                assigned: {
+                                    employee_id: number;
+                                    name: string;
+                                }[];
+                                assigned_to_me: boolean;
+                                work: {
+                                    id: string;
+                                    order_item_id: string;
+                                    /** @enum {string} */
+                                    status: "confirmed" | "disputed" | "superseded" | "cancelled";
+                                    late: string;
+                                    submitted_by: {
+                                        id: string;
+                                        name: string;
+                                    };
+                                    submitted_at: string;
+                                    /** @enum {string} */
+                                    allocation_method: "equal" | "primary_assistant" | "custom";
+                                    primary_share_bp: string;
+                                    supersedes_id: string;
+                                    override_reason: string;
+                                    dispute_reason: string;
+                                    disputed_by: string | null;
+                                    resolution_reason: string;
+                                    includes_me: boolean;
+                                    contributors: {
+                                        employee_id: number;
+                                        name: string;
+                                        is_primary: boolean;
+                                        share_bp: number;
+                                    }[];
+                                } | null;
+                                history: {
+                                    id: number;
+                                    order_item_id: number;
+                                    /** @enum {string} */
+                                    status: "confirmed" | "disputed" | "superseded" | "cancelled";
+                                    late: boolean;
+                                    submitted_by: {
+                                        id: number;
+                                        name: string;
+                                    };
+                                    submitted_at: string;
+                                    /** @enum {string} */
+                                    allocation_method: "equal" | "primary_assistant" | "custom";
+                                    primary_share_bp: number | null;
+                                    supersedes_id: number | null;
+                                    override_reason: string | null;
+                                    dispute_reason: string | null;
+                                    disputed_by: string | null;
+                                    resolution_reason: string | null;
+                                    includes_me: boolean;
+                                    contributors: {
+                                        employee_id: number;
+                                        name: string;
+                                        is_primary: boolean;
+                                        share_bp: number;
+                                    }[];
+                                }[];
+                            }[];
+                            customer_id: number | null;
+                            subtotal_kobo: string;
+                            phone: string | null;
+                            phone_display: string | null;
+                        };
+                        meta: string;
+                    };
+                };
+            };
+            422: components["responses"]["ValidationException"];
+        };
+    };
+    "v1.order-items.approve": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                orderItem: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["OptionalReasonRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        success: boolean;
+                        data: {
+                            id: number;
+                            reference: string;
+                            /** @enum {string} */
+                            status: "open" | "finalised" | "cancelled";
+                            customer_name: string;
+                            is_guest: boolean;
+                            opened_at: string;
+                            opened_business_day: string;
+                            opened_by: string;
+                            cancelled_at: string | null;
+                            cancel_reason: string | null;
+                            progress: {
+                                services: number;
+                                recorded: number;
+                                disputed: number;
+                                waiting: number;
+                                pending_approval: number;
+                            };
+                            items: {
+                                id: number;
+                                /** @enum {string} */
+                                type: "service" | "product";
+                                name: string;
+                                quantity: number;
+                                /** @enum {string} */
+                                status: "requested" | "pending_approval" | "approved" | "rejected" | "cancelled";
+                                /** @enum {string} */
+                                origin: "order" | "desk_add" | "additional_request";
+                                request_note: string | null;
+                                decision_reason: string | null;
+                                cancel_reason: string | null;
+                                requested_by: number;
+                                assigned: {
+                                    employee_id: number;
+                                    name: string;
+                                }[];
+                                assigned_to_me: boolean;
+                                work: {
+                                    id: string;
+                                    order_item_id: string;
+                                    /** @enum {string} */
+                                    status: "confirmed" | "disputed" | "superseded" | "cancelled";
+                                    late: string;
+                                    submitted_by: {
+                                        id: string;
+                                        name: string;
+                                    };
+                                    submitted_at: string;
+                                    /** @enum {string} */
+                                    allocation_method: "equal" | "primary_assistant" | "custom";
+                                    primary_share_bp: string;
+                                    supersedes_id: string;
+                                    override_reason: string;
+                                    dispute_reason: string;
+                                    disputed_by: string | null;
+                                    resolution_reason: string;
+                                    includes_me: boolean;
+                                    contributors: {
+                                        employee_id: number;
+                                        name: string;
+                                        is_primary: boolean;
+                                        share_bp: number;
+                                    }[];
+                                } | null;
+                                history: {
+                                    id: number;
+                                    order_item_id: number;
+                                    /** @enum {string} */
+                                    status: "confirmed" | "disputed" | "superseded" | "cancelled";
+                                    late: boolean;
+                                    submitted_by: {
+                                        id: number;
+                                        name: string;
+                                    };
+                                    submitted_at: string;
+                                    /** @enum {string} */
+                                    allocation_method: "equal" | "primary_assistant" | "custom";
+                                    primary_share_bp: number | null;
+                                    supersedes_id: number | null;
+                                    override_reason: string | null;
+                                    dispute_reason: string | null;
+                                    disputed_by: string | null;
+                                    resolution_reason: string | null;
+                                    includes_me: boolean;
+                                    contributors: {
+                                        employee_id: number;
+                                        name: string;
+                                        is_primary: boolean;
+                                        share_bp: number;
+                                    }[];
+                                }[];
+                            }[];
+                            customer_id: number | null;
+                            subtotal_kobo: string;
+                            phone: string | null;
+                            phone_display: string | null;
+                        };
+                        meta: string;
+                    };
+                };
+            };
+            422: components["responses"]["ValidationException"];
+        };
+    };
+    "v1.order-items.reject": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                orderItem: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ReasonRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        success: boolean;
+                        data: {
+                            id: number;
+                            reference: string;
+                            /** @enum {string} */
+                            status: "open" | "finalised" | "cancelled";
+                            customer_name: string;
+                            is_guest: boolean;
+                            opened_at: string;
+                            opened_business_day: string;
+                            opened_by: string;
+                            cancelled_at: string | null;
+                            cancel_reason: string | null;
+                            progress: {
+                                services: number;
+                                recorded: number;
+                                disputed: number;
+                                waiting: number;
+                                pending_approval: number;
+                            };
+                            items: {
+                                id: number;
+                                /** @enum {string} */
+                                type: "service" | "product";
+                                name: string;
+                                quantity: number;
+                                /** @enum {string} */
+                                status: "requested" | "pending_approval" | "approved" | "rejected" | "cancelled";
+                                /** @enum {string} */
+                                origin: "order" | "desk_add" | "additional_request";
+                                request_note: string | null;
+                                decision_reason: string | null;
+                                cancel_reason: string | null;
+                                requested_by: number;
+                                assigned: {
+                                    employee_id: number;
+                                    name: string;
+                                }[];
+                                assigned_to_me: boolean;
+                                work: {
+                                    id: string;
+                                    order_item_id: string;
+                                    /** @enum {string} */
+                                    status: "confirmed" | "disputed" | "superseded" | "cancelled";
+                                    late: string;
+                                    submitted_by: {
+                                        id: string;
+                                        name: string;
+                                    };
+                                    submitted_at: string;
+                                    /** @enum {string} */
+                                    allocation_method: "equal" | "primary_assistant" | "custom";
+                                    primary_share_bp: string;
+                                    supersedes_id: string;
+                                    override_reason: string;
+                                    dispute_reason: string;
+                                    disputed_by: string | null;
+                                    resolution_reason: string;
+                                    includes_me: boolean;
+                                    contributors: {
+                                        employee_id: number;
+                                        name: string;
+                                        is_primary: boolean;
+                                        share_bp: number;
+                                    }[];
+                                } | null;
+                                history: {
+                                    id: number;
+                                    order_item_id: number;
+                                    /** @enum {string} */
+                                    status: "confirmed" | "disputed" | "superseded" | "cancelled";
+                                    late: boolean;
+                                    submitted_by: {
+                                        id: number;
+                                        name: string;
+                                    };
+                                    submitted_at: string;
+                                    /** @enum {string} */
+                                    allocation_method: "equal" | "primary_assistant" | "custom";
+                                    primary_share_bp: number | null;
+                                    supersedes_id: number | null;
+                                    override_reason: string | null;
+                                    dispute_reason: string | null;
+                                    disputed_by: string | null;
+                                    resolution_reason: string | null;
+                                    includes_me: boolean;
+                                    contributors: {
+                                        employee_id: number;
+                                        name: string;
+                                        is_primary: boolean;
+                                        share_bp: number;
+                                    }[];
+                                }[];
+                            }[];
+                            customer_id: number | null;
+                            subtotal_kobo: string;
+                            phone: string | null;
+                            phone_display: string | null;
+                        };
+                        meta: string;
+                    };
+                };
+            };
+            422: components["responses"]["ValidationException"];
+        };
+    };
+    "v1.order-items.withdraw": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                orderItem: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["OptionalReasonRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        success: boolean;
+                        data: {
+                            id: number;
+                            reference: string;
+                            /** @enum {string} */
+                            status: "open" | "finalised" | "cancelled";
+                            customer_name: string;
+                            is_guest: boolean;
+                            opened_at: string;
+                            opened_business_day: string;
+                            opened_by: string;
+                            cancelled_at: string | null;
+                            cancel_reason: string | null;
+                            progress: {
+                                services: number;
+                                recorded: number;
+                                disputed: number;
+                                waiting: number;
+                                pending_approval: number;
+                            };
+                            items: {
+                                id: number;
+                                /** @enum {string} */
+                                type: "service" | "product";
+                                name: string;
+                                quantity: number;
+                                /** @enum {string} */
+                                status: "requested" | "pending_approval" | "approved" | "rejected" | "cancelled";
+                                /** @enum {string} */
+                                origin: "order" | "desk_add" | "additional_request";
+                                request_note: string | null;
+                                decision_reason: string | null;
+                                cancel_reason: string | null;
+                                requested_by: number;
+                                assigned: {
+                                    employee_id: number;
+                                    name: string;
+                                }[];
+                                assigned_to_me: boolean;
+                                work: {
+                                    id: string;
+                                    order_item_id: string;
+                                    /** @enum {string} */
+                                    status: "confirmed" | "disputed" | "superseded" | "cancelled";
+                                    late: string;
+                                    submitted_by: {
+                                        id: string;
+                                        name: string;
+                                    };
+                                    submitted_at: string;
+                                    /** @enum {string} */
+                                    allocation_method: "equal" | "primary_assistant" | "custom";
+                                    primary_share_bp: string;
+                                    supersedes_id: string;
+                                    override_reason: string;
+                                    dispute_reason: string;
+                                    disputed_by: string | null;
+                                    resolution_reason: string;
+                                    includes_me: boolean;
+                                    contributors: {
+                                        employee_id: number;
+                                        name: string;
+                                        is_primary: boolean;
+                                        share_bp: number;
+                                    }[];
+                                } | null;
+                                history: {
+                                    id: number;
+                                    order_item_id: number;
+                                    /** @enum {string} */
+                                    status: "confirmed" | "disputed" | "superseded" | "cancelled";
+                                    late: boolean;
+                                    submitted_by: {
+                                        id: number;
+                                        name: string;
+                                    };
+                                    submitted_at: string;
+                                    /** @enum {string} */
+                                    allocation_method: "equal" | "primary_assistant" | "custom";
+                                    primary_share_bp: number | null;
+                                    supersedes_id: number | null;
+                                    override_reason: string | null;
+                                    dispute_reason: string | null;
+                                    disputed_by: string | null;
+                                    resolution_reason: string | null;
+                                    includes_me: boolean;
+                                    contributors: {
+                                        employee_id: number;
+                                        name: string;
+                                        is_primary: boolean;
+                                        share_bp: number;
+                                    }[];
+                                }[];
+                            }[];
+                            customer_id: number | null;
+                            subtotal_kobo: string;
+                            phone: string | null;
+                            phone_display: string | null;
+                        };
+                        meta: string;
+                    };
+                };
+            };
+            422: components["responses"]["ValidationException"];
         };
     };
     "v1.permissions.index": {
@@ -2166,6 +5448,34 @@ export interface operations {
                 };
             };
             422: components["responses"]["ValidationException"];
+        };
+    };
+    "v1.staff-directory": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        success: boolean;
+                        data: {
+                            id: number;
+                            name: string;
+                            job_title: string | null;
+                            is_me: boolean;
+                        }[];
+                        meta: string;
+                    };
+                };
+            };
         };
     };
     "v1.users.index": {

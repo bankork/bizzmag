@@ -10,12 +10,16 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { createCustomer, useCustomerMutation, type CustomerInput } from "@/lib/api/customers";
 import { ApiError } from "@/lib/api/errors";
-import type { DuplicateMatch } from "@/lib/api/types";
+import type { Customer, DuplicateMatch } from "@/lib/api/types";
 import { useAuth } from "@/lib/auth/auth-provider";
 
 const BLANK: CustomerValues = { name: "", phone: "", email: "", notes: "" };
 
-export function AddCustomerDialog({ basePath }: { basePath: string }) {
+/**
+ * Registers a customer. By default it then opens their page; with
+ * `onCreated` (opening a visit) it hands the new customer back instead.
+ */
+export function AddCustomerDialog({ basePath, onCreated }: { basePath: string; onCreated?: (customer: Customer) => void }) {
   const auth = useAuth();
   const router = useRouter();
   const [open, setOpen] = useState(false);
@@ -46,7 +50,12 @@ export function AddCustomerDialog({ basePath }: { basePath: string }) {
     try {
       const customer = await create.mutateAsync(body);
       setOpen(false);
-      router.push(`${basePath}edit/?id=${customer.id}`);
+
+      if (onCreated) {
+        onCreated(customer);
+      } else {
+        router.push(`${basePath}edit/?id=${customer.id}`);
+      }
     } catch (error) {
       const matches = duplicateMatches(error);
 
@@ -74,7 +83,7 @@ export function AddCustomerDialog({ basePath }: { basePath: string }) {
         }
       }}
     >
-      <DialogTrigger render={<Button />}>
+      <DialogTrigger render={<Button type="button" variant={onCreated ? "outline" : "default"} />}>
         <UserPlus aria-hidden />
         Add customer
       </DialogTrigger>

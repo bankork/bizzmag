@@ -168,3 +168,110 @@ export type Customer = {
 };
 
 export type DuplicateMatch = { id: number; name: string };
+
+export type OrderStatus = "open" | "finalised" | "cancelled";
+
+export type ItemStatus = "requested" | "pending_approval" | "approved" | "rejected" | "cancelled";
+
+export type ExecutionStatus = "confirmed" | "disputed" | "superseded" | "cancelled";
+
+export type AllocationMethod = "equal" | "primary_assistant" | "custom";
+
+export type Contributor = { employee_id: number; name: string; is_primary: boolean; share_bp: number };
+
+/** A recorded service. Shares are percentages of credit, never money. */
+export type Execution = {
+  id: number;
+  order_item_id: number;
+  status: ExecutionStatus;
+  late: boolean;
+  submitted_by: { id: number; name: string };
+  submitted_at: string;
+  allocation_method: AllocationMethod;
+  primary_share_bp: number | null;
+  supersedes_id: number | null;
+  override_reason: string | null;
+  dispute_reason: string | null;
+  disputed_by: string | null;
+  resolution_reason: string | null;
+  includes_me: boolean;
+  contributors: Contributor[];
+};
+
+/**
+ * One line on a visit. The price fields are present only for people who may
+ * see prices (order.view_all); employees never receive them (BR-041).
+ */
+export type OrderItem = {
+  id: number;
+  type: ItemType;
+  name: string;
+  quantity: number;
+  status: ItemStatus;
+  origin: "order" | "desk_add" | "additional_request";
+  request_note: string | null;
+  decision_reason: string | null;
+  cancel_reason: string | null;
+  requested_by: number;
+  assigned: { employee_id: number; name: string }[];
+  assigned_to_me: boolean;
+  work: Execution | null;
+  history: Execution[];
+  unit_price_kobo?: number;
+  override_price_kobo?: number | null;
+  override_reason?: string | null;
+  line_value_kobo?: number;
+  taxable?: boolean;
+};
+
+export type Order = {
+  id: number;
+  reference: string;
+  status: OrderStatus;
+  customer_name: string;
+  is_guest: boolean;
+  opened_at: string;
+  opened_business_day: string;
+  opened_by: string;
+  cancelled_at: string | null;
+  cancel_reason: string | null;
+  progress: { services: number; recorded: number; disputed: number; waiting: number; pending_approval: number };
+  items: OrderItem[];
+  customer_id?: number | null;
+  subtotal_kobo?: number;
+  phone?: string | null;
+  phone_display?: string | null;
+};
+
+export type StaffMember = { id: number; name: string; job_title: string | null; is_me: boolean };
+
+export type Approval = {
+  type: "additional_service";
+  order_item_id: number;
+  name: string;
+  quantity: number;
+  note: string | null;
+  requested_by: { id: number; name: string | null };
+  requested_at: string | null;
+  order: { id: number; reference: string; customer_name: string };
+  unit_price_kobo?: number;
+  line_value_kobo?: number;
+};
+
+export type MyWork = Execution & {
+  item_name: string;
+  order: { id: number; reference: string; customer_name: string; status: OrderStatus };
+  my_share_bp: number | null;
+};
+
+export type CustomerVisit = { id: number; reference: string; status: OrderStatus; opened_at: string; items: string[]; subtotal_kobo: number };
+
+export type AppNotification = {
+  id: number;
+  type: string;
+  title: string;
+  body: string | null;
+  data: { order_id?: number; order_item_id?: number; execution_id?: number; reference?: string; approved?: boolean };
+  read: boolean;
+  created_at: string;
+};

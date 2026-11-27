@@ -8,6 +8,7 @@ import { ConfirmDialog } from "@/components/admin/confirm-dialog";
 import { CustomerFormFields, customerFieldErrors, type CustomerErrors, type CustomerValues } from "@/components/customers/customer-form-fields";
 import { DuplicatePrompt, duplicateMatches } from "@/components/customers/duplicate-prompt";
 import { describedBy, FormField } from "@/components/shared/form-field";
+import { CustomerVisits } from "@/components/visits/customer-visits";
 import { Alert } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -67,12 +68,7 @@ function Profile({ customer, basePath }: { customer: Customer; basePath: string 
         <ReadOnlyDetails customer={customer} />
       )}
 
-      <Card>
-        <CardHeader>
-          <CardTitle>Visits and payments</CardTitle>
-          <CardDescription>Visits appear here from Phase 3, and bills and payments from Phases 4 and 5.</CardDescription>
-        </CardHeader>
-      </Card>
+      <CustomerVisits customerId={customer.id} />
 
       {!customer.is_removed && auth.isOwner ? <RemoveCard customer={customer} /> : null}
     </div>

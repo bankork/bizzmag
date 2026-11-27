@@ -6,6 +6,7 @@ import type { ReactNode } from "react";
 import { LogOut, UserRound } from "lucide-react";
 import { cn } from "cn";
 import { RequireAuth } from "@/components/auth/require-auth";
+import { NotificationBell } from "@/components/shared/notification-bell";
 import { Button } from "@/components/ui/button";
 import type { AreaKey } from "@/lib/api/types";
 import { useAuth } from "@/lib/auth/auth-provider";
@@ -83,6 +84,7 @@ function Frame({ area, title, mobileFirst, actions, children }: Omit<AreaShellPr
                 {other.title}
               </Link>
             ))}
+            <NotificationBell area={area} />
             <Link href="/account/" className="inline-flex items-center gap-1.5 rounded-md px-2 py-1.5 text-sm hover:bg-muted" aria-label="My account">
               <UserRound className="size-4" aria-hidden />
               <span className="hidden max-w-32 truncate sm:inline">{auth.me?.user.name}</span>
