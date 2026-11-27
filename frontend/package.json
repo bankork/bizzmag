@@ -7,7 +7,7 @@
     "build": "next build && node scripts/generate-sw.mjs",
     "start": "npx --yes serve@14.2.4 out",
     "lint": "eslint",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "next typegen && tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
     "api:types": "openapi-typescript ../docs/api/openapi.json -o src/lib/api/schema.d.ts",

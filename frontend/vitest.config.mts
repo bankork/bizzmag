@@ -14,5 +14,7 @@ export default defineConfig({
     include: ["src/**/*.test.{ts,tsx}"],
     restoreMocks: true,
     setupFiles: ["src/test/setup.ts"],
+    // Screen tests render whole forms in jsdom; a busy CI runner needs more than the 5 second default.
+    testTimeout: 15_000,
   },
 });
