@@ -52,14 +52,30 @@ The phone numbers are the same on every machine. The two cashiers have no employ
 6. Sign in as **Adunni**, open **Customers**, open anyone, and use **Remove personal data** (type REMOVE). The name becomes "Removed customer". Kemi and Ngozi do not see this button, and the API refuses them.
 7. Sign in as **Chiamaka**: the Catalogue and Customers pages are refused, and the services list the API gives her has no prices.
 
+### Things to try in Phase 3
+
+Use a laptop for the desk and phones (or narrow browser windows, one per person) for staff. Each person signs in on their own device.
+
+1. Sign in as **Kemi** (desk). The **Visits board** shows this morning's visits: Funke's knotless braids done by three braiders, a pedicure still waiting for Zainab, a frontal install with an extra wash waiting for approval, lashes that Precious disputed, and a walk-in for cornrows.
+2. Open **New visit**: pick a customer or type a guest name, add "Knotless braids, Medium" and three packs of X-pression hair, assign Chiamaka, and open it. The reference looks like V-261127-006.
+3. On a phone, sign in as **Chiamaka**. The new visit is at the top, marked "For you". Open it, tap the service, tap **I did this**. That is three taps.
+4. On another phone, sign in as **Funmilayo**, open the same visit and tap **I did this**: she is told it is already recorded and offered **Join**. After she joins, the credit shows Chiamaka 60%, Funmilayo 40% (the service's split).
+5. As **Hauwa**, open Tope's visit and use **Ask for an extra service**. Sign in as **Ngozi** (supervisor) and open **Approvals**: approve or reject it. Hauwa sees the decision under the bell.
+6. As **Ngozi**, open Ladi's lashes visit from the board: Precious disputed it. Dismiss the dispute, or **Correct** it to Tolani alone. The original stays visible as "Replaced".
+7. As **Kemi**, try to remove a service that has been recorded: there is no button, and the API refuses her. Ngozi can remove it with a reason, which cancels the record too.
+8. As **Chiamaka**, open **My work** to see what she is credited on and her share. No prices anywhere on the staff screens.
+
+The script for a live rehearsal with real staff is in [staff-walkthrough.md](staff-walkthrough.md).
+
 ## What is in it, phase by phase
 
 | Phase | Adds |
 |---|---|
 | P0 | Staff login accounts. The full price list and calculation scenarios (`app:demo:calc`). |
 | P1 | Roles for every account, phone sign-in, the salon's profile and default settings, tax switched off (turn on VAT 7.5% to try it) |
-| P2 (now) | The price list in the database (5 service and 2 product categories, variants, products, credit splits) and 150 customers. A few share a phone number, as family members booked on one phone do, and some have no phone |
-| P3 to P5 | About 90 days of visits: Saturday rushes, shared braids, extra services, part payments, cash, POS and transfers |
+| P2 | The price list in the database (5 service and 2 product categories, variants, products, credit splits) and 150 customers. A few share a phone number, as family members booked on one phone do, and some have no phone |
+| P3 (now) | Today's visits in every state: waiting, done by one, done by three, disputed, and an extra service waiting for approval. Added once per day, so running `app:demo` again tomorrow adds a new morning |
+| P4 to P5 | About 90 days of visits: Saturday rushes, shared braids, extra services, part payments, cash, POS and transfers |
 | P6 | Cashier closings, including a cash shortage, plus unverified and rejected transfers |
 | P7 | A month of staff performance and bonus calculations |
 

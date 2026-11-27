@@ -87,7 +87,25 @@ A few actions need the **Owner role** on top of a permission, so they cannot be 
 |---|---|---|
 | Remove a customer's personal data (SEC-021) | `customer.manage` | Owner role |
 
+## Rules on top of a permission (Phase 3)
+
+Some visit actions also depend on who you are in relation to the work. The server checks these; the screens only hide what you cannot use.
+
+| Action | Permission | Also |
+|---|---|---|
+| Change who worked on a recorded service | `execution.submit` | Only the person who recorded it, while the visit is open. They cannot remove themselves or the main person. |
+| Dispute a recorded service | `execution.dispute` | Only someone named on it. People with `execution.correct` can dispute any record. |
+| Withdraw an extra-service request | `additional.request` | Only the person who asked, before a decision. The desk can with `order.item.cancel_unexecuted`. |
+| Remove a service from a visit | `order.item.cancel_unexecuted` | If someone has recorded it, `execution.correct` is needed instead, and the record is cancelled too. |
+| Cancel a whole visit | `order.cancel` | If any service has been recorded, `execution.correct` as well. |
+| Approve or reject an extra service; correct, cancel or resolve a record; change a split | `additional.decide`, `execution.correct`, `allocation.override` | Not on your own request or your own recorded work (segregation of duties, BR-040). The owner may, and the change log flags it. |
+| Record work after the bill's late window | `execution.submit_late` | Takes effect when bills arrive in Phase 4. |
+
+Someone who records work but does not do salon work (for example the owner recording for a stylist) chooses the main person and is not credited.
+
 ## Prices and contact details
 
 - Prices in the catalogue are sent only to people with `order.view_all` or `catalogue.manage`. Everyone else, including employees, gets the services without any price field (BR-041).
 - Customer phone numbers and emails are sent only to people with `customer.view_contact`, and only they can search by phone number (SEC-021).
+- Visits: people without `order.view_all` (employees) see open visits only, with the customer's name and the work, but no prices, phone numbers or bill (BR-041, §14.23). The fields are left out of the response entirely. The staff list used to choose colleagues has names and job titles only.
+- Notifications never contain amounts or contact details (FR-NOT-004).

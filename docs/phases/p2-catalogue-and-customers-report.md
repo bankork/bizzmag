@@ -3,7 +3,7 @@
 **Date:** 2026-11-26
 **Plan:** [p2-catalogue-and-customers-plan.md](p2-catalogue-and-customers-plan.md) v1.0 (approved with the recommended defaults: variants share their parent's settings; catalogue credit splits are Equal or Primary and assistants; demo price list until the real one arrives)
 **Branch:** `development`
-**Status:** Complete locally. Waiting for your review, your push, the GitHub Actions results, and your approval before P3.
+**Status:** Approved by the product owner on 2026-11-26 (commits 89d5fb2, 5a5c42d, 4aeefe3).
 
 ---
 
